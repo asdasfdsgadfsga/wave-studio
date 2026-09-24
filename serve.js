@@ -21,7 +21,7 @@ const mimeTypes = {
     '.m4a': 'audio/mp4'
 };
 
-const server = http.createServer((req, res) => {
+const handleRequest = (req, res) => {
     const rawUrl = req.url.split('?')[0];
 
     // API: Загрузка сэмпла в конкретную папку на сервере
@@ -118,8 +118,9 @@ const server = http.createServer((req, res) => {
         decodedPath = rawUrl;
     }
 
-    let filePath = '.' + decodedPath;
-    if (filePath === './') filePath = './index.html';
+    let relPath = decodedPath.replace(/^\//, '');
+    if (!relPath || relPath === '') relPath = 'index.html';
+    const filePath = path.join(__dirname, relPath);
 
     const extname = String(path.extname(filePath)).toLowerCase();
     const contentType = mimeTypes[extname] || 'application/octet-stream';
@@ -170,15 +171,17 @@ const server = http.createServer((req, res) => {
             stream.pipe(res);
         }
     });
-});
+};
 
-const PORT = 5050; // Используем менее популярный порт
-
-server.listen(PORT, () => {
-    console.log(`========================================`);
-    console.log(`FRONTEND SERVER IS RUNNING`);
-    console.log(`URL: http://localhost:${PORT}`);
-    console.log(`========================================`);
-}).on('error', (err) => {
-    console.error('Ошибка запуска сервера:', err.message);
+const PORTS = [5050, 8080];
+PORTS.forEach(port => {
+    http.createServer(handleRequest).listen(port, () => {
+        console.log(`FRONTEND SERVER IS RUNNING ON http://localhost:${port}`);
+    }).on('error', (err) => {
+        if (err.code === 'EADDRINUSE') {
+            console.log(`Port ${port} is already in use.`);
+        } else {
+            console.error(`Error on port ${port}:`, err.message);
+        }
+    });
 });

@@ -18,6 +18,11 @@ if (!fs.existsSync(templatePath)) {
     }, null, 2));
 }
 
+// Root healthcheck
+app.get('/', (req, res) => {
+    res.send('Wave Backend API is running on port 3000');
+});
+
 // Получить текущий шаблон
 app.get('/api/template', (req, res) => {
     try {
