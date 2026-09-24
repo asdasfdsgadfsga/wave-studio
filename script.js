@@ -728,6 +728,9 @@ function closeMobileMenu() {
 /* ===================================================
    РРќРўР•Р РђРљРўРР’РќР«Р™ A/B РђРЈР”РРћРџР›Р•Р•Р  РЎР РђР’РќР•РќРРЇ "Р”Рћ / РџРћРЎР›Р•"
    =================================================== */
+/* ===================================================
+   ИНТЕРАКТИВНЫЙ A/B АУДИОПЛЕЕР СРАВНЕНИЯ "ДО / ПОСЛЕ"
+   =================================================== */
 document.addEventListener('DOMContentLoaded', () => {
     const audioRaw = document.getElementById('ab-audio-raw');
     const audioMaster = document.getElementById('ab-audio-mastered');
@@ -751,27 +754,50 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!audioRaw || !audioMaster || !playBtn) return;
 
-    const TRACK_DURATION = 38; // Р¤РёРєСЃРёСЂРѕРІР°РЅРЅР°СЏ РґР»РёС‚РµР»СЊРЅРѕСЃС‚СЊ С‚СЂРµРєР° 38 СЃРµРєСѓРЅРґ
+    const TRACK_DURATION = 38.6; // Точная длительность трека
     let isPlaying = false;
-    let currentMode = 'mastered'; // 'raw' РёР»Рё 'mastered'
+    let currentMode = 'mastered'; // 'raw' или 'mastered'
     let masterVolume = 0.85;
 
-    // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЃС‚Р°Р±РёР»СЊРЅРѕРµ РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ РґР»РёС‚РµР»СЊРЅРѕСЃС‚Рё СЃСЂР°Р·Сѓ
+    // Web Audio API для живой синхронизации спектра с визуализатором волны
+    let audioCtx = null;
+    let analyser = null;
+    let dataArray = null;
+
+    function initVisualizerAudio() {
+        if (audioCtx) return;
+        try {
+            const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+            audioCtx = new AudioCtxClass();
+            analyser = audioCtx.createAnalyser();
+            analyser.fftSize = 128; // 64 частотные полосы
+            analyser.smoothingTimeConstant = 0.8;
+            dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+            const sourceMaster = audioCtx.createMediaElementSource(audioMaster);
+            const sourceRaw = audioCtx.createMediaElementSource(audioRaw);
+
+            sourceMaster.connect(analyser);
+            sourceRaw.connect(analyser);
+            analyser.connect(audioCtx.destination);
+        } catch (e) {
+            console.warn('Web Audio API audio visualizer init note:', e);
+        }
+    }
+
     if (durationTimeEl) durationTimeEl.textContent = '0:38';
 
-    // РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РіСЂРѕРјРєРѕСЃС‚Рё
     function updateAudios() {
         if (currentMode === 'mastered') {
             audioMaster.volume = masterVolume;
-            audioRaw.volume = 0; // Р·Р°РіР»СѓС€РµРЅ, РЅРѕ РёРіСЂР°РµС‚ СЃРёРЅС…СЂРѕРЅРЅРѕ
+            audioRaw.volume = 0; // заглушен, но идет синхронно
         } else {
             audioRaw.volume = masterVolume;
-            audioMaster.volume = 0; // Р·Р°РіР»СѓС€РµРЅ, РЅРѕ РёРіСЂР°РµС‚ СЃРёРЅС…СЂРѕРЅРЅРѕ
+            audioMaster.volume = 0; // заглушен, но идет синхронно
         }
     }
     updateAudios();
 
-    // Р¤РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёРµ РІСЂРµРјРµРЅРё (СЃРµРєСѓРЅРґС‹ -> Рњ:РЎРЎ)
     function formatTime(sec) {
         if (isNaN(sec) || sec < 0 || !isFinite(sec)) return '0:00';
         const m = Math.floor(sec / 60);
@@ -779,20 +805,26 @@ document.addEventListener('DOMContentLoaded', () => {
         return m + ':' + (s < 10 ? '0' : '') + s;
     }
 
-    // Р’РѕСЃРїСЂРѕРёР·РІРµРґРµРЅРёРµ / РџР°СѓР·Р°
     async function togglePlay() {
+        initVisualizerAudio();
+        if (audioCtx && audioCtx.state === 'suspended') {
+            await audioCtx.resume();
+        }
+
+        const activeAudio = currentMode === 'mastered' ? audioMaster : audioRaw;
+        const inactiveAudio = currentMode === 'mastered' ? audioRaw : audioMaster;
+
         if (!isPlaying) {
             try {
-                // Р•СЃР»Рё РѕР±Р° С‚СЂРµРєР° РІ РєРѕРЅС†Рµ РёР»Рё Р·Р° РїСЂРµРґРµР»Р°РјРё 38СЃ вЂ” СЃР±СЂР°СЃС‹РІР°РµРј РІ РЅР°С‡Р°Р»Рѕ
-                if (audioMaster.currentTime >= TRACK_DURATION) {
+                if (activeAudio.currentTime >= TRACK_DURATION - 0.5) {
                     audioMaster.currentTime = 0;
                     audioRaw.currentTime = 0;
                 }
-                // Р’С‹СЂР°РІРЅРёРІР°РµРј РїРѕР·РёС†РёРё Рё СЃРєРѕСЂРѕСЃС‚Рё РїРµСЂРµРґ СЃС‚Р°СЂС‚РѕРј
-                audioRaw.currentTime = audioMaster.currentTime;
+                inactiveAudio.currentTime = activeAudio.currentTime;
+                audioMaster.playbackRate = 1.0;
                 audioRaw.playbackRate = 1.0;
                 updateAudios();
-                
+
                 await Promise.all([audioMaster.play(), audioRaw.play()]);
                 isPlaying = true;
                 playIcon.style.display = 'none';
@@ -813,10 +845,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     playBtn.addEventListener('click', togglePlay);
 
-    // РџРµСЂРµРєР»СЋС‡РµРЅРёРµ СЂРµР¶РёРјР° A/B (Р”Рѕ / РџРѕСЃР»Рµ) Р±РµР· РїСЂРµСЂС‹РІР°РЅРёСЏ Рё С‰РµР»С‡РєРѕРІ
     function setMode(mode) {
         if (currentMode === mode) return;
+        const oldActive = currentMode === 'mastered' ? audioMaster : audioRaw;
         currentMode = mode;
+        const newActive = currentMode === 'mastered' ? audioMaster : audioRaw;
+
+        // Синхронизируем позицию нового активного трека
+        newActive.currentTime = oldActive.currentTime;
+        newActive.playbackRate = 1.0;
 
         if (mode === 'raw') {
             btnRaw.classList.add('active');
@@ -825,7 +862,7 @@ document.addEventListener('DOMContentLoaded', () => {
             playerCard.classList.remove('is-mastered');
             specRaw.classList.add('active');
             specMaster.classList.remove('active');
-            stateBadgeText.textContent = 'RAW AUDIO вЂў DEMO (-6dB)';
+            stateBadgeText.textContent = 'RAW AUDIO • DEMO (-6dB)';
             stateBadgeText.parentElement.style.borderColor = 'rgba(255, 77, 77, 0.5)';
             stateBadgeText.parentElement.style.background = 'rgba(255, 77, 77, 0.12)';
             stateBadgeText.parentElement.style.color = '#ff6b6b';
@@ -836,17 +873,10 @@ document.addEventListener('DOMContentLoaded', () => {
             playerCard.classList.remove('is-raw');
             specMaster.classList.add('active');
             specRaw.classList.remove('active');
-            stateBadgeText.textContent = 'MASTERED вЂў 3D STEREO';
+            stateBadgeText.textContent = 'MASTERED • 3D STEREO';
             stateBadgeText.parentElement.style.borderColor = 'rgba(157, 78, 221, 0.4)';
             stateBadgeText.parentElement.style.background = 'rgba(157, 78, 221, 0.15)';
             stateBadgeText.parentElement.style.color = '#c77dff';
-        }
-
-        // Р•СЃР»Рё РїСЂРё РїРµСЂРµРєР»СЋС‡РµРЅРёРё РЅР°РєРѕРїРёР»СЃСЏ Р·Р°РјРµС‚РЅС‹Р№ СЂР°СЃСЃРёРЅС…СЂРѕРЅ, РјСЏРіРєРѕ РїРѕРґСЂР°РІРЅРёРІР°РµРј
-        const drift = audioMaster.currentTime - audioRaw.currentTime;
-        if (Math.abs(drift) > 0.12) {
-            audioRaw.currentTime = audioMaster.currentTime;
-            audioRaw.playbackRate = 1.0;
         }
 
         updateAudios();
@@ -855,21 +885,22 @@ document.addEventListener('DOMContentLoaded', () => {
     btnRaw.addEventListener('click', () => setMode('raw'));
     btnMaster.addEventListener('click', () => setMode('mastered'));
 
-    // Р РµРіСѓР»СЏС‚РѕСЂ РіСЂРѕРјРєРѕСЃС‚Рё
     volumeSlider.addEventListener('input', (e) => {
         masterVolume = parseFloat(e.target.value);
         updateAudios();
     });
 
-    // РћР±РЅРѕРІР»РµРЅРёРµ РїСЂРѕРіСЂРµСЃСЃ-Р±Р°СЂР°, РІСЂРµРјРµРЅРё Рё Р±РµСЃС€РѕРІРЅРѕР№ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё
-    audioMaster.addEventListener('timeupdate', () => {
-        const curTime = audioMaster.currentTime;
+    // Обработчик тика: активный трек играет плавно, без смены playbackRate и без заиканий
+    function onAudioTick(sourceAudio) {
+        const activeAudio = currentMode === 'mastered' ? audioMaster : audioRaw;
+        const inactiveAudio = currentMode === 'mastered' ? audioRaw : audioMaster;
+        if (sourceAudio !== activeAudio) return;
 
-        // Р•СЃР»Рё РґРѕРёРіСЂР°Р»Рё РґРѕ 38 СЃРµРєСѓРЅРґ вЂ” СЃРёРЅС…СЂРѕРЅРЅРѕ Р·Р°С†РёРєР»РёРІР°РµРј РІ 0
+        const curTime = activeAudio.currentTime;
+
         if (curTime >= TRACK_DURATION) {
             audioMaster.currentTime = 0;
             audioRaw.currentTime = 0;
-            audioRaw.playbackRate = 1.0;
             return;
         }
 
@@ -879,33 +910,27 @@ document.addEventListener('DOMContentLoaded', () => {
         currentTimeEl.textContent = formatTime(curTime);
         durationTimeEl.textContent = '0:38';
 
-        // Р‘Р•РЎРЁРћР’РќРђРЇ РЎРРќРҐР РћРќРР—РђР¦РРЇ Р‘Р•Р— Р—РђРРљРђРќРР™:
-        // Р’РјРµСЃС‚Рѕ СЃР±СЂРѕСЃР° currentTime (РєРѕС‚РѕСЂС‹Р№ РѕС‡РёС‰Р°РµС‚ Р±СѓС„РµСЂ РґРµРєРѕРґРµСЂР° Рё РІС‹Р·С‹РІР°РµС‚ Р·Р°РёРєР°РЅРёСЏ),
-        // РїР»Р°РІРЅРѕ СЂРµРіСѓР»РёСЂСѓРµРј playbackRate audioRaw РЅР° РЅРµР·Р°РјРµС‚РЅС‹Рµ +-4%.
-        const drift = curTime - audioRaw.currentTime;
-        if (Math.abs(drift) > 0.025 && Math.abs(drift) < 0.4) {
-            audioRaw.playbackRate = 1.0 + Math.max(-0.06, Math.min(0.06, drift * 0.4));
-        } else if (Math.abs(drift) >= 0.4) {
-            // РўРѕР»СЊРєРѕ РїСЂРё Р±РѕР»СЊС€РѕРј СЂР°СЃС…РѕР¶РґРµРЅРёРё (РЅР°РїСЂРёРјРµСЂ, РїСЂРё РїРµСЂРµРєР»СЋС‡РµРЅРёРё РІРєР»Р°РґРѕРє)
-            audioRaw.currentTime = curTime;
-            audioRaw.playbackRate = 1.0;
-        } else {
-            audioRaw.playbackRate = 1.0;
+        // Корректируем ТОЛЬКО неактивный трек, если он отстал, активный не трогаем!
+        const drift = activeAudio.currentTime - inactiveAudio.currentTime;
+        if (Math.abs(drift) > 0.18) {
+            inactiveAudio.currentTime = activeAudio.currentTime;
         }
-    });
+    }
 
-    // РџСЂРё Р·Р°РІРµСЂС€РµРЅРёРё С‚СЂРµРєР° вЂ” СЃРёРЅС…СЂРѕРЅРЅРѕ РІ РЅР°С‡Р°Р»Рѕ
-    audioMaster.addEventListener('ended', () => {
+    audioMaster.addEventListener('timeupdate', () => onAudioTick(audioMaster));
+    audioRaw.addEventListener('timeupdate', () => onAudioTick(audioRaw));
+
+    function onEnded() {
         audioMaster.currentTime = 0;
         audioRaw.currentTime = 0;
-        audioRaw.playbackRate = 1.0;
         if (isPlaying) {
             audioMaster.play();
             audioRaw.play();
         }
-    });
+    }
+    audioMaster.addEventListener('ended', onEnded);
+    audioRaw.addEventListener('ended', onEnded);
 
-    // РџРµСЂРµРјРѕС‚РєР° РєР»РёРєРѕРј РїРѕ РїСЂРѕРіСЂРµСЃСЃ-Р±Р°СЂСѓ РёР»Рё С…РѕР»СЃС‚Сѓ
     function scrub(e) {
         const rect = scrubBar.getBoundingClientRect();
         const clickX = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
@@ -914,10 +939,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         audioMaster.currentTime = targetTime;
         audioRaw.currentTime = targetTime;
-        audioRaw.playbackRate = 1.0;
 
         currentTimeEl.textContent = formatTime(targetTime);
-        durationTimeEl.textContent = '0:38';
         progressFill.style.width = (pct * 100) + '%';
         progressHandle.style.left = (pct * 100) + '%';
     }
@@ -926,27 +949,26 @@ document.addEventListener('DOMContentLoaded', () => {
     if (canvas && canvas.parentElement) canvas.parentElement.addEventListener('click', scrub);
 
     // ==========================================
-    // Р–РР’РћР™ РќР•РћРќРћР’Р«Р™ Р’РР—РЈРђР›РР—РђРўРћР  РќРђ РҐРћР›РЎРўР• CANVAS
+    // ЖИВОЙ НЕОНОВЫЙ ВИЗУАЛИЗАТОР СПЕКТРА
     // ==========================================
     if (canvas) {
         const ctx = canvas.getContext('2d');
-        let animId;
 
         function resizeCanvas() {
-            canvas.width = canvas.parentElement.clientWidth * window.devicePixelRatio || 800;
-            canvas.height = canvas.parentElement.clientHeight * window.devicePixelRatio || 90;
+            canvas.width = canvas.parentElement.clientWidth * (window.devicePixelRatio || 1);
+            canvas.height = canvas.parentElement.clientHeight * (window.devicePixelRatio || 1);
         }
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
 
-        // Р“РµРЅРµСЂР°С†РёСЏ СЃС‚Р°С‚РёС‡РµСЃРєРѕРіРѕ СЃР»РµРїРєР° С„РѕСЂРјС‹ РІРѕР»РЅС‹
+        // Статический профиль формы волны трека
         const numBars = 64;
         const barHeights = [];
         for (let i = 0; i < numBars; i++) {
             const centerDist = Math.abs(i - numBars / 2) / (numBars / 2);
-            const base = (1 - Math.pow(centerDist, 1.4)) * 0.75 + 0.15;
-            const variation = (Math.sin(i * 0.4) * 0.2 + Math.cos(i * 0.8) * 0.15);
-            barHeights.push(Math.max(0.12, Math.min(0.95, base + variation)));
+            const base = (1 - Math.pow(centerDist, 1.35)) * 0.72 + 0.18;
+            const variation = (Math.sin(i * 0.45) * 0.18 + Math.cos(i * 0.85) * 0.12);
+            barHeights.push(Math.max(0.14, Math.min(0.95, base + variation)));
         }
 
         function drawWaveform() {
@@ -955,49 +977,71 @@ document.addEventListener('DOMContentLoaded', () => {
             const h = canvas.height;
             const barWidth = (w / numBars) * 0.65;
             const gap = (w / numBars) * 0.35;
-            const progress = Math.min(1, (audioMaster.currentTime / TRACK_DURATION));
+            const activeAudio = currentMode === 'mastered' ? audioMaster : audioRaw;
+            const progress = Math.min(1, activeAudio.currentTime / TRACK_DURATION);
+
+            // Получаем спектр частот из Web Audio API
+            let hasRealData = false;
+            if (analyser && isPlaying && dataArray) {
+                analyser.getByteFrequencyData(dataArray);
+                hasRealData = true;
+            }
 
             for (let i = 0; i < numBars; i++) {
                 const x = i * (barWidth + gap) + gap / 2;
-                let barH = barHeights[i] * (h * 0.75);
+                let barH = barHeights[i] * (h * 0.72);
 
-                // Р•СЃР»Рё С‚СЂРµРє РёРіСЂР°РµС‚, РґРѕР±Р°РІР»СЏРµРј Р¶РёРІСѓСЋ РјРёРєСЂРѕ-РїСѓР»СЊСЃР°С†РёСЋ
                 if (isPlaying) {
-                    const waveBoost = currentMode === 'mastered' ? 1.4 : 0.7;
-                    const pulse = Math.sin((Date.now() / 120) + i * 0.3) * (6 * waveBoost);
-                    barH = Math.max(6, barH + pulse);
+                    if (hasRealData) {
+                        // Живая реакция на звук: бас (слева), вокал/мид (центр), хэты (справа)
+                        const freqVal = dataArray[i] / 255.0;
+                        const boost = currentMode === 'mastered' ? 1.35 : 0.95;
+                        const reactiveH = (barHeights[i] * 0.35 + freqVal * 0.85) * (h * 0.82) * boost;
+                        barH = Math.max(5, Math.min(h * 0.95, reactiveH));
+                    } else {
+                        // Плавная волна, если контекст еще не инициализирован
+                        const waveBoost = currentMode === 'mastered' ? 1.3 : 0.7;
+                        const pulse = Math.sin((Date.now() / 110) + i * 0.32) * (5 * waveBoost);
+                        barH = Math.max(5, barHeights[i] * (h * 0.72) + pulse);
+                    }
                 }
 
                 const y = (h - barH) / 2;
                 const isPassed = (i / numBars) <= progress;
 
-                // Р¦РІРµС‚Р° СЃРїРµРєС‚СЂР°: Mastered (РќРµРѕРЅРѕРІРѕ-С„РёРѕР»РµС‚РѕРІС‹Р№) РїСЂРѕС‚РёРІ Raw (РџСЂРёРіР»СѓС€РµРЅРЅС‹Р№ РєСЂР°СЃРЅС‹Р№)
                 if (isPassed) {
                     if (currentMode === 'mastered') {
                         const grad = ctx.createLinearGradient(0, y, 0, y + barH);
-                        grad.addColorStop(0, '#c77dff');
+                        grad.addColorStop(0, '#e0aaff');
+                        grad.addColorStop(0.5, '#c77dff');
                         grad.addColorStop(1, '#7b2cbf');
                         ctx.fillStyle = grad;
                         ctx.shadowColor = '#c77dff';
-                        ctx.shadowBlur = isPlaying ? 12 : 6;
+                        ctx.shadowBlur = isPlaying ? 14 : 6;
                     } else {
-                        ctx.fillStyle = '#ff6b6b';
-                        ctx.shadowColor = '#ff4d4d';
-                        ctx.shadowBlur = isPlaying ? 8 : 4;
+                        const grad = ctx.createLinearGradient(0, y, 0, y + barH);
+                        grad.addColorStop(0, '#ff8787');
+                        grad.addColorStop(1, '#e03131');
+                        ctx.fillStyle = grad;
+                        ctx.shadowColor = '#ff6b6b';
+                        ctx.shadowBlur = isPlaying ? 10 : 4;
                     }
                 } else {
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.16)';
                     ctx.shadowBlur = 0;
                 }
 
-                // Р РёСЃСѓРµРј СЃРєСЂСѓРіР»РµРЅРЅС‹Р№ СЃС‚РѕР»Р±РёРє
                 ctx.beginPath();
                 const radius = Math.min(barWidth / 2, 3);
-                ctx.roundRect ? ctx.roundRect(x, y, barWidth, barH, radius) : ctx.rect(x, y, barWidth, barH);
+                if (ctx.roundRect) {
+                    ctx.roundRect(x, y, barWidth, barH, radius);
+                } else {
+                    ctx.rect(x, y, barWidth, barH);
+                }
                 ctx.fill();
             }
 
-            animId = requestAnimationFrame(drawWaveform);
+            requestAnimationFrame(drawWaveform);
         }
 
         drawWaveform();
