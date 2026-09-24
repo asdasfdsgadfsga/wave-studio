@@ -1,0 +1,1678 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="shortcut icon" href="logo1.png" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WaveProdMusic - Профессиональная студия звукозаписи и браузерная DAW. Запись вокала, сведение, мастеринг, биты.">
+    <meta name="keywords" content="звукозапись, студия звукозаписи, сведение, мастеринг, создание битов, DAW онлайн">
+    <title>WaveMusic | Студия звукозаписи со встроенной DAW</title>
+    <!-- Предзагрузка шрифтов для ускорения отрисовки -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <!-- Закрепленная шапка (Лого + Кнопка) -->
+    <div class="top-left-header">
+        <a href="#hero" class="top-left-logo">
+            <img src="logo-new.png" alt="WaveMusic Logo">
+            <span class="top-left-logo-text">WAVEMUSIC</span>
+        </a>
+        <a href="#daw" class="hero-daw-link" id="header-daw-btn">ОПРОБУЙТЕ ТАКЖЕ НАШУ DAW &rarr;</a>
+    </div>
+    
+
+    <!-- Боковое меню: 3D OptionWheel -->
+    <nav class="side-nav option-wheel option-wheel--right" id="side-option-wheel" aria-label="Навигация по разделам">
+        <div class="ow-focus-indicator" aria-hidden="true">
+            <span class="ow-focus-glow"></span>
+        </div>
+        <div class="ow-track" id="ow-track">
+            <a href="#hero" class="ow-item active" data-index="0" role="option" aria-selected="true">
+                <span class="ow-label">Главная</span>
+                <span class="ow-dot"></span>
+            </a>
+            <a href="#about" class="ow-item" data-index="1" role="option" aria-selected="false">
+                <span class="ow-label">О нас</span>
+                <span class="ow-dot"></span>
+            </a>
+            <a href="#services" class="ow-item" data-index="2" role="option" aria-selected="false">
+                <span class="ow-label">Услуги</span>
+                <span class="ow-dot"></span>
+            </a>
+            <a href="#showcase" class="ow-item" data-index="3" role="option" aria-selected="false">
+                <span class="ow-label">До / После</span>
+                <span class="ow-dot"></span>
+            </a>
+            <a href="#gear" class="ow-item" data-index="4" role="option" aria-selected="false">
+                <span class="ow-label">Сетап</span>
+                <span class="ow-dot"></span>
+            </a>
+            <a href="#reviews" class="ow-item" data-index="5" role="option" aria-selected="false">
+                <span class="ow-label">Релизы</span>
+                <span class="ow-dot"></span>
+            </a>
+            <a href="#gallery" class="ow-item" data-index="6" role="option" aria-selected="false">
+                <span class="ow-label">Галерея</span>
+                <span class="ow-dot"></span>
+            </a>
+            <a href="#faq" class="ow-item" data-index="7" role="option" aria-selected="false">
+                <span class="ow-label">FAQ</span>
+                <span class="ow-dot"></span>
+            </a>
+            <a href="#booking" class="ow-item" data-index="8" role="option" aria-selected="false">
+                <span class="ow-label">Запись</span>
+                <span class="ow-dot"></span>
+            </a>
+            <a href="#daw" class="ow-item" data-index="9" role="option" aria-selected="false">
+                <span class="ow-label">Wave DAW</span>
+                <span class="ow-dot"></span>
+            </a>
+            <a href="#footer" class="ow-item" data-index="10" role="option" aria-selected="false">
+                <span class="ow-label">Контакты</span>
+                <span class="ow-dot"></span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Главный контейнер для Full-screen Scroll Snap -->
+    <main class="scroll-container">
+<section id="hero" class="scroll-section hero">
+            <div class="hero-bg-eq">
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+            </div>
+            <div class="hero-bg-wave"></div>
+            <div class="hero-japanese-left">
+                <div class="col1">炎り</div>
+                <div class="col2">明を見る</div>
+            </div>
+            <div class="hero-japanese-right">
+                <div class="col1">親の</div>
+                <div class="col2">手あり</div>
+            </div>
+            <div class="hero-content">
+                <h1 class="hero-title animate-on-scroll delay-1">WAVEMUSIC</h1>
+                <a href="#booking" class="btn btn-primary animate-on-scroll delay-2">Записаться</a>
+                <p class="hero-subtitle animate-on-scroll delay-3">Чистота звука. Чистота мысли...</p>
+            </div>
+        </section>
+
+<section id="about" class="scroll-section about-section">
+            <div class="about-bg"></div>
+            <div class="container about-content animate-on-scroll">
+                <h2 class="section-title">О НАС</h2>
+                <div class="about-grid">
+                    <div class="about-text">
+                        <p>Мы — <strong>WaveProdMusic</strong>. Инновационная студия звукозаписи и команда профессионалов, живущих музыкой. С 2026 года мы создаем не просто звук, а атмосферу, стиль и уникальное звучание для каждого артиста.</p>
+                        <p>Наши двери открыты как для начинающих музыкантов, так и для опытных исполнителей. В нашем арсенале топовое оборудование, идеальная акустика и, главное, — уши, которые безошибочно определяют хиты.</p>
+                    </div>
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <span class="stat-num">500+</span>
+                            <span class="stat-label">Записанных треков</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-num">50+</span>
+                            <span class="stat-label">Релизов на лейблах</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<section id="services" class="scroll-section services">
+            <div class="services-bg parallax-bg"></div>
+            <div class="services-content-wrapper">
+                <div class="services-header animate-on-scroll">
+                    <span class="services-badge">STUDIO SERVICES</span>
+                    <h2 class="services-title">Услуги</h2>
+                    <p class="services-subtitle">От трекинга вокала до коммерческого радио-мастеринга. Создаем фирменное звучание под ключ.</p>
+                </div>
+                <div class="container services-grid">
+                    <div class="service-card card-spotlight animate-on-scroll delay-1">
+                        <div class="service-card-icon">
+                            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                                <line x1="12" y1="19" x2="12" y2="23"></line>
+                                <line x1="8" y1="23" x2="16" y2="23"></line>
+                            </svg>
+                        </div>
+                        <h3 class="service-card-title">Запись вокала</h3>
+                        <p class="service-card-desc">Основа студии. Работа опытного звукорежиссера, топовый микрофон и акустически выверенное пространство для идеальной детализации голоса.</p>
+                        <div class="service-card-price" id="price-vocal">1 500 – 2 500 ₽ / час</div>
+                    </div>
+
+                    <div class="service-card middle-card card-spotlight animate-on-scroll delay-2">
+                        <div class="service-card-icon">
+                            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <line x1="4" y1="21" x2="4" y2="14"></line>
+                                <line x1="4" y1="10" x2="4" y2="3"></line>
+                                <line x1="12" y1="21" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12" y2="3"></line>
+                                <line x1="20" y1="21" x2="20" y2="16"></line>
+                                <line x1="20" y1="12" x2="20" y2="3"></line>
+                                <line x1="1" y1="14" x2="7" y2="14"></line>
+                                <line x1="9" y1="8" x2="15" y2="8"></line>
+                                <line x1="17" y1="16" x2="23" y2="16"></line>
+                            </svg>
+                        </div>
+                        <h3 class="service-card-title">Сведение & Мастеринг</h3>
+                        <p class="service-card-desc">Превращаем «сырые» дорожки в коммерческий звук. Балансировка инструментов, частотная чистка, склейка и максимальная плотность для стримингов.</p>
+                        <div class="service-card-price" id="price-mix">3 000 – 7 000 ₽ / трек</div>
+                    </div>
+
+                    <div class="service-card card-spotlight animate-on-scroll delay-3">
+                        <div class="service-card-icon">
+                            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polygon points="10 8 16 12 10 16 10 8" fill="currentColor"></polygon>
+                            </svg>
+                        </div>
+                        <h3 class="service-card-title">Написание бита</h3>
+                        <p class="service-card-desc">Создание авторского музыкального продакшна под ключ в любых жанрах от трэпа до поп-музыки с полной передачей исключительных прав.</p>
+                        <div class="service-card-price" id="price-beat">от 5 000 ₽</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<section id="showcase" class="scroll-section showcase-section">
+            <div class="showcase-bg-glow"></div>
+            <div class="showcase-container animate-on-scroll">
+                <div class="showcase-header">
+                    <span class="showcase-badge">A / B AUDIO COMPARISON</span>
+                    <h2 class="showcase-title">СВЕДЕНИЕ & МАСТЕРИНГ</h2>
+                    <p class="showcase-subtitle">Сравните исходный сырой трек и финальное студийное звучание на лету без прерывания воспроизведения.</p>
+                </div>
+<!-- Главный блок плеера -->
+                <div class="ab-player-card">
+                    
+                    <!-- Верхняя панель: Трек инфо и статус режима -->
+                    <div class="ab-player-top">
+                        <div class="ab-track-info">
+                            <div class="ab-disc-icon">
+                                <div class="ab-disc-inner"></div>
+                            </div>
+                            <div>
+                                <div class="ab-track-title">IllBEINSIDE(WPM) - backspace"</div>
+                                <div class="ab-track-meta">Trap / Synthwave &bull; 120 BPM &bull; 24-bit 44.1kHz</div>
+                            </div>
+                        </div>
+
+                        <!-- Ключевой тумблер ДО / ПОСЛЕ -->
+                        <div class="ab-mode-switch" id="ab-toggle-container">
+                            <button type="button" class="ab-mode-btn" id="ab-btn-raw" data-mode="raw">
+                                <span class="ab-dot"></span>
+                                <span>ДО (Сырой звук)</span>
+                            </button>
+                            <button type="button" class="ab-mode-btn active" id="ab-btn-mastered" data-mode="mastered">
+                                <span class="ab-dot"></span>
+                                <span>ПОСЛЕ (Мастеринг)</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Живой аудио-визуализатор волны -->
+                    <div class="ab-waveform-container" id="ab-waveform-wrap">
+                        <canvas id="ab-wave-canvas"></canvas>
+                        <div class="ab-progress-bar-wrap" id="ab-scrub-bar">
+                            <div class="ab-progress-fill" id="ab-progress-fill"></div>
+                            <div class="ab-progress-handle" id="ab-progress-handle"></div>
+                        </div>
+                    </div>
+
+                    <!-- Нижняя панель контролов -->
+                    <div class="ab-player-bottom">
+                        <div class="ab-controls-left">
+                            <button type="button" class="ab-play-btn" id="ab-play-btn" aria-label="Play / Pause">
+                                <svg id="ab-play-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                                    <polygon points="5,3 19,12 5,21"></polygon>
+                                </svg>
+                                <svg id="ab-pause-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" style="display:none;">
+                                    <rect x="5" y="4" width="4" height="16"></rect>
+                                    <rect x="15" y="4" width="4" height="16"></rect>
+                                </svg>
+                            </button>
+                            
+                            <div class="ab-time-display">
+                                <span id="ab-current-time">0:00</span> / <span id="ab-duration-time">0:38</span>
+                            </div>
+
+                            <div class="ab-state-indicator" id="ab-state-badge">
+                                <span class="pulse-ring"></span>
+                                <span id="ab-state-text">MASTERED &bull; 3D STEREO</span>
+                            </div>
+                        </div>
+
+                        <!-- Регулятор громкости -->
+                        <div class="ab-volume-wrap">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" style="opacity:0.7;">
+                                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                            </svg>
+                            <input type="range" id="ab-volume-slider" min="0" max="1" step="0.01" value="0.85" class="ab-volume-range">
+                        </div>
+                    </div>
+
+                    <!-- Сравнительные плашки с характеристиками -->
+                    <div class="ab-specs-grid">
+                        <div class="ab-spec-card raw-spec" id="spec-card-raw">
+                            <div class="spec-label">ПАРАМЕТРЫ ИСХОДНИКА</div>
+                            <div class="spec-status">Тусклый верх &bull; Каша в басу &bull; Моно-сужение (-6dB)</div>
+                        </div>
+                        <div class="ab-spec-card master-spec active" id="spec-card-mastered">
+                            <div class="spec-label">ПОСЛЕ ОБРАБОТКИ WAVEMUSIC</div>
+                            <div class="spec-status">Аналоговый сатуратор &bull; Пробивной панч &bull; Стерео-база 100%</div>
+                        </div>
+                    </div>
+
+                    <!-- Скрытые аудио-теги для точной синхронизации -->
+                    <audio id="ab-audio-raw" src="audio/demo_raw.wav" preload="auto"></audio>
+                    <audio id="ab-audio-mastered" src="audio/demo_mastered.wav" preload="auto"></audio>
+                </div>
+
+                <div class="showcase-cta">
+                    <span>Хотите такой же плотный и прозрачный звук для своего трека?</span>
+                    <a href="#booking" class="btn btn-primary" style="margin-left: 20px;">Заказать сведение</a>
+                </div>
+
+            </div>
+        </section>
+
+<section id="gear" class="scroll-section gear-section">
+            <div class="gear-bg-glow"></div>
+            <div class="gear-content-wrapper animate-on-scroll">
+                <div class="gear-header">
+                    <span class="gear-badge">STUDIO HARDWARE & GEAR</span>
+                    <h2 class="gear-title">СТУДИЙНЫЙ СЕТАП</h2>
+                    <p class="gear-subtitle">Бескомпромиссный аналоговый и цифровой тракт: от легендарных ламп до флагманских аудиоинтерфейсов.</p>
+                </div>
+<!-- Swiper 3D Coverflow Slider (Карточки выходят за экран) -->
+                <div class="gear-slider-container">
+                    <div class="swiper gear-swiper">
+                        <div class="swiper-wrapper">
+<!-- Карточка 1: Микрофон Neumann U87 -->
+                            <div class="swiper-slide gear-slide">
+                                <div class="gear-card">
+                                    <div class="gear-card-glow"></div>
+                                    <div class="gear-img-box">
+                                        <img src="images/gear/neumann_u87.jpg" alt="Neumann U87 Ai" class="gear-img" loading="lazy">
+                                        <span class="gear-status-dot" title="В строю"></span>
+                                    </div>
+                                    <div class="gear-card-body">
+                                        <div class="gear-category">МИКРОФОННЫЙ ТРАКТ</div>
+                                        <h3 class="gear-name">Neumann U87 Ai</h3>
+                                        <p class="gear-role">Студийный конденсаторный эталон</p>
+                                        <div class="gear-specs">
+                                            <span class="spec-tag">Золотая диафрагма</span>
+                                            <span class="spec-tag">3 диаграммы</span>
+                                            <span class="spec-tag">Тёплый бархат</span>
+                                        </div>
+                                        <div class="gear-desc">
+                                            Мировой золотой стандарт записи вокала на мейджор-лейблах. Передаёт мельчайшие нюансы тембра и даёт тот самый плотный "дорогой" звук.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Карточка 2: Аудиоинтерфейс Apollo x8 -->
+                            <div class="swiper-slide gear-slide">
+                                <div class="gear-card">
+                                    <div class="gear-card-glow"></div>
+                                    <div class="gear-img-box">
+                                        <img src="images/gear/apollo_x8.jpg" alt="Universal Audio Apollo x8" class="gear-img" loading="lazy">
+                                        <span class="gear-status-dot" title="В строю"></span>
+                                    </div>
+                                    <div class="gear-card-body">
+                                        <div class="gear-category">АУДИОИНТЕРФЕЙС</div>
+                                        <h3 class="gear-name">UA Apollo x8</h3>
+                                        <p class="gear-role">Thunderbolt 3 DSP процессор</p>
+                                        <div class="gear-specs">
+                                            <span class="spec-tag">HEXA Core DSP</span>
+                                            <span class="spec-tag">ЦАП 133 dB</span>
+                                            <span class="spec-tag">Unison Preamp</span>
+                                        </div>
+                                        <div class="gear-desc">
+                                            Нулевая задержка при записи с аналоговыми эмуляциями Neve, SSL и Manley в реальном времени. Кристальная детализация каждого трека.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Карточка 3: Ламповый компрессор Tube-Tech CL 1B -->
+                            <div class="swiper-slide gear-slide">
+                                <div class="gear-card">
+                                    <div class="gear-card-glow"></div>
+                                    <div class="gear-img-box">
+                                        <img src="images/gear/tube_tech.jpg" alt="Tube-Tech CL 1B" class="gear-img" loading="lazy">
+                                        <span class="gear-status-dot" title="В строю"></span>
+                                    </div>
+                                    <div class="gear-card-body">
+                                        <div class="gear-category">АНАЛОГОВЫЙ СТЕК</div>
+                                        <h3 class="gear-name">Tube-Tech CL 1B</h3>
+                                        <p class="gear-role">Оптический ламповый компрессор</p>
+                                        <div class="gear-specs">
+                                            <span class="spec-tag">True Tube</span>
+                                            <span class="spec-tag">Optical Cell</span>
+                                            <span class="spec-tag">Шелковый клей</span>
+                                        </div>
+                                        <div class="gear-desc">
+                                            Секретное оружие современного вокала в стилях Hip-Hop и R&B. Делает голос гладким, близким к слушателю и пробивающим любой бит.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Карточка 4: Студийные мониторы Genelec 8351B -->
+                            <div class="swiper-slide gear-slide">
+                                <div class="gear-card">
+                                    <div class="gear-card-glow"></div>
+                                    <div class="gear-img-box">
+                                        <img src="images/gear/genelec_monitor.jpg" alt="Genelec 8351B SAM" class="gear-img" loading="lazy">
+                                        <span class="gear-status-dot" title="В строю"></span>
+                                    </div>
+                                    <div class="gear-card-body">
+                                        <div class="gear-category">МОНИТОРИНГ</div>
+                                        <h3 class="gear-name">Genelec 8351B</h3>
+                                        <p class="gear-role">Коаксиальные трёхполосные мониторы</p>
+                                        <div class="gear-specs">
+                                            <span class="spec-tag">Coaxial Point</span>
+                                            <span class="spec-tag">DSP калибровка</span>
+                                            <span class="spec-tag">Хирургическая точность</span>
+                                        </div>
+                                        <div class="gear-desc">
+                                            Честный акустический контроль без прикрас. Мы слышим каждый дефект, балансируем панораму и настраиваем бас так, чтобы он качал на любых колонках.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Карточка 5: Наушники Beyerdynamic DT 1990 Pro -->
+                            <div class="swiper-slide gear-slide">
+                                <div class="gear-card">
+                                    <div class="gear-card-glow"></div>
+                                    <div class="gear-img-box">
+                                        <img src="images/gear/beyerdynamic_headphones.jpg" alt="Beyerdynamic DT 1990 Pro" class="gear-img" loading="lazy">
+                                        <span class="gear-status-dot" title="В строю"></span>
+                                    </div>
+                                    <div class="gear-card-body">
+                                        <div class="gear-category">АРТИСТ И ЗВУКОРЕЖИССЕР</div>
+                                        <h3 class="gear-name">DT 1990 Pro</h3>
+                                        <p class="gear-role">Открытые референсные наушники</p>
+                                        <div class="gear-specs">
+                                            <span class="spec-tag">Tesla Drivers</span>
+                                            <span class="spec-tag">250 Ohm</span>
+                                            <span class="spec-tag">Made in Germany</span>
+                                        </div>
+                                        <div class="gear-desc">
+                                            Безупречный контроль микродинамики, хвостов реверберации и стерео-пространства при тонкой редакции вокала и сведении.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Карточка 6: Синтезатор Moog Sub 37 -->
+                            <div class="swiper-slide gear-slide">
+                                <div class="gear-card">
+                                    <div class="gear-card-glow"></div>
+                                    <div class="gear-img-box">
+                                        <img src="images/gear/moog_synth.jpg" alt="Moog Sub 37" class="gear-img" loading="lazy">
+                                        <span class="gear-status-dot" title="В строю"></span>
+                                    </div>
+                                    <div class="gear-card-body">
+                                        <div class="gear-category">СИНТЕЗ И БИТМЕЙКИНГ</div>
+                                        <h3 class="gear-name">Moog Sub 37</h3>
+                                        <p class="gear-role">Аналоговый парафонический синтезатор</p>
+                                        <div class="gear-specs">
+                                            <span class="spec-tag">100% Analog</span>
+                                            <span class="spec-tag">Ladder Filter</span>
+                                            <span class="spec-tag">Жирный 808 саб</span>
+                                        </div>
+                                        <div class="gear-desc">
+                                            Источник зубодробительных аналоговых бас-партий, винтажных лидов и уникальных звуковых текстур для наших авторских битов.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Карточка 7: Мастер-компрессор SSL G-Master Bus -->
+                            <div class="swiper-slide gear-slide">
+                                <div class="gear-card">
+                                    <div class="gear-card-glow"></div>
+                                    <div class="gear-img-box">
+                                        <img src="images/gear/ssl_bus_comp.jpg" alt="SSL G-Master Bus Compressor" class="gear-img" loading="lazy">
+                                        <span class="gear-status-dot" title="В строю"></span>
+                                    </div>
+                                    <div class="gear-card-body">
+                                        <div class="gear-category">МАСТЕР-ШИНА</div>
+                                        <h3 class="gear-name">SSL G-Master Bus</h3>
+                                        <p class="gear-role">Легендарный клей для микса</p>
+                                        <div class="gear-specs">
+                                            <span class="spec-tag">VCA Circuit</span>
+                                            <span class="spec-tag">Auto Release</span>
+                                            <span class="spec-tag">Плотность чартов</span>
+                                        </div>
+                                        <div class="gear-desc">
+                                            Тот самый финальный "склеивающий" компрессор с больших студийных пультов Solid State Logic. Делает микс слитным, громким и динамичным.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Карточка 8: Динамический микрофон Shure SM7B -->
+                            <div class="swiper-slide gear-slide">
+                                <div class="gear-card">
+                                    <div class="gear-card-glow"></div>
+                                    <div class="gear-img-box">
+                                        <img src="images/gear/shure_sm7b.jpg" alt="Shure SM7B" class="gear-img" loading="lazy">
+                                        <span class="gear-status-dot" title="В строю"></span>
+                                    </div>
+                                    <div class="gear-card-body">
+                                        <div class="gear-category">ДИНАМИЧЕСКИЙ ТРАКТ</div>
+                                        <h3 class="gear-name">Shure SM7B</h3>
+                                        <p class="gear-role">Агрессивный вокал, рок и подкасты</p>
+                                        <div class="gear-specs">
+                                            <span class="spec-tag">Air Suspension</span>
+                                            <span class="spec-tag">Bass Rolloff</span>
+                                            <span class="spec-tag">Плотный напор</span>
+                                        </div>
+                                        <div class="gear-desc">
+                                            Идеальный выбор для напористого речитатива, скрима, рок-вокала и подкастов. Отсекает паразитные шумы комнаты и даёт плотный мясной панч.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+<!-- Карточка 1: Микрофон Neumann U87 -->
+                            <div class="swiper-slide gear-slide">
+                                <div class="gear-card">
+                                    <div class="gear-card-glow"></div>
+                                    <div class="gear-img-box">
+                                        <img src="images/gear/neumann_u87.jpg" alt="Neumann U87 Ai" class="gear-img" loading="lazy">
+                                        <span class="gear-status-dot" title="В строю"></span>
+                                    </div>
+                                    <div class="gear-card-body">
+                                        <div class="gear-category">МИКРОФОННЫЙ ТРАКТ</div>
+                                        <h3 class="gear-name">Neumann U87 Ai</h3>
+                                        <p class="gear-role">Студийный конденсаторный эталон</p>
+                                        <div class="gear-specs">
+                                            <span class="spec-tag">Золотая диафрагма</span>
+                                            <span class="spec-tag">3 диаграммы</span>
+                                            <span class="spec-tag">Тёплый бархат</span>
+                                        </div>
+                                        <div class="gear-desc">
+                                            Мировой золотой стандарт записи вокала на мейджор-лейблах. Передаёт мельчайшие нюансы тембра и даёт тот самый плотный "дорогой" звук.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Карточка 2: Аудиоинтерфейс Apollo x8 -->
+                            <div class="swiper-slide gear-slide">
+                                <div class="gear-card">
+                                    <div class="gear-card-glow"></div>
+                                    <div class="gear-img-box">
+                                        <img src="images/gear/apollo_x8.jpg" alt="Universal Audio Apollo x8" class="gear-img" loading="lazy">
+                                        <span class="gear-status-dot" title="В строю"></span>
+                                    </div>
+                                    <div class="gear-card-body">
+                                        <div class="gear-category">АУДИОИНТЕРФЕЙС</div>
+                                        <h3 class="gear-name">UA Apollo x8</h3>
+                                        <p class="gear-role">Thunderbolt 3 DSP процессор</p>
+                                        <div class="gear-specs">
+                                            <span class="spec-tag">HEXA Core DSP</span>
+                                            <span class="spec-tag">ЦАП 133 dB</span>
+                                            <span class="spec-tag">Unison Preamp</span>
+                                        </div>
+                                        <div class="gear-desc">
+                                            Нулевая задержка при записи с аналоговыми эмуляциями Neve, SSL и Manley в реальном времени. Кристальная детализация каждого трека.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Карточка 3: Ламповый компрессор Tube-Tech CL 1B -->
+                            <div class="swiper-slide gear-slide">
+                                <div class="gear-card">
+                                    <div class="gear-card-glow"></div>
+                                    <div class="gear-img-box">
+                                        <img src="images/gear/tube_tech.jpg" alt="Tube-Tech CL 1B" class="gear-img" loading="lazy">
+                                        <span class="gear-status-dot" title="В строю"></span>
+                                    </div>
+                                    <div class="gear-card-body">
+                                        <div class="gear-category">АНАЛОГОВЫЙ СТЕК</div>
+                                        <h3 class="gear-name">Tube-Tech CL 1B</h3>
+                                        <p class="gear-role">Оптический ламповый компрессор</p>
+                                        <div class="gear-specs">
+                                            <span class="spec-tag">True Tube</span>
+                                            <span class="spec-tag">Optical Cell</span>
+                                            <span class="spec-tag">Шелковый клей</span>
+                                        </div>
+                                        <div class="gear-desc">
+                                            Секретное оружие современного вокала в стилях Hip-Hop и R&B. Делает голос гладким, близким к слушателю и пробивающим любой бит.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Карточка 4: Студийные мониторы Genelec 8351B -->
+                            <div class="swiper-slide gear-slide">
+                                <div class="gear-card">
+                                    <div class="gear-card-glow"></div>
+                                    <div class="gear-img-box">
+                                        <img src="images/gear/genelec_monitor.jpg" alt="Genelec 8351B SAM" class="gear-img" loading="lazy">
+                                        <span class="gear-status-dot" title="В строю"></span>
+                                    </div>
+                                    <div class="gear-card-body">
+                                        <div class="gear-category">МОНИТОРИНГ</div>
+                                        <h3 class="gear-name">Genelec 8351B</h3>
+                                        <p class="gear-role">Коаксиальные трёхполосные мониторы</p>
+                                        <div class="gear-specs">
+                                            <span class="spec-tag">Coaxial Point</span>
+                                            <span class="spec-tag">DSP калибровка</span>
+                                            <span class="spec-tag">Хирургическая точность</span>
+                                        </div>
+                                        <div class="gear-desc">
+                                            Честный акустический контроль без прикрас. Мы слышим каждый дефект, балансируем панораму и настраиваем бас так, чтобы он качал на любых колонках.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Карточка 5: Наушники Beyerdynamic DT 1990 Pro -->
+                            <div class="swiper-slide gear-slide">
+                                <div class="gear-card">
+                                    <div class="gear-card-glow"></div>
+                                    <div class="gear-img-box">
+                                        <img src="images/gear/beyerdynamic_headphones.jpg" alt="Beyerdynamic DT 1990 Pro" class="gear-img" loading="lazy">
+                                        <span class="gear-status-dot" title="В строю"></span>
+                                    </div>
+                                    <div class="gear-card-body">
+                                        <div class="gear-category">АРТИСТ И ЗВУКОРЕЖИССЕР</div>
+                                        <h3 class="gear-name">DT 1990 Pro</h3>
+                                        <p class="gear-role">Открытые референсные наушники</p>
+                                        <div class="gear-specs">
+                                            <span class="spec-tag">Tesla Drivers</span>
+                                            <span class="spec-tag">250 Ohm</span>
+                                            <span class="spec-tag">Made in Germany</span>
+                                        </div>
+                                        <div class="gear-desc">
+                                            Безупречный контроль микродинамики, хвостов реверберации и стерео-пространства при тонкой редакции вокала и сведении.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Карточка 6: Синтезатор Moog Sub 37 -->
+                            <div class="swiper-slide gear-slide">
+                                <div class="gear-card">
+                                    <div class="gear-card-glow"></div>
+                                    <div class="gear-img-box">
+                                        <img src="images/gear/moog_synth.jpg" alt="Moog Sub 37" class="gear-img" loading="lazy">
+                                        <span class="gear-status-dot" title="В строю"></span>
+                                    </div>
+                                    <div class="gear-card-body">
+                                        <div class="gear-category">СИНТЕЗ И БИТМЕЙКИНГ</div>
+                                        <h3 class="gear-name">Moog Sub 37</h3>
+                                        <p class="gear-role">Аналоговый парафонический синтезатор</p>
+                                        <div class="gear-specs">
+                                            <span class="spec-tag">100% Analog</span>
+                                            <span class="spec-tag">Ladder Filter</span>
+                                            <span class="spec-tag">Жирный 808 саб</span>
+                                        </div>
+                                        <div class="gear-desc">
+                                            Источник зубодробительных аналоговых бас-партий, винтажных лидов и уникальных звуковых текстур для наших авторских битов.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Карточка 7: Мастер-компрессор SSL G-Master Bus -->
+                            <div class="swiper-slide gear-slide">
+                                <div class="gear-card">
+                                    <div class="gear-card-glow"></div>
+                                    <div class="gear-img-box">
+                                        <img src="images/gear/ssl_bus_comp.jpg" alt="SSL G-Master Bus Compressor" class="gear-img" loading="lazy">
+                                        <span class="gear-status-dot" title="В строю"></span>
+                                    </div>
+                                    <div class="gear-card-body">
+                                        <div class="gear-category">МАСТЕР-ШИНА</div>
+                                        <h3 class="gear-name">SSL G-Master Bus</h3>
+                                        <p class="gear-role">Легендарный клей для микса</p>
+                                        <div class="gear-specs">
+                                            <span class="spec-tag">VCA Circuit</span>
+                                            <span class="spec-tag">Auto Release</span>
+                                            <span class="spec-tag">Плотность чартов</span>
+                                        </div>
+                                        <div class="gear-desc">
+                                            Тот самый финальный "склеивающий" компрессор с больших студийных пультов Solid State Logic. Делает микс слитным, громким и динамичным.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Карточка 8: Динамический микрофон Shure SM7B -->
+                            <div class="swiper-slide gear-slide">
+                                <div class="gear-card">
+                                    <div class="gear-card-glow"></div>
+                                    <div class="gear-img-box">
+                                        <img src="images/gear/shure_sm7b.jpg" alt="Shure SM7B" class="gear-img" loading="lazy">
+                                        <span class="gear-status-dot" title="В строю"></span>
+                                    </div>
+                                    <div class="gear-card-body">
+                                        <div class="gear-category">ДИНАМИЧЕСКИЙ ТРАКТ</div>
+                                        <h3 class="gear-name">Shure SM7B</h3>
+                                        <p class="gear-role">Агрессивный вокал, рок и подкасты</p>
+                                        <div class="gear-specs">
+                                            <span class="spec-tag">Air Suspension</span>
+                                            <span class="spec-tag">Bass Rolloff</span>
+                                            <span class="spec-tag">Плотный напор</span>
+                                        </div>
+                                        <div class="gear-desc">
+                                            Идеальный выбор для напористого речитатива, скрима, рок-вокала и подкастов. Отсекает паразитные шумы комнаты и даёт плотный мясной панч.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Навигационные кнопки стрелки -->
+                        <div class="gear-nav-btn gear-prev" id="gear-prev-btn">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="15 18 9 12 15 6"></polyline>
+                            </svg>
+                        </div>
+                        <div class="gear-nav-btn gear-next" id="gear-next-btn">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </div>
+
+                        <!-- Пагинация (неоновые точки) -->
+                        <div class="swiper-pagination gear-pagination"></div>
+                    </div>
+                </div>
+
+                <div class="gear-bottom-info">
+                    <span class="gear-hint">💡 Листайте свайпом, стрелками или колесом мыши. Наведите курсор для паузы автопрокрутки.</span>
+                </div>
+
+            </div>
+        </section>
+
+<section id="reviews" class="scroll-section reviews-section">
+            <div class="reviews-bg-glow"></div>
+            <div class="reviews-content-wrapper animate-on-scroll">
+                <div class="reviews-header">
+                    <span class="reviews-badge">ARTIST RELEASES & REVIEWS</span>
+                    <h2 class="reviews-title">РЕЛИЗЫ И ОТЗЫВЫ</h2>
+                    <p class="reviews-subtitle">Сотни артистов доверяют нам свой звук. Вот что говорят музыканты, чьи треки уже звучат в топ-чартах.</p>
+                </div>
+<!-- 3D Swiper Slider для артистов -->
+                <div class="reviews-slider-container">
+                    <div class="swiper reviews-swiper">
+                        <div class="swiper-wrapper">
+<!-- Карточка 1: ALYSIA -->
+                            <div class="swiper-slide review-slide">
+                                <div class="review-card">
+                                    <div class="review-card-glow"></div>
+                                    <div class="review-top">
+                                        <div class="review-avatar-box">
+                                            <img src="images/artists/artist_1.jpg" alt="Alysia" class="review-avatar" loading="lazy">
+                                            <span class="review-verified-badge" title="Верифицированный артист">✓</span>
+                                        </div>
+                                        <div class="review-author-meta">
+                                            <h3 class="review-name">PANTERA</h3>
+                                            <span class="review-genre">R&B</span>
+                                            <div class="review-rating">★★★★★</div>
+                                        </div>
+                                    </div>
+                                    <blockquote class="review-text">
+                                        «Писала вокал на альбом в WaveMusic. Звукорежиссер сразу поймал нужный вайб, подсказал по подаче и бэкам. А когда прислали мастер — у меня мурашки пошли. Плотность нереальная, трек залетел в редакторские плейлисты!»
+                                    </blockquote>
+                                    <div class="review-release-box">
+                                        <div class="release-info">
+                                            <span class="release-label">РЕЛИЗ СТУДИИ</span>
+                                            <span class="release-title">Танцуй, пантера, в черном Панамеро" &bull; сходу пробил топ чарта VK</span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Карточка: M1KLUSSSHEVSKIY -->
+                            <div class="swiper-slide review-slide">
+                                <div class="review-card review-card--m1k">
+                                    <div class="review-card-glow review-card-glow--bad"></div>
+                                    <div class="review-top">
+                                        <div class="review-avatar-box review-avatar-box--m1k">
+                                            <img src="images/artists/artist_m1klussshevskiy.jpg" alt="M1klussshevskiy" class="review-avatar" loading="lazy">
+                                            <span class="review-verified-badge review-bad-badge" title="Крайне недовольный артист">✕</span>
+                                        </div>
+                                        <div class="review-author-meta">
+                                            <h3 class="review-name">M1klussshevskiy</h3>
+                                            <span class="review-genre">SoundCloud Рэп / Трэп</span>
+                                            <div class="review-rating review-rating-bad" title="1 звезда из 5">
+                                                <span class="star-active">★</span><span class="star-dim">☆☆☆☆</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <blockquote class="review-text">
+                                        «Карочи студия полнейшый шлакк!! Пришол записаца на трэк, звукарь ваще не шарит за свэг и автотюн накрутил так какбудто я робот вертер!! Бит перегружэн, басы пердят, в ушах ничево не слышно!! Я в микрафон орал душу вложыль, а звукареж в телефоне сидел в бравл старс играл!! Денги на ветер, на раене пацаны засмеяли, верните 5 тыщ рублей или напишу заяву!! Никаму ни советую худшая студия на планети 1 звезда!!!!»
+                                    </blockquote>
+                                    <div class="review-release-card review-release-audio">
+                                        <div class="release-info">
+                                            <span class="release-label">РЕЛИЗ СТУДИИ</span>
+                                            <span class="release-title">M1klussshevskiy - ТТГ prod. WaveMusic</span>
+                                        </div>
+                                        <button type="button" class="release-listen-btn m1k-play-btn" title="Слушать трек: M1klussshevskiy - ТТГ prod. WaveMusic" aria-label="Слушать трек">
+                                            <svg class="m1k-play-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"></polygon></svg>
+                                            <svg class="m1k-pause-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="display: none;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Карточка 2: MARK G -->
+                            <div class="swiper-slide review-slide">
+                                <div class="review-card">
+                                    <div class="review-card-glow"></div>
+                                    <div class="review-top">
+                                        <div class="review-avatar-box">
+                                            <img src="images/artists/artist_2.jpg" alt="Mark G" class="review-avatar" loading="lazy">
+                                            <span class="review-verified-badge" title="Верифицированный артист">✓</span>
+                                        </div>
+                                        <div class="review-author-meta">
+                                            <h3 class="review-name">Pr1kolnyi4el1k</h3>
+                                            <span class="review-genre">Hip-Hop / Drill</span>
+                                            <div class="review-rating">★★★★★</div>
+                                        </div>
+                                    </div>
+                                    <blockquote class="review-text">
+                                        «Перепробовал 4 студии в городе, пока не пришел сюда. На Tube-Tech и Neumann голос ложится в микс как влитой, бочка долбит прямо в грудь. Свели 3 трека за день, отдали день в день. Теперь только к вам!»
+                                    </blockquote>
+                                    <div class="review-release-box">
+                                        <div class="release-info">
+                                            <span class="release-label">РЕЛИЗ СТУДИИ</span>
+                                            <span class="release-title">EP "No Mercy" &bull; Warner Music Label</span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Карточка 3: EVA RAY -->
+                            <div class="swiper-slide review-slide">
+                                <div class="review-card">
+                                    <div class="review-card-glow"></div>
+                                    <div class="review-top">
+                                        <div class="review-avatar-box">
+                                            <img src="images/artists/artist_3.jpg" alt="Eva Ray" class="review-avatar" loading="lazy">
+                                            <span class="review-verified-badge" title="Верифицированный артист">✓</span>
+                                        </div>
+                                        <div class="review-author-meta">
+                                            <h3 class="review-name">Barak Obama</h3>
+                                            <span class="review-genre">Gimn / rap</span>
+                                            <div class="review-rating">★★★★★</div>
+                                        </div>
+                                    </div>
+                                    <blockquote class="review-text">
+                                        «Йоу, эээ, вассап всем хомис. Короче, типа, я приходить в эта студия, и это рилток просто... лайк, крышеснос, мэн. Я быть очень крутой гангста, но даже я, типа, офигевать. Тут, короче, микрофон... он так сиять, эээ, что я хотеть забрать его себе на шею вместо мой цепь.»
+                                    </blockquote>
+                                    <div class="review-release-box">
+                                        <div class="release-info">
+                                            <span class="release-label">РЕЛИЗ СТУДИИ</span>
+                                            <span class="release-title">Гимн Соединенных Штатов Америки" &bull; Взорвало</span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Карточка 4: KAI PROD -->
+                            <div class="swiper-slide review-slide">
+                                <div class="review-card">
+                                    <div class="review-card-glow"></div>
+                                    <div class="review-top">
+                                        <div class="review-avatar-box">
+                                            <img src="images/artists/artist_4.jpg" alt="Kai Prod" class="review-avatar" loading="lazy">
+                                            <span class="review-verified-badge" title="Верифицированный артист">✓</span>
+                                        </div>
+                                        <div class="review-author-meta">
+                                            <h3 class="review-name">Ezios</h3>
+                                            <span class="review-genre">Sound Producer / Beatmaker</span>
+                                            <div class="review-rating">★★★★★</div>
+                                        </div>
+                                    </div>
+                                    <blockquote class="review-text">
+                                        «Брал аренду студии для работы с Moog и мониторами Genelec. Акустическая комната сделана идеально — слышно всё вплоть до миллисекунд хвостов. Мои биты зазвучали на совершенно другом уровне!»
+                                    </blockquote>
+                                    <div class="review-release-box">
+                                        <div class="release-info">
+                                            <span class="release-label">РЕЛИЗ СТУДИИ</span>
+                                            <span class="release-title">Beat Pack "Neon Abyss" &bull; Платиновый статус</span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide review-slide">
+                                <div class="review-card">
+                                    <div class="review-card-glow"></div>
+                                    <div class="review-top">
+                                        <div class="review-avatar-box">
+                                            <img src="images/artists/artist_6.jpg" alt="Kai Prod2" class="review-avatar" loading="lazy">
+                                            <span class="review-verified-badge" title="Верифицированный артист">✓</span>
+                                        </div>
+                                        <div class="review-author-meta">
+                                            <h3 class="review-name">Yaroslave</h3>
+                                            <span class="review-genre">Postsovetskiy rock</span>
+                                            <div class="review-rating">★★★★★</div>
+                                        </div>
+                                    </div>
+                                    <blockquote class="review-text">
+                                        «Ну что я могу сказать... Аппаратура — мое почтение, качает не хуже, чем батины колонки "Радиотехника S-90" в 89-м году. Сначала напрягло, что на стенах поролон, а не ковры, но звук выдали шикарный. Звукарь колдовал над пультом так, будто на заводе трехлетний план за смену перевыполняет. Никаких тебе шумов, как из дедовского радиоприемника, всё кристально чисто. Однозначно рекомендую, ГОСТ пройден!»
+                                    </blockquote>
+                                    <div class="review-release-box">
+                                        <div class="release-info">
+                                            <span class="release-label">РЕЛИЗ СТУДИИ</span>
+                                            <span class="release-title">Опиум в хрущевке" &bull; Разорвал TikTok</span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Карточка 5: ROMAN SHOK -->
+                            <div class="swiper-slide review-slide">
+                                <div class="review-card">
+                                    <div class="review-card-glow"></div>
+                                    <div class="review-top">
+                                        <div class="review-avatar-box">
+                                            <img src="images/artists/artist_5.jpg" alt="Roman Shok" class="review-avatar" loading="lazy">
+                                            <span class="review-verified-badge" title="Верифицированный артист">✓</span>
+                                        </div>
+                                        <div class="review-author-meta">
+                                            <h3 class="review-name">Khlebalnik</h3>
+                                            <span class="review-genre">Alt Rock / Grunge</span>
+                                            <div class="review-rating">★★★★★</div>
+                                        </div>
+                                    </div>
+                                    <blockquote class="review-text">
+                                        «Писали живые барабаны и перегруженный вокал на Shure SM7B и лампу. Звук получился сырым, агрессивным, но при этом кристально разборчивым в плотном миксе. Лучший саунд в городе без компромиссов.»
+                                    </blockquote>
+                                    <div class="review-release-box">
+                                        <div class="release-info">
+                                            <span class="release-label">РЕЛИЗ СТУДИИ</span>
+                                            <span class="release-title">Альбом "Static Electricity" &bull; Яндекс Музыка Топ-100</span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                   
+
+
+<!-- Карточка 1: ALYSIA -->
+                        <div class="swiper-slide review-slide">
+                                <div class="review-card">
+                                    <div class="review-card-glow"></div>
+                                    <div class="review-top">
+                                        <div class="review-avatar-box">
+                                            <img src="images/artists/artist_1.jpg" alt="Alysia" class="review-avatar" loading="lazy">
+                                            <span class="review-verified-badge" title="Верифицированный артист">✓</span>
+                                        </div>
+                                        <div class="review-author-meta">
+                                            <h3 class="review-name">PANTERA</h3>
+                                            <span class="review-genre">R&B</span>
+                                            <div class="review-rating">★★★★★</div>
+                                        </div>
+                                    </div>
+                                    <blockquote class="review-text">
+                                        «Писала вокал на альбом в WaveMusic. Звукорежиссер сразу поймал нужный вайб, подсказал по подаче и бэкам. А когда прислали мастер — у меня мурашки пошли. Плотность нереальная, трек залетел в редакторские плейлисты!»
+                                    </blockquote>
+                                    <div class="review-release-box">
+                                        <div class="release-info">
+                                            <span class="release-label">РЕЛИЗ СТУДИИ</span>
+                                            <span class="release-title">Танцуй, пантера, в черном Панамеро" &bull; сходу пробил топ чарта VK</span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Карточка: M1KLUSSSHEVSKIY -->
+                            <div class="swiper-slide review-slide">
+                                <div class="review-card review-card--m1k">
+                                    <div class="review-card-glow review-card-glow--bad"></div>
+                                    <div class="review-top">
+                                        <div class="review-avatar-box review-avatar-box--m1k">
+                                            <img src="images/artists/artist_m1klussshevskiy.jpg" alt="M1klussshevskiy" class="review-avatar" loading="lazy">
+                                            <span class="review-verified-badge review-bad-badge" title="Крайне недовольный артист">✕</span>
+                                        </div>
+                                        <div class="review-author-meta">
+                                            <h3 class="review-name">M1klussshevskiy</h3>
+                                            <span class="review-genre">SoundCloud Рэп / Трэп</span>
+                                            <div class="review-rating review-rating-bad" title="1 звезда из 5">
+                                                <span class="star-active">★</span><span class="star-dim">☆☆☆☆</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <blockquote class="review-text">
+                                        «Карочи студия полнейшый шлакк!! Пришол записаца на трэк, звукарь ваще не шарит за свэг и автотюн накрутил так какбудто я робот вертер!! Бит перегружэн, басы пердят, в ушах ничево не слышно!! Я в микрафон орал душу вложыль, а звукареж в телефоне сидел в бравл старс играл!! Денги на ветер, на раене пацаны засмеяли, верните 5 тыщ рублей или напишу заяву!! Никаму ни советую худшая студия на планети 1 звезда!!!!»
+                                    </blockquote>
+                                    <div class="review-release-card review-release-audio">
+                                        <div class="release-info">
+                                            <span class="release-label">РЕЛИЗ СТУДИИ</span>
+                                            <span class="release-title">M1klussshevskiy - ТТГ prod. WaveMusic</span>
+                                        </div>
+                                        <button type="button" class="release-listen-btn m1k-play-btn" title="Слушать трек: M1klussshevskiy - ТТГ prod. WaveMusic" aria-label="Слушать трек">
+                                            <svg class="m1k-play-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"></polygon></svg>
+                                            <svg class="m1k-pause-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="display: none;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Карточка 2: MARK G -->
+                            <div class="swiper-slide review-slide">
+                                <div class="review-card">
+                                    <div class="review-card-glow"></div>
+                                    <div class="review-top">
+                                        <div class="review-avatar-box">
+                                            <img src="images/artists/artist_2.jpg" alt="Mark G" class="review-avatar" loading="lazy">
+                                            <span class="review-verified-badge" title="Верифицированный артист">✓</span>
+                                        </div>
+                                        <div class="review-author-meta">
+                                            <h3 class="review-name">Pr1kolnyi4el1k</h3>
+                                            <span class="review-genre">Hip-Hop / Drill</span>
+                                            <div class="review-rating">★★★★★</div>
+                                        </div>
+                                    </div>
+                                    <blockquote class="review-text">
+                                        «Перепробовал 4 студии в городе, пока не пришел сюда. На Tube-Tech и Neumann голос ложится в микс как влитой, бочка долбит прямо в грудь. Свели 3 трека за день, отдали день в день. Теперь только к вам!»
+                                    </blockquote>
+                                    <div class="review-release-box">
+                                        <div class="release-info">
+                                            <span class="release-label">РЕЛИЗ СТУДИИ</span>
+                                            <span class="release-title">EP "No Mercy" &bull; Warner Music Label</span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Карточка 3: EVA RAY -->
+                            <div class="swiper-slide review-slide">
+                                <div class="review-card">
+                                    <div class="review-card-glow"></div>
+                                    <div class="review-top">
+                                        <div class="review-avatar-box">
+                                            <img src="images/artists/artist_3.jpg" alt="Eva Ray" class="review-avatar" loading="lazy">
+                                            <span class="review-verified-badge" title="Верифицированный артист">✓</span>
+                                        </div>
+                                        <div class="review-author-meta">
+                                            <h3 class="review-name">Barak Obama</h3>
+                                            <span class="review-genre">Gimn / rap</span>
+                                            <div class="review-rating">★★★★★</div>
+                                        </div>
+                                    </div>
+                                    <blockquote class="review-text">
+                                        «Йоу, эээ, вассап всем хомис. Короче, типа, я приходить в эта студия, и это рилток просто... лайк, крышеснос, мэн. Я быть очень крутой гангста, но даже я, типа, офигевать. Тут, короче, микрофон... он так сиять, эээ, что я хотеть забрать его себе на шею вместо мой цепь.»
+                                    </blockquote>
+                                    <div class="review-release-box">
+                                        <div class="release-info">
+                                            <span class="release-label">РЕЛИЗ СТУДИИ</span>
+                                            <span class="release-title">Гимн Соединенных Штатов Америки" &bull; Взорвало</span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Карточка 4: KAI PROD -->
+                            <div class="swiper-slide review-slide">
+                                <div class="review-card">
+                                    <div class="review-card-glow"></div>
+                                    <div class="review-top">
+                                        <div class="review-avatar-box">
+                                            <img src="images/artists/artist_4.jpg" alt="Kai Prod" class="review-avatar" loading="lazy">
+                                            <span class="review-verified-badge" title="Верифицированный артист">✓</span>
+                                        </div>
+                                        <div class="review-author-meta">
+                                            <h3 class="review-name">Ezios</h3>
+                                            <span class="review-genre">Sound Producer / Beatmaker</span>
+                                            <div class="review-rating">★★★★★</div>
+                                        </div>
+                                    </div>
+                                    <blockquote class="review-text">
+                                        «Брал аренду студии для работы с Moog и мониторами Genelec. Акустическая комната сделана идеально — слышно всё вплоть до миллисекунд хвостов. Мои биты зазвучали на совершенно другом уровне!»
+                                    </blockquote>
+                                    <div class="review-release-box">
+                                        <div class="release-info">
+                                            <span class="release-label">РЕЛИЗ СТУДИИ</span>
+                                            <span class="release-title">Beat Pack "Neon Abyss" &bull; Платиновый статус</span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide review-slide">
+                                <div class="review-card">
+                                    <div class="review-card-glow"></div>
+                                    <div class="review-top">
+                                        <div class="review-avatar-box">
+                                            <img src="images/artists/artist_6.jpg" alt="Kai Prod2" class="review-avatar" loading="lazy">
+                                            <span class="review-verified-badge" title="Верифицированный артист">✓</span>
+                                        </div>
+                                        <div class="review-author-meta">
+                                            <h3 class="review-name">Yaroslave</h3>
+                                            <span class="review-genre">Postsovetskiy rock</span>
+                                            <div class="review-rating">★★★★★</div>
+                                        </div>
+                                    </div>
+                                    <blockquote class="review-text">
+                                        «Ну что я могу сказать... Аппаратура — мое почтение, качает не хуже, чем батины колонки "Радиотехника S-90" в 89-м году. Сначала напрягло, что на стенах поролон, а не ковры, но звук выдали шикарный. Звукарь колдовал над пультом так, будто на заводе трехлетний план за смену перевыполняет. Никаких тебе шумов, как из дедовского радиоприемника, всё кристально чисто. Однозначно рекомендую, ГОСТ пройден!»
+                                    </blockquote>
+                                    <div class="review-release-box">
+                                        <div class="release-info">
+                                            <span class="release-label">РЕЛИЗ СТУДИИ</span>
+                                            <span class="release-title">Опиум в хрущевке" &bull; Разорвал TikTok</span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Карточка 5: ROMAN SHOK -->
+                            <div class="swiper-slide review-slide">
+                                <div class="review-card">
+                                    <div class="review-card-glow"></div>
+                                    <div class="review-top">
+                                        <div class="review-avatar-box">
+                                            <img src="images/artists/artist_5.jpg" alt="Roman Shok" class="review-avatar" loading="lazy">
+                                            <span class="review-verified-badge" title="Верифицированный артист">✓</span>
+                                        </div>
+                                        <div class="review-author-meta">
+                                            <h3 class="review-name">Khlebalnik</h3>
+                                            <span class="review-genre">Alt Rock / Grunge</span>
+                                            <div class="review-rating">★★★★★</div>
+                                        </div>
+                                    </div>
+                                    <blockquote class="review-text">
+                                        «Писали живые барабаны и перегруженный вокал на Shure SM7B и лампу. Звук получился сырым, агрессивным, но при этом кристально разборчивым в плотном миксе. Лучший саунд в городе без компромиссов.»
+                                    </blockquote>
+                                    <div class="review-release-box">
+                                        <div class="release-info">
+                                            <span class="release-label">РЕЛИЗ СТУДИИ</span>
+                                            <span class="release-title">Альбом "Static Electricity" &bull; Яндекс Музыка Топ-100</span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                     
+
+
+<!-- Карточка 1: ALYSIA -->
+                            <div class="swiper-slide review-slide">
+                                <div class="review-card">
+                                    <div class="review-card-glow"></div>
+                                    <div class="review-top">
+                                        <div class="review-avatar-box">
+                                            <img src="images/artists/artist_1.jpg" alt="Alysia" class="review-avatar" loading="lazy">
+                                            <span class="review-verified-badge" title="Верифицированный артист">✓</span>
+                                        </div>
+                                        <div class="review-author-meta">
+                                            <h3 class="review-name">PANTERA</h3>
+                                            <span class="review-genre">R&B</span>
+                                            <div class="review-rating">★★★★★</div>
+                                        </div>
+                                    </div>
+                                    <blockquote class="review-text">
+                                        «Писала вокал на альбом в WaveMusic. Звукорежиссер сразу поймал нужный вайб, подсказал по подаче и бэкам. А когда прислали мастер — у меня мурашки пошли. Плотность нереальная, трек залетел в редакторские плейлисты!»
+                                    </blockquote>
+                                    <div class="review-release-box">
+                                        <div class="release-info">
+                                            <span class="release-label">РЕЛИЗ СТУДИИ</span>
+                                            <span class="release-title">Танцуй, пантера, в черном Панамеро" &bull; сходу пробил топ чарта VK</span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Карточка: M1KLUSSSHEVSKIY -->
+                            <div class="swiper-slide review-slide">
+                                <div class="review-card review-card--m1k">
+                                    <div class="review-card-glow review-card-glow--bad"></div>
+                                    <div class="review-top">
+                                        <div class="review-avatar-box review-avatar-box--m1k">
+                                            <img src="images/artists/artist_m1klussshevskiy.jpg" alt="M1klussshevskiy" class="review-avatar" loading="lazy">
+                                            <span class="review-verified-badge review-bad-badge" title="Крайне недовольный артист">✕</span>
+                                        </div>
+                                        <div class="review-author-meta">
+                                            <h3 class="review-name">M1klussshevskiy</h3>
+                                            <span class="review-genre">SoundCloud Рэп / Трэп</span>
+                                            <div class="review-rating review-rating-bad" title="1 звезда из 5">
+                                                <span class="star-active">★</span><span class="star-dim">☆☆☆☆</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <blockquote class="review-text">
+                                        «Карочи студия полнейшый шлакк!! Пришол записаца на трэк, звукарь ваще не шарит за свэг и автотюн накрутил так какбудто я робот вертер!! Бит перегружэн, басы пердят, в ушах ничево не слышно!! Я в микрафон орал душу вложыль, а звукареж в телефоне сидел в бравл старс играл!! Денги на ветер, на раене пацаны засмеяли, верните 5 тыщ рублей или напишу заяву!! Никаму ни советую худшая студия на планети 1 звезда!!!!»
+                                    </blockquote>
+                                    <div class="review-release-card review-release-audio">
+                                        <div class="release-info">
+                                            <span class="release-label">РЕЛИЗ СТУДИИ</span>
+                                            <span class="release-title">M1klussshevskiy - ТТГ prod. WaveMusic</span>
+                                        </div>
+                                        <button type="button" class="release-listen-btn m1k-play-btn" title="Слушать трек: M1klussshevskiy - ТТГ prod. WaveMusic" aria-label="Слушать трек">
+                                            <svg class="m1k-play-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"></polygon></svg>
+                                            <svg class="m1k-pause-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="display: none;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Карточка 2: MARK G -->
+                            <div class="swiper-slide review-slide">
+                                <div class="review-card">
+                                    <div class="review-card-glow"></div>
+                                    <div class="review-top">
+                                        <div class="review-avatar-box">
+                                            <img src="images/artists/artist_2.jpg" alt="Mark G" class="review-avatar" loading="lazy">
+                                            <span class="review-verified-badge" title="Верифицированный артист">✓</span>
+                                        </div>
+                                        <div class="review-author-meta">
+                                            <h3 class="review-name">Pr1kolnyi4el1k</h3>
+                                            <span class="review-genre">Hip-Hop / Drill</span>
+                                            <div class="review-rating">★★★★★</div>
+                                        </div>
+                                    </div>
+                                    <blockquote class="review-text">
+                                        «Перепробовал 4 студии в городе, пока не пришел сюда. На Tube-Tech и Neumann голос ложится в микс как влитой, бочка долбит прямо в грудь. Свели 3 трека за день, отдали день в день. Теперь только к вам!»
+                                    </blockquote>
+                                    <div class="review-release-box">
+                                        <div class="release-info">
+                                            <span class="release-label">РЕЛИЗ СТУДИИ</span>
+                                            <span class="release-title">EP "No Mercy" &bull; Warner Music Label</span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Карточка 3: EVA RAY -->
+                            <div class="swiper-slide review-slide">
+                                <div class="review-card">
+                                    <div class="review-card-glow"></div>
+                                    <div class="review-top">
+                                        <div class="review-avatar-box">
+                                            <img src="images/artists/artist_3.jpg" alt="Eva Ray" class="review-avatar" loading="lazy">
+                                            <span class="review-verified-badge" title="Верифицированный артист">✓</span>
+                                        </div>
+                                        <div class="review-author-meta">
+                                            <h3 class="review-name">Barak Obama</h3>
+                                            <span class="review-genre">Gimn / rap</span>
+                                            <div class="review-rating">★★★★★</div>
+                                        </div>
+                                    </div>
+                                    <blockquote class="review-text">
+                                        «Йоу, эээ, вассап всем хомис. Короче, типа, я приходить в эта студия, и это рилток просто... лайк, крышеснос, мэн. Я быть очень крутой гангста, но даже я, типа, офигевать. Тут, короче, микрофон... он так сиять, эээ, что я хотеть забрать его себе на шею вместо мой цепь.»
+                                    </blockquote>
+                                    <div class="review-release-box">
+                                        <div class="release-info">
+                                            <span class="release-label">РЕЛИЗ СТУДИИ</span>
+                                            <span class="release-title">Гимн Соединенных Штатов Америки" &bull; Взорвало</span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Карточка 4: KAI PROD -->
+                            <div class="swiper-slide review-slide">
+                                <div class="review-card">
+                                    <div class="review-card-glow"></div>
+                                    <div class="review-top">
+                                        <div class="review-avatar-box">
+                                            <img src="images/artists/artist_4.jpg" alt="Kai Prod" class="review-avatar" loading="lazy">
+                                            <span class="review-verified-badge" title="Верифицированный артист">✓</span>
+                                        </div>
+                                        <div class="review-author-meta">
+                                            <h3 class="review-name">Ezios</h3>
+                                            <span class="review-genre">Sound Producer / Beatmaker</span>
+                                            <div class="review-rating">★★★★★</div>
+                                        </div>
+                                    </div>
+                                    <blockquote class="review-text">
+                                        «Брал аренду студии для работы с Moog и мониторами Genelec. Акустическая комната сделана идеально — слышно всё вплоть до миллисекунд хвостов. Мои биты зазвучали на совершенно другом уровне!»
+                                    </blockquote>
+                                    <div class="review-release-box">
+                                        <div class="release-info">
+                                            <span class="release-label">РЕЛИЗ СТУДИИ</span>
+                                            <span class="release-title">Beat Pack "Neon Abyss" &bull; Платиновый статус</span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide review-slide">
+                                <div class="review-card">
+                                    <div class="review-card-glow"></div>
+                                    <div class="review-top">
+                                        <div class="review-avatar-box">
+                                            <img src="images/artists/artist_6.jpg" alt="Kai Prod2" class="review-avatar" loading="lazy">
+                                            <span class="review-verified-badge" title="Верифицированный артист">✓</span>
+                                        </div>
+                                        <div class="review-author-meta">
+                                            <h3 class="review-name">Yaroslave</h3>
+                                            <span class="review-genre">Postsovetskiy rock</span>
+                                            <div class="review-rating">★★★★★</div>
+                                        </div>
+                                    </div>
+                                    <blockquote class="review-text">
+                                        «Ну что я могу сказать... Аппаратура — мое почтение, качает не хуже, чем батины колонки "Радиотехника S-90" в 89-м году. Сначала напрягло, что на стенах поролон, а не ковры, но звук выдали шикарный. Звукарь колдовал над пультом так, будто на заводе трехлетний план за смену перевыполняет. Никаких тебе шумов, как из дедовского радиоприемника, всё кристально чисто. Однозначно рекомендую, ГОСТ пройден!»
+                                    </blockquote>
+                                    <div class="review-release-box">
+                                        <div class="release-info">
+                                            <span class="release-label">РЕЛИЗ СТУДИИ</span>
+                                            <span class="release-title">Опиум в хрущевке" &bull; Разорвал TikTok</span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Карточка 5: ROMAN SHOK -->
+                            <div class="swiper-slide review-slide">
+                                <div class="review-card">
+                                    <div class="review-card-glow"></div>
+                                    <div class="review-top">
+                                        <div class="review-avatar-box">
+                                            <img src="images/artists/artist_5.jpg" alt="Roman Shok" class="review-avatar" loading="lazy">
+                                            <span class="review-verified-badge" title="Верифицированный артист">✓</span>
+                                        </div>
+                                        <div class="review-author-meta">
+                                            <h3 class="review-name">Khlebalnik</h3>
+                                            <span class="review-genre">Alt Rock / Grunge</span>
+                                            <div class="review-rating">★★★★★</div>
+                                        </div>
+                                    </div>
+                                    <blockquote class="review-text">
+                                        «Писали живые барабаны и перегруженный вокал на Shure SM7B и лампу. Звук получился сырым, агрессивным, но при этом кристально разборчивым в плотном миксе. Лучший саунд в городе без компромиссов.»
+                                    </blockquote>
+                                    <div class="review-release-box">
+                                        <div class="release-info">
+                                            <span class="release-label">РЕЛИЗ СТУДИИ</span>
+                                            <span class="release-title">Альбом "Static Electricity" &bull; Яндекс Музыка Топ-100</span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Стрелки управления -->
+                        <div class="reviews-nav-btn reviews-prev" id="reviews-prev-btn">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        </div>
+                        <div class="reviews-nav-btn reviews-next" id="reviews-next-btn">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </div>
+
+                        <!-- Пагинация -->
+                        <div class="swiper-pagination reviews-pagination"></div>
+
+                        <!-- Аудиоплеер для трека M1klussshevskiy - ТТГ prod. WaveMusic -->
+                        <audio id="m1k-global-audio" preload="none">
+                            <source src="audio/m1klussshevskiy_ttg.mp3" type="audio/mpeg">
+                            <source src="audio/M1klussshevskiy - ТТГ prod. WaveMusic.mp3" type="audio/mpeg">
+                            <source src="audio/m1klussshevskiy_ttg.wav" type="audio/wav">
+                            <source src="audio/M1klussshevskiy - ТТГ prod. WaveMusic.wav" type="audio/wav">
+                        </audio>
+
+                        <div class="m1k-toast" id="m1k-toast">
+                            <span class="m1k-toast-icon">🎵</span>
+                            <span class="m1k-toast-msg">Положите аудиофайл в audio/m1klussshevskiy_ttg.mp3</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reviews-cta">
+                    <span>Хочешь выпустить свой трек на всех музыкальных площадках?</span>
+                    <a href="#booking" class="btn btn-primary" style="margin-left: 20px;">Забронировать время</a>
+                </div>
+            </div>
+        </section>
+
+<section id="gallery" class="scroll-section gallery-section">
+            <div class="gallery-bg-glow"></div>
+
+            <!-- ReactBits Infinite 3D Grid Menu (WebGL2) with GhostFibers Background -->
+            <div class="infinite-menu-wrapper">
+                <div class="infinite-menu-container">
+                    <canvas id="ghost-fibers-canvas"></canvas>
+                    <canvas id="infinite-grid-menu-canvas"></canvas>
+
+                    <!-- Left: Badge & Title -->
+                    <div class="face-title-box active" id="gallery-title-box">
+                        <span class="face-badge" id="gallery-face-badge">STUDIO ENTRANCE • 24/7</span>
+                        <h2 class="face-title" id="gallery-face-title">Вход в студию</h2>
+                    </div>
+
+                    <!-- Right: Description -->
+                    <div class="face-desc-box active" id="gallery-desc-box">
+                        <p class="face-description" id="gallery-face-desc">Стильная входная группа с неоновой вывеской и уютной зоной ожидания в историческом центре.</p>
+                    </div>
+
+                    <!-- Center Bottom: Action Button (Open 4K Photo in Lightbox) -->
+                    <div class="action-button active" id="gallery-action-btn" title="Открыть фото в 4K">
+                        <span class="action-button-icon">&#x2197;</span>
+                    </div>
+
+                    <!-- Bottom Hint -->
+                    <div class="infinite-menu-hint">
+                        <span>&#8644; Вращайте сферу мышью или пальцем</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-content-wrapper animate-on-scroll">
+                <div class="gallery-header">
+                    <span class="gallery-badge">STUDIO INTERIOR</span>
+                    <h2 class="gallery-title">ГАЛЕРЕЯ</h2>
+                    <p class="gallery-subtitle">Погрузитесь в атмосферу нашей студии. Продуманный дизайн, идеальная акустика и топовое железо.</p>
+                </div>
+                
+                <div class="gallery-cta">
+                    <span class="gallery-cta-text">Убедитесь сами — забронируйте тур по студии перед первой сессией:</span>
+                    <a href="#booking" class="gallery-tour-btn">
+                        <span class="tour-btn-icon">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                            </svg>
+                        </span>
+                        <span class="tour-btn-text">Забронировать тур</span>
+                        <span class="tour-btn-arrow">&rarr;</span>
+                    </a>
+                </div>
+            </div>
+</section>
+
+<section id="faq" class="scroll-section faq-section">
+            <div class="faq-bg-glow"></div>
+            <div class="faq-container animate-on-scroll">
+                <div class="faq-header">
+                    <span class="faq-badge">FAQ</span>
+                    <h2 class="faq-title">ЧАСТЫЕ ВОПРОСЫ</h2>
+                    <p class="faq-subtitle">Всё, что нужно знать перед тем, как забронировать студию и начать работу над треком.</p>
+                </div>
+                
+                <div class="faq-accordion">
+                    <!-- Item 1 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>Сколько времени нужно на сведение и мастеринг трека?</span>
+                            <div class="faq-icon">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </div>
+                        </button>
+                        <div class="faq-answer-wrapper">
+                            <div class="faq-answer-content">
+                                Обычно процесс сведения и мастеринга занимает от 3 до 7 рабочих дней в зависимости от загруженности студии и сложности проекта. Мы также предлагаем услугу экспресс-сведения за 24 часа.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Item 2 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>В каком формате присылать мультитрек?</span>
+                            <div class="faq-icon">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </div>
+                        </button>
+                        <div class="faq-answer-wrapper">
+                            <div class="faq-answer-content">
+                                Мы принимаем файлы в формате WAV (24 bit / 44.1 kHz или выше). Убедитесь, что все дорожки синхронизированы от самого начала проекта, отключены эффекты на мастере и каналы не клиппуют.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>Можно ли прийти на запись со своим звукорежиссером?</span>
+                            <div class="faq-icon">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </div>
+                        </button>
+                        <div class="faq-answer-wrapper">
+                            <div class="faq-answer-content">
+                                Да, вы можете арендовать студию (Dry Hire) и работать со своим инженером. Наш технический специалист поможет вам подключиться и настроить оборудование перед началом сессии.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 4 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>Делаете ли вы Ghost Production и биты на заказ?</span>
+                            <div class="faq-icon">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </div>
+                        </button>
+                        <div class="faq-answer-wrapper">
+                            <div class="faq-answer-content">
+                                Да, наша команда продюсеров пишет эксклюзивные аранжировки, биты и осуществляет полный цикл Ghost Production в любых жанрах — от Hip-Hop и Pop до EDM и Cinematic.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 5 -->
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>Как происходит оплата?</span>
+                            <div class="faq-icon">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </div>
+                        </button>
+                        <div class="faq-answer-wrapper">
+                            <div class="faq-answer-content">
+                                Бронирование времени в студии осуществляется по предоплате 50%. Оставшуюся сумму вы оплачиваете по завершении сессии. Принимаем наличные, переводы и оплату по счету для юрлиц.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<section id="booking" class="scroll-section booking-section">
+            <div class="booking-bg-glow"></div>
+            <div class="booking-container animate-on-scroll">
+                <div class="booking-left">
+                    <span class="booking-badge">ONLINE BOOKING</span>
+                    <h2 class="booking-title">ГОТОВ<br>К ЗАПИСИ?</h2>
+                    <p class="booking-desc">Оставьте заявку онлайн, и наш звукорежиссер свяжется с вами в течение 15 минут, чтобы зафиксировать студийное время и обсудить детали проекта.</p>
+                    
+                    <div class="booking-perks">
+                        <div class="booking-perk-item">
+                            <div class="booking-perk-icon">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8">
+                                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                                    <line x1="12" y1="19" x2="12" y2="22"></line>
+                                </svg>
+                            </div>
+                            <div class="booking-perk-text">
+                                <div class="perk-title">Звукоинженер включен</div>
+                                <div class="perk-desc">Помощь с подачей, дублями и контролем качества на записи</div>
+                            </div>
+                        </div>
+
+                        <div class="booking-perk-item">
+                            <div class="booking-perk-icon">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
+                            </div>
+                            <div class="booking-perk-text">
+                                <div class="perk-title">Работа 24/7</div>
+                                <div class="perk-desc">Дневные студийные часы и ночные локдауны для глубокого продакшна</div>
+                            </div>
+                        </div>
+
+                        <div class="booking-perk-item">
+                            <div class="booking-perk-icon">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                            </div>
+                            <div class="booking-perk-text">
+                                <div class="perk-title">Гарантия результата</div>
+                                <div class="perk-desc">Кристально чистый исходник, готовый к финальному сведению</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="booking-right">
+                    <div class="booking-form-container">
+                        <div class="booking-form-header">
+                            <h3 class="booking-form-title">Заполнить заявку</h3>
+                            <p class="booking-form-subtitle">Бронь фиксируется сразу после отправки</p>
+                        </div>
+                        <form id="booking-form" class="auth-form active" novalidate>
+                            <div class="form-group">
+                                <label for="book-name">Ваше имя</label>
+                                <input type="text" id="book-name" required placeholder="Как к вам обращаться?">
+                                <span class="error-msg"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="book-email">Email (для подтверждения)</label>
+                                <input type="email" id="book-email" required placeholder="Ваш email">
+                                <span class="error-msg"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="book-phone">Номер телефона</label>
+                                <input type="tel" id="book-phone" required placeholder="+7 (999) 000-00-00">
+                                <span class="error-msg"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="book-service">Выберите услугу</label>
+                                <select id="book-service" required class="custom-select">
+                                    <option value="">Не выбрано</option>
+                                    <option value="Запись вокала" id="opt-vocal">Запись вокала (1500 - 2500 ₽/ч)</option>
+                                    <option value="Сведение и мастеринг" id="opt-mix">Сведение и мастеринг (от 3000 ₽)</option>
+                                    <option value="Написание бита" id="opt-beat">Написание бита (от 5000 ₽)</option>
+                                </select>
+                                <span class="error-msg"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="book-date">Желаемая дата и время</label>
+                                <input type="datetime-local" id="book-date" required>
+                                <span class="error-msg"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary form-btn">Подтвердить запись</button>
+                        </form>
+                        
+                        <div id="booking-success" style="display:none; text-align:center;">
+                            <div style="font-size: 3.5rem; color: #c77dff; margin-bottom: 10px;">✓</div>
+                            <h3 style="color:#fff; margin-bottom:12px; font-weight: 400; letter-spacing: 2px;">ЗАЯВКА ПРИНЯТА</h3>
+                            <p class="modal-body" id="booking-success-text" style="color: #ccc; font-weight: 300; line-height: 1.6;">На вашу почту <strong>test@email.com</strong> было отправлено письмо со всеми деталями бронирования.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<section id="daw" class="scroll-section daw-promo-section">
+            <div class="daw-bg-glow"></div>
+            <div class="daw-promo-container animate-on-scroll">
+                <div class="daw-promo-content">
+                    <span class="daw-badge">CLOUD PRODUCTION</span>
+                    <h2 class="daw-promo-title">WAVEMUSIC<br>WEB DAW</h2>
+                    <p class="daw-promo-desc">
+                        Передовая цифровая звуковая станция прямо в браузере. Пишите биты, сводите мультитреки и экспериментируйте с синтезаторами без скачивания и установки тяжелых плагинов.
+                    </p>
+                    <div class="daw-features-chips">
+                        <span class="daw-chip">Мультитрек-секвенсор</span>
+                        <span class="daw-chip">Мастер-микшер с FX</span>
+                        <span class="daw-chip">Нулевой latency</span>
+                    </div>
+                    <a href="app.html" target="_blank" class="btn btn-primary daw-btn">Запустить DAW</a>
+                </div>
+                <div class="daw-promo-image-wrap">
+                    <div class="daw-promo-image-card">
+                        <img src="daw_promo_forest.jpg" alt="WaveMusic DAW Interface" loading="lazy" decoding="async">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<footer id="footer" class="scroll-section footer-section">
+            <!-- Фон-гифка (файл вы загрузите сами) -->
+            <div class="footer-bg-gif"></div>
+            <div class="footer-content animate-on-scroll">
+                <div class="footer-logo">
+                    <img src="logo-new.png" alt="WaveMusic Logo" loading="lazy" decoding="async">
+                </div>
+                <div class="footer-links">
+                    <a href="#services">Прайс</a>
+                    <a href="#about">О нас</a>
+                    <a href="#" data-open-modal="info" data-info="socials">Наши соцсети</a>
+                    <a href="#" data-open-modal="info" data-info="support">Поддержка 24/7</a>
+                </div>
+                <div class="footer-contacts">
+                    <p>г. Хабаровск, ул. Свеговая, д. 67</p>
+                    <p>+7 (999) 228-52-67</p>
+                    <p>booking@waveprodmusic.com</p>
+                </div>
+                <div class="footer-copyright">
+                    <a href="admin.html" style="color:inherit; text-decoration:none;" title="Вход для администратора">&copy; 2026 WaveProdMusic. Все права защищены.</a>
+                </div>
+            </div>
+        </footer>
+</main>
+
+    <!-- Лайтбокс галереи (прямой дочерний элемент body для корректного position:fixed) -->
+    <div class="gallery-lightbox" id="gallery-lightbox">
+        <div class="lightbox-backdrop"></div>
+        <div class="lightbox-container">
+            <button class="lightbox-close" id="lightbox-close-btn" aria-label="Закрыть">&times;</button>
+            <button class="lightbox-nav-btn lightbox-prev" id="lightbox-prev-btn" aria-label="Предыдущее фото">&#10094;</button>
+            <button class="lightbox-nav-btn lightbox-next" id="lightbox-next-btn" aria-label="Следующее фото">&#10095;</button>
+            <div class="lightbox-image-wrap">
+                <img src="" alt="Просмотр фото" class="lightbox-img" id="lightbox-img">
+                <div class="lightbox-caption">
+                    <span id="lightbox-tag" class="lightbox-tag"></span>
+                    <h3 id="lightbox-title" class="lightbox-title"></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для информации (Соцсети и т.д.) -->
+    <div class="modal-overlay" id="info-modal">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Закрыть">&times;</button>
+            <h2 id="info-title" class="modal-title">Заголовок</h2>
+            <div id="info-body" class="modal-body">Текст...</div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="gl-matrix-min.js"></script>
+    <script src="script.js" defer></script>
+</body>
+</html>

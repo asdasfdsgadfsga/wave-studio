@@ -1,0 +1,12 @@
+# Node modules
+node_modules/
+backend/node_modules/
+
+# Archives & temporary
+archive/
+dist/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db

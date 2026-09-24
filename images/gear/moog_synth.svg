@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 280" width="500" height="280">
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="40%" r="70%">
+      <stop offset="0%" stop-color="#240c42" stop-opacity="0.9" />
+      <stop offset="70%" stop-color="#090214" stop-opacity="1" />
+      <stop offset="100%" stop-color="#040008" stop-opacity="1" />
+    </radialGradient>
+    <linearGradient id="neonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff007f" />
+      <stop offset="100%" stop-color="#7b2cbf" />
+    </linearGradient>
+    <linearGradient id="metalGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4a4254" />
+      <stop offset="50%" stop-color="#211c29" />
+      <stop offset="100%" stop-color="#0f0c14" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="15" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="500" height="280" rx="14" fill="url(#bgGrad)" />
+  <rect width="500" height="280" rx="14" fill="none" stroke="#ff007f" stroke-opacity="0.25" stroke-width="1.5" />
+
+  <!-- Studio Grid lines background -->
+  <g opacity="0.08" stroke="#fff" stroke-width="1">
+    <line x1="0" y1="70" x2="500" y2="70" />
+    <line x1="0" y1="140" x2="500" y2="140" />
+    <line x1="0" y1="210" x2="500" y2="210" />
+    <line x1="125" y1="0" x2="125" y2="280" />
+    <line x1="250" y1="0" x2="250" y2="280" />
+    <line x1="375" y1="0" x2="375" y2="280" />
+  </g>
+
+  <!-- Ambient Light Aura -->
+  <circle cx="250" cy="120" r="80" fill="#ff007f" opacity="0.16" filter="url(#softGlow)" />
+
+  <!-- Equipment Illustration Art -->
+  <g transform="translate(0, 5)">
+    
+  <g transform="translate(250, 115)">
+    <!-- Slanted Wooden & Metal Synthesizer Panel -->
+    <polygon points="-160,-45 160,-45 180,35 -180,35" fill="#140c21" stroke="#ff007f" stroke-width="2" filter="url(#glow)" />
+    <!-- Wooden Cheek Ends -->
+    <polygon points="-180,-45 -160,-45 -180,35 -195,35" fill="#5c2c16" stroke="#2d1508" />
+    <polygon points="160,-45 180,-45 195,35 180,35" fill="#5c2c16" stroke="#2d1508" />
+    <!-- Knobs and Switches Matrix -->
+    <g transform="translate(0, -10)">
+      
+        <circle cx="-120" cy="-15" r="8" fill="#2d1d42" stroke="#ff007f" stroke-width="1.5" />
+        <circle cx="-120" cy="15" r="8" fill="#2d1d42" stroke="#00f5d4" stroke-width="1.5" />
+      
+        <circle cx="-80" cy="-15" r="8" fill="#2d1d42" stroke="#ff007f" stroke-width="1.5" />
+        <circle cx="-80" cy="15" r="8" fill="#2d1d42" stroke="#00f5d4" stroke-width="1.5" />
+      
+        <circle cx="-40" cy="-15" r="8" fill="#2d1d42" stroke="#ff007f" stroke-width="1.5" />
+        <circle cx="-40" cy="15" r="8" fill="#2d1d42" stroke="#00f5d4" stroke-width="1.5" />
+      
+        <circle cx="0" cy="-15" r="8" fill="#2d1d42" stroke="#ff007f" stroke-width="1.5" />
+        <circle cx="0" cy="15" r="8" fill="#2d1d42" stroke="#00f5d4" stroke-width="1.5" />
+      
+        <circle cx="40" cy="-15" r="8" fill="#2d1d42" stroke="#ff007f" stroke-width="1.5" />
+        <circle cx="40" cy="15" r="8" fill="#2d1d42" stroke="#00f5d4" stroke-width="1.5" />
+      
+        <circle cx="80" cy="-15" r="8" fill="#2d1d42" stroke="#ff007f" stroke-width="1.5" />
+        <circle cx="80" cy="15" r="8" fill="#2d1d42" stroke="#00f5d4" stroke-width="1.5" />
+      
+        <circle cx="120" cy="-15" r="8" fill="#2d1d42" stroke="#ff007f" stroke-width="1.5" />
+        <circle cx="120" cy="15" r="8" fill="#2d1d42" stroke="#00f5d4" stroke-width="1.5" />
+      
+    </g>
+    <!-- Keyboard Keys at Bottom -->
+    <rect x="-170" y="35" width="340" height="35" rx="3" fill="#ffffff" stroke="#222" stroke-width="2" />
+    <!-- Black Keys -->
+    
+      <rect x="-150" y="35" width="9" height="22" rx="2" fill="#000000" />
+    
+      <rect x="-135" y="35" width="9" height="22" rx="2" fill="#000000" />
+    
+      <rect x="-105" y="35" width="9" height="22" rx="2" fill="#000000" />
+    
+      <rect x="-90" y="35" width="9" height="22" rx="2" fill="#000000" />
+    
+      <rect x="-75" y="35" width="9" height="22" rx="2" fill="#000000" />
+    
+      <rect x="-45" y="35" width="9" height="22" rx="2" fill="#000000" />
+    
+      <rect x="-30" y="35" width="9" height="22" rx="2" fill="#000000" />
+    
+      <rect x="0" y="35" width="9" height="22" rx="2" fill="#000000" />
+    
+      <rect x="15" y="35" width="9" height="22" rx="2" fill="#000000" />
+    
+      <rect x="30" y="35" width="9" height="22" rx="2" fill="#000000" />
+    
+      <rect x="60" y="35" width="9" height="22" rx="2" fill="#000000" />
+    
+      <rect x="75" y="35" width="9" height="22" rx="2" fill="#000000" />
+    
+      <rect x="105" y="35" width="9" height="22" rx="2" fill="#000000" />
+    
+      <rect x="120" y="35" width="9" height="22" rx="2" fill="#000000" />
+    
+      <rect x="135" y="35" width="9" height="22" rx="2" fill="#000000" />
+    
+  </g>
+
+  </g>
+
+  <!-- Title Badge overlay at bottom -->
+  <rect x="25" y="222" width="450" height="42" rx="8" fill="#0c0418" fill-opacity="0.85" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+  <text x="40" y="248" fill="#ffffff" font-family="'Montserrat', 'Segoe UI', sans-serif" font-size="14" font-weight="700" letter-spacing="1.5">MOOG SUB 37</text>
+  <text x="460" y="247" text-anchor="end" fill="#ff007f" font-family="'Montserrat', 'Segoe UI', sans-serif" font-size="11" font-weight="600" letter-spacing="1">ANALOG PARAPHONIC SYNTH</text>
+</svg>

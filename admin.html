@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>WaveMusic - CRM & Admin</title>
+    <!-- Предзагрузка шрифтов -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --bg0: #0a0214; /* Темный цвет фона */
+            --color-primary: #9d4edd; /* Основной фиолетовый цвет для акцентов */
+        }
+        /* MOBILE OVERLAY */
+        #mobile-block {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: var(--bg0);
+            z-index: 999999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 30px;
+        }
+        #mobile-block h1 { color: #9d4edd; margin-bottom: 15px; }
+        #mobile-block p { color: #ccc; line-height: 1.6; }
+        @media (max-width: 900px) {
+            .admin-wrapper { display: none !important; }
+            #mobile-block { display: flex; }
+        }
+
+        html, body {
+            overflow-y: auto !important;
+            height: auto !important;
+            min-height: 100vh;
+        }
+        body {
+            background: #0a0214; /* или #000000 для черного */
+            color: #fff5fe;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 20px;
+            font-family: 'Montserrat', sans-serif;
+            position: relative;
+        }
+        .admin-bg {
+            position: fixed; 
+            top: 0; left: 0; right: 0; bottom: 0;
+            
+           
+            background: url('Layx.gif') center/cover no-repeat, 
+            radial-gradient(circle at top center, 
+            rgba(157, 78, 221, 0.15) 0%, transparent 60%);
+            
+       
+            opacity: 0.1; 
+            filter: contrast(120%) brightness(80%) grayscale(20%);
+            
+            z-index: -1;
+            pointer-events: none;
+        }
+        .admin-container {
+            width: 100%;
+            max-width: 1100px;
+            z-index: 10;
+        }
+        .back-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .back-link:hover {
+            color: #c77dff;
+        }
+
+        /* Widgets */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(157, 78, 221, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        .stat-card h4 {
+            margin: 0 0 10px 0;
+            font-size: 0.9rem;
+            color: #aaa;
+            font-weight: 400;
+        }
+        .stat-card .val {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        /* Tabs */
+        .admin-tabs {
+            display: flex;
+            gap: 10px;
+        }
+        .admin-tabs button {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid transparent;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .admin-tabs button.active {
+            background: rgba(157, 78, 221, 0.2);
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        /* Select Status */
+        .status-select {
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            border: 1px solid #444;
+            padding: 5px;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+        .status-select.s-new { border-color: #c77dff; color: #c77dff; }
+        .status-select.s-work { border-color: #fca311; color: #fca311; }
+        .status-select.s-done { border-color: #43a047; color: #43a047; }
+
+        /* Notes */
+        .note-text {
+            display: block;
+            font-size: 0.8rem;
+            color: #aaa;
+            margin-top: 5px;
+            max-width: 150px;
+            white-space: normal;
+        }
+
+        
+        /* New unified button class */
+        .admin-btn {
+            background: rgba(10, 2, 20, 0.8);
+            border: 1px solid #9d4edd;
+            color: #c77dff;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+        .admin-btn:hover {
+            background: rgba(157, 78, 221, 0.2);
+            box-shadow: 0 0 10px rgba(157, 78, 221, 0.4);
+            color: #fff;
+        }
+        
+        .action-btn {
+            background: transparent;
+            border: 1px solid #9d4edd;
+            color: var(--color-primary);
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            margin-top: 5px;
+        }
+        .action-btn:hover { background: rgba(157, 78, 221, 0.2); }
+
+        .settings-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .settings-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #ccc;
+        }
+        .settings-group input {
+            width: 100%;
+            padding: 10px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 6px;
+        }
+    
+        #admin-clear-btn:hover {
+            background: rgba(157, 78, 221, 0.3) !important;
+            box-shadow: 0 0 10px rgba(157, 78, 221, 0.3);
+        }
+    </style>
+
+</head>
+<body>
+    <div id="mobile-block">
+        <svg viewBox="0 0 24 24" width="64" height="64" fill="none" stroke="#9d4edd" stroke-width="2" style="margin-bottom:20px;">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+            <line x1="8" y1="21" x2="16" y2="21"></line>
+            <line x1="12" y1="17" x2="12" y2="21"></line>
+        </svg>
+        <h1>Доступно только на ПК</h1>
+        <p>Панель администратора содержит сложные таблицы и графики, требующие широкого экрана.</p>
+        <p style="margin-top:20px; font-size: 0.9em; opacity: 0.7;">Пожалуйста, откройте админ-панель на компьютере.</p>
+        <a href="index.html" style="margin-top:30px; padding: 12px 24px; background: #9d4edd; color: #fff; text-decoration: none; border-radius: 8px;">Вернуться на главную</a>
+    </div>
+    <div class="admin-wrapper" style="width:100%; display:flex; justify-content:center;">
+        <div class="admin-bg"></div>
+    <a href="index.html" class="back-link">&larr; Вернуться на сайт</a>
+
+    <div class="admin-container">
+        <h2 class="section-title" style="margin-bottom: 20px;">WAVE CRM</h2>
+        
+        <!-- Окно входа -->
+        <div id="admin-login-view" class="admin-box" style="margin-top: 10vh;">
+            <h3>Требуется доступ</h3>
+            <p style="margin-bottom: 20px; color: #888;">Введите пароль администратора.</p>
+            <input type="password" id="admin-pw" placeholder="Пароль" class="admin-input">
+            <br>
+            <button id="admin-login-btn" class="btn btn-primary">Войти</button>
+            <p id="admin-error" class="error-msg" style="margin-top: 10px; display: block;"></p>
+        </div>
+
+        <!-- Дашборд -->
+        <div id="admin-dashboard-view" style="display: none;">
+            
+            <div class="admin-header">
+                <div class="admin-tabs">
+                    <button id="tab-bookings" class="active">Заявки</button>
+                    <button id="tab-settings">Настройки Сайта</button>
+                </div>
+                <div>
+                    <button id="admin-export-btn" class="admin-btn" style="margin-right: 10px;">Экспорт (CSV)</button>
+                    <button id="admin-logout-btn" class="admin-btn">Выйти</button>
+                </div>
+            </div>
+
+            <!-- Вкладка: Заявки -->
+            <div id="view-bookings">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>Всего заявок</h4>
+                        <div class="val" id="stat-total">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Топ услуга</h4>
+                        <div class="val" id="stat-top" style="font-size: 1.2rem; line-height: 1.5rem; margin-top: 10px;">-</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Новых сегодня</h4>
+                        <div class="val" id="stat-today">0</div>
+                    </div>
+                </div>
+
+                <div class="admin-box" style="padding: 20px;">
+                    <div class="admin-list-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Клиент / Контакты</th>
+                                    <th>Услуга / Дата</th>
+                                    <th>Статус</th>
+                                    <th>Заметки</th>
+                                    <th>Действие</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-bookings-list">
+                            </tbody>
+                        </table>
+                        <div id="admin-empty-msg" style="padding: 20px; text-align: center; color: #666; display: none;">Нет новых заявок.</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <button id="admin-clear-btn" class="admin-btn" style="margin-top:20px;">Очистить базу</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Вкладка: Настройки -->
+            <div id="view-settings" style="display: none;">
+                <div class="admin-box" style="padding: 40px; text-align: left;">
+                    <h3 style="margin-bottom: 20px;">Настройки прайса на сайте</h3>
+                    <p style="color: #888; margin-bottom: 30px;">Здесь вы можете изменить цены, которые отображаются на главной странице и в форме записи.</p>
+                    
+                    <div class="settings-group">
+                        <label>Цена: Запись вокала</label>
+                        <input type="text" id="set-vocal" placeholder="Например: 1 500 – 2 500 ₽ / час">
+                    </div>
+                    <div class="settings-group">
+                        <label>Цена: Сведение и мастеринг</label>
+                        <input type="text" id="set-mix" placeholder="Например: 3 000 – 7 000 ₽ / трек">
+                    </div>
+                    <div class="settings-group">
+                        <label>Цена: Написание бита</label>
+                        <input type="text" id="set-beat" placeholder="Например: от 5 000 ₽">
+                    </div>
+                    
+                    
+
+                    
+                    <hr style="border-color: rgba(157, 78, 221, 0.3); margin: 40px 0;">
+                    <h3 style="margin-bottom: 20px;">Шаблон письма клиенту</h3>
+                    <p style="color: #888; margin-bottom: 20px;">Это письмо автоматически отправляется клиенту после бронирования. Вы можете использовать HTML-теги для оформления.</p>
+                    
+                    <div class="settings-group">
+                        <label>Тема письма</label>
+                        <input type="text" id="setting-email-subject" value="Запись на сессию - WaveProdMusic" style="width: 100%; padding: 10px; background: rgba(0,0,0,0.5); border: 1px solid #9d4edd; color: #fff; border-radius: 6px;">
+                    </div>
+                    <div class="settings-group">
+                        <label>Текст письма (без кода)</label>
+                        <textarea id="setting-email-text" style="width: 100%; height: 250px; background: rgba(0,0,0,0.5); border: 1px solid #9d4edd; color: #fff; padding: 10px; border-radius: 6px; font-family: monospace; line-height: 1.4; resize: vertical;">Привет, {name}!
+
+Вы успешно оставили заявку на сессию в WaveProdMusic.
+
+Ваша заявка:
+Услуга: {service}
+Желаемая дата: {date}
+Указанный телефон: {phone}
+
+Наш администратор свяжется с вами в ближайшее время для подтверждения деталей. Ждем вас на студии!</textarea>
+                        <p style="font-size: 0.75rem; color: #c77dff; margin-top: 10px;">Доступные переменные: {name}, {service}, {date}, {phone}, {email}</p>
+                    </div>
+
+                    <button id="save-settings-btn" class="btn btn-primary" style="margin-top: 10px;">Сохранить настройки</button>
+                    <span id="settings-msg" style="color: #43a047; margin-left: 15px; display: none;">Сохранено!</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const adminPw = document.getElementById('admin-pw');
+        const adminLoginBtn = document.getElementById('admin-login-btn');
+        const adminError = document.getElementById('admin-error');
+        const adminLoginView = document.getElementById('admin-login-view');
+        const adminDashboardView = document.getElementById('admin-dashboard-view');
+        
+        const tabBookings = document.getElementById('tab-bookings');
+        const tabSettings = document.getElementById('tab-settings');
+        const viewBookings = document.getElementById('view-bookings');
+        const viewSettings = document.getElementById('view-settings');
+
+        // State
+        let bookings = JSON.parse(localStorage.getItem('waveBookings') || '[]');
+
+        // Auth
+        if (localStorage.getItem('waveAdminAuth') === 'true') showAdminDashboard();
+
+        adminLoginBtn.addEventListener('click', () => {
+            if (adminPw.value === '0000') {
+                localStorage.setItem('waveAdminAuth', 'true');
+                adminPw.value = '';
+                adminError.textContent = '';
+                showAdminDashboard();
+            } else {
+                adminError.textContent = 'Неверный пароль';
+            }
+        });
+        
+        adminPw.addEventListener('keypress', (e) => { if (e.key === 'Enter') adminLoginBtn.click(); });
+        
+        document.getElementById('admin-logout-btn').addEventListener('click', () => {
+            localStorage.removeItem('waveAdminAuth');
+            adminDashboardView.style.display = 'none';
+            adminLoginView.style.display = 'block';
+        });
+
+        // Tabs
+        tabBookings.addEventListener('click', () => {
+            tabBookings.classList.add('active'); tabSettings.classList.remove('active');
+            viewBookings.style.display = 'block'; viewSettings.style.display = 'none';
+        });
+        tabSettings.addEventListener('click', () => {
+            tabSettings.classList.add('active'); tabBookings.classList.remove('active');
+            viewSettings.style.display = 'block'; viewBookings.style.display = 'none';
+            loadSettings();
+        });
+
+        // Functions
+        function showAdminDashboard() {
+            adminLoginView.style.display = 'none';
+            adminDashboardView.style.display = 'block';
+            renderBookings();
+        }
+
+        function renderBookings() {
+            bookings = JSON.parse(localStorage.getItem('waveBookings') || '[]');
+            updateStats();
+            
+            const list = document.getElementById('admin-bookings-list');
+            const emptyMsg = document.getElementById('admin-empty-msg');
+            const clearBtn = document.getElementById('admin-clear-btn');
+            
+            if (bookings.length === 0) {
+                list.innerHTML = '';
+                emptyMsg.style.display = 'block';
+                clearBtn.style.display = 'none';
+                return;
+            }
+            
+            emptyMsg.style.display = 'none';
+            clearBtn.style.display = 'inline-block';
+            
+            list.innerHTML = bookings.slice().reverse().map(b => {
+                const status = b.status || 'new';
+                const statusClass = status === 'new' ? 's-new' : (status === 'work' ? 's-work' : 's-done');
+                
+                return `
+                <tr>
+                    <td>
+                        <strong>${b.name}</strong><br>
+                        <a href="mailto:${b.email}?subject=WaveMusic Studio" style="color:#aaa; font-size:0.8rem;">${b.email}</a>
+                    </td>
+                    <td>
+                        <span style="color:var(--color-primary)">${b.service}</span><br>
+                        <span style="color:#888; font-size:0.8rem;">${new Date(b.date).toLocaleString('ru-RU', {day:'2-digit', month:'2-digit', year:'2-digit', hour:'2-digit', minute:'2-digit'})}</span>
+                    </td>
+                    <td>
+                        <select class="status-select ${statusClass}" onchange="updateStatus(${b.id}, this.value)">
+                            <option value="new" ${status === 'new' ? 'selected' : ''}>Новая</option>
+                            <option value="work" ${status === 'work' ? 'selected' : ''}>В работе</option>
+                            <option value="done" ${status === 'done' ? 'selected' : ''}>Завершена</option>
+                        </select>
+                    </td>
+                    <td>
+                        ${b.note ? `<span class="note-text">${b.note}</span>` : ''}
+                        <button class="action-btn" onclick="addNote(${b.id})">${b.note ? 'Изменить' : '+ Заметка'}</button>
+                    </td>
+                    <td><button onclick="deleteBooking(${b.id})" class="action-btn">Удалить</button></td>
+                </tr>
+            `}).join('');
+        }
+
+        function updateStats() {
+            document.getElementById('stat-total').textContent = bookings.length;
+            
+            // Today
+            const today = new Date().toDateString();
+            const todayCount = bookings.filter(b => b.timestamp && new Date(b.timestamp).toDateString() === today).length;
+            document.getElementById('stat-today').textContent = todayCount;
+
+            // Popular service
+            if (bookings.length === 0) {
+                document.getElementById('stat-top').textContent = '-';
+            } else {
+                const counts = {};
+                let max = 0;
+                let topS = '';
+                bookings.forEach(b => {
+                    counts[b.service] = (counts[b.service] || 0) + 1;
+                    if(counts[b.service] > max) { max = counts[b.service]; topS = b.service; }
+                });
+                document.getElementById('stat-top').textContent = topS;
+            }
+        }
+
+        window.updateStatus = function(id, status) {
+            const idx = bookings.findIndex(b => b.id === id);
+            if (idx > -1) {
+                bookings[idx].status = status;
+                localStorage.setItem('waveBookings', JSON.stringify(bookings));
+                renderBookings();
+            }
+        }
+
+        window.addNote = function(id) {
+            const idx = bookings.findIndex(b => b.id === id);
+            if (idx > -1) {
+                const currentNote = bookings[idx].note || '';
+                const newNote = prompt('Введите комментарий к заявке:', currentNote);
+                if (newNote !== null) {
+                    bookings[idx].note = newNote;
+                    localStorage.setItem('waveBookings', JSON.stringify(bookings));
+                    renderBookings();
+                }
+            }
+        }
+
+        window.deleteBooking = function(id) {
+            if (confirm('Удалить эту заявку?')) {
+                bookings = bookings.filter(b => b.id !== id);
+                localStorage.setItem('waveBookings', JSON.stringify(bookings));
+                renderBookings();
+            }
+        }
+
+        document.getElementById('admin-clear-btn').addEventListener('click', () => {
+            if (confirm('Вы уверены, что хотите удалить ВСЕ заявки? Это действие нельзя отменить.')) {
+                localStorage.removeItem('waveBookings');
+                renderBookings();
+            }
+        });
+
+        document.getElementById('admin-export-btn').addEventListener('click', () => {
+            if (bookings.length === 0) return alert('Нет данных для экспорта');
+            let csv = 'Имя,Email,Услуга,Дата Желаемая,Статус,Заметка,Дата Заявки\n';
+            bookings.forEach(b => {
+                const safeNote = (b.note || '').replace(/,/g, ' ');
+                csv += `${b.name},${b.email},${b.service},${b.date},${b.status||'new'},${safeNote},${b.timestamp}\n`;
+            });
+            const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'wave_bookings.csv';
+            link.click();
+        });
+
+        // Settings (Mini CMS)
+        function loadSettings() {
+            const settings = JSON.parse(localStorage.getItem('waveSettings') || '{"vocal":"1 500 – 2 500 ₽ / час","mix":"3 000 – 7 000 ₽ / трек","beat":"от 5 000 ₽"}');
+            document.getElementById('set-vocal').value = settings.vocal || '';
+            document.getElementById('set-mix').value = settings.mix || '';
+            document.getElementById('set-beat').value = settings.beat || '';
+            
+            // Загрузка шаблона письма с бэкенда
+            fetch('http://localhost:3000/api/template')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.subject) document.getElementById('setting-email-subject').value = data.subject;
+                    if (data.textBody) document.getElementById('setting-email-text').value = data.textBody;
+                })
+                .catch(err => console.error('Ошибка загрузки шаблона', err));
+        }
+
+        document.getElementById('save-settings-btn').addEventListener('click', () => {
+            const settings = {
+                vocal: document.getElementById('set-vocal').value,
+                mix: document.getElementById('set-mix').value,
+                beat: document.getElementById('set-beat').value,
+            };
+            localStorage.setItem('waveSettings', JSON.stringify(settings));
+            
+            // Сохраняем шаблон письма на сервер
+            const templateData = {
+                subject: document.getElementById('setting-email-subject').value,
+                textBody: document.getElementById('setting-email-text').value
+            };
+            
+            fetch('http://localhost:3000/api/template', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(templateData)
+            })
+            .then(res => res.json())
+            .then(data => {
+                const msg = document.getElementById('settings-msg');
+                msg.style.display = 'inline';
+                setTimeout(() => msg.style.display = 'none', 3000);
+            })
+            .catch(err => {
+                alert('Прайс сохранен, но произошла ошибка при сохранении шаблона письма. Убедитесь, что бэкенд запущен.');
+                console.error(err);
+            });
+        });
+    </script>
+    </div>
+</body>
+</html>
