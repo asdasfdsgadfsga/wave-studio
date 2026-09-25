@@ -21,6 +21,13 @@ const mimeTypes = {
     '.m4a': 'audio/mp4'
 };
 
+const { generateSamplesManifest } = require('./generate-samples');
+try {
+    generateSamplesManifest();
+} catch (e) {
+    console.warn('Предупреждение при генерации манифеста сэмплов:', e.message);
+}
+
 const handleRequest = (req, res) => {
     const rawUrl = req.url.split('?')[0];
 
@@ -44,6 +51,7 @@ const handleRequest = (req, res) => {
                 const relUrl = cleanFolder
                     ? `samples/${encodeURIComponent(cleanFolder)}/${encodeURIComponent(cleanFile)}`
                     : `samples/${encodeURIComponent(cleanFile)}`;
+                try { generateSamplesManifest(); } catch (e) {}
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 res.end(JSON.stringify({ success: true, url: relUrl, name: cleanFile }));
             });
@@ -58,46 +66,10 @@ const handleRequest = (req, res) => {
         return;
     }
 
-    // API: Сканирование папки samples и её подпапок
+    // API: Сканирование папки samples и её подпапок (с автоматической генерацией манифеста)
     if (rawUrl === '/api/samples') {
-        const samplesDir = path.join(__dirname, 'samples');
         try {
-            if (!fs.existsSync(samplesDir)) {
-                fs.mkdirSync(samplesDir, { recursive: true });
-            }
-            const entries = fs.readdirSync(samplesDir, { withFileTypes: true });
-            const result = [];
-
-            entries.forEach(entry => {
-                if (entry.isDirectory()) {
-                    const folderPath = path.join(samplesDir, entry.name);
-                    const subFiles = fs.readdirSync(folderPath, { withFileTypes: true })
-                        .filter(f => f.isFile() && f.name.match(/\.(wav|mp3|ogg|flac|aif|aiff|m4a)$/i))
-                        .map(f => ({
-                            name: f.name,
-                            url: `samples/${encodeURIComponent(entry.name)}/${encodeURIComponent(f.name)}`
-                        }));
-                    result.push({
-                        folder: entry.name,
-                        files: subFiles
-                    });
-                }
-            });
-
-            // Корневые файлы
-            const rootFiles = entries
-                .filter(f => f.isFile() && f.name.match(/\.(wav|mp3|ogg|flac|aif|aiff|m4a)$/i))
-                .map(f => ({
-                    name: f.name,
-                    url: `samples/${encodeURIComponent(f.name)}`
-                }));
-            if (rootFiles.length > 0) {
-                result.unshift({
-                    folder: 'Общие сэмплы',
-                    files: rootFiles
-                });
-            }
-
+            const result = generateSamplesManifest();
             res.writeHead(200, {
                 'Content-Type': 'application/json; charset=utf-8',
                 'Cache-Control': 'no-cache'

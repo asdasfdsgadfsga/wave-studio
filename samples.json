@@ -1,0 +1,725 @@
+[
+  {
+    "folder": "DILLZEDD DRUM KIT - 808",
+    "files": [
+      {
+        "name": "808 (1).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20808/808%20(1).wav"
+      },
+      {
+        "name": "808 (2).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20808/808%20(2).wav"
+      },
+      {
+        "name": "808 (3).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20808/808%20(3).wav"
+      },
+      {
+        "name": "808 (4).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20808/808%20(4).wav"
+      },
+      {
+        "name": "808 (5).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20808/808%20(5).wav"
+      }
+    ]
+  },
+  {
+    "folder": "DILLZEDD DRUM KIT - CLAPS",
+    "files": [
+      {
+        "name": "CLAP (1).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20CLAPS/CLAP%20(1).wav"
+      },
+      {
+        "name": "CLAP (2).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20CLAPS/CLAP%20(2).wav"
+      },
+      {
+        "name": "CLAP (3).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20CLAPS/CLAP%20(3).wav"
+      },
+      {
+        "name": "CLAP (4).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20CLAPS/CLAP%20(4).wav"
+      },
+      {
+        "name": "CLAP (5).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20CLAPS/CLAP%20(5).wav"
+      },
+      {
+        "name": "CLAP (6).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20CLAPS/CLAP%20(6).wav"
+      },
+      {
+        "name": "CLAP (7).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20CLAPS/CLAP%20(7).wav"
+      },
+      {
+        "name": "CLAP (8).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20CLAPS/CLAP%20(8).wav"
+      },
+      {
+        "name": "CLAP (9).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20CLAPS/CLAP%20(9).wav"
+      },
+      {
+        "name": "CLAP (10).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20CLAPS/CLAP%20(10).wav"
+      }
+    ]
+  },
+  {
+    "folder": "DILLZEDD DRUM KIT - CRASHES",
+    "files": [
+      {
+        "name": "CRASH (1).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20CRASHES/CRASH%20(1).wav"
+      },
+      {
+        "name": "CRASH (2).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20CRASHES/CRASH%20(2).wav"
+      },
+      {
+        "name": "CRASH (3).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20CRASHES/CRASH%20(3).wav"
+      },
+      {
+        "name": "CRASH (4).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20CRASHES/CRASH%20(4).wav"
+      },
+      {
+        "name": "CRASH (5).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20CRASHES/CRASH%20(5).wav"
+      },
+      {
+        "name": "CRASH (6).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20CRASHES/CRASH%20(6).wav"
+      },
+      {
+        "name": "CRASH (7).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20CRASHES/CRASH%20(7).wav"
+      },
+      {
+        "name": "CRASH (8).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20CRASHES/CRASH%20(8).wav"
+      },
+      {
+        "name": "CRASH (9).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20CRASHES/CRASH%20(9).wav"
+      },
+      {
+        "name": "CRASH (10).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20CRASHES/CRASH%20(10).wav"
+      }
+    ]
+  },
+  {
+    "folder": "DILLZEDD DRUM KIT - FX",
+    "files": [
+      {
+        "name": "FX (1).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20FX/FX%20(1).wav"
+      },
+      {
+        "name": "FX (2).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20FX/FX%20(2).wav"
+      },
+      {
+        "name": "FX (3).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20FX/FX%20(3).wav"
+      },
+      {
+        "name": "FX (4).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20FX/FX%20(4).wav"
+      },
+      {
+        "name": "FX (5).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20FX/FX%20(5).wav"
+      },
+      {
+        "name": "FX (6).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20FX/FX%20(6).wav"
+      },
+      {
+        "name": "FX (7).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20FX/FX%20(7).wav"
+      },
+      {
+        "name": "FX (8).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20FX/FX%20(8).wav"
+      },
+      {
+        "name": "FX (9).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20FX/FX%20(9).wav"
+      },
+      {
+        "name": "FX (10).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20FX/FX%20(10).wav"
+      }
+    ]
+  },
+  {
+    "folder": "DILLZEDD DRUM KIT - HIGH HATS",
+    "files": [
+      {
+        "name": "HIGH HATS (1).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(1).wav"
+      },
+      {
+        "name": "HIGH HATS (2).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(2).wav"
+      },
+      {
+        "name": "HIGH HATS (3).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(3).wav"
+      },
+      {
+        "name": "HIGH HATS (4).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(4).wav"
+      },
+      {
+        "name": "HIGH HATS (5).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(5).wav"
+      },
+      {
+        "name": "HIGH HATS (6).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(6).wav"
+      },
+      {
+        "name": "HIGH HATS (7).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(7).wav"
+      },
+      {
+        "name": "HIGH HATS (8).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(8).wav"
+      },
+      {
+        "name": "HIGH HATS (9).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(9).wav"
+      },
+      {
+        "name": "HIGH HATS (10).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(10).wav"
+      },
+      {
+        "name": "HIGH HATS (11).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(11).wav"
+      },
+      {
+        "name": "HIGH HATS (12).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(12).wav"
+      },
+      {
+        "name": "HIGH HATS (13).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(13).wav"
+      },
+      {
+        "name": "HIGH HATS (14).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(14).wav"
+      },
+      {
+        "name": "HIGH HATS (15).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(15).wav"
+      },
+      {
+        "name": "HIGH HATS (16).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(16).wav"
+      },
+      {
+        "name": "HIGH HATS (17).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(17).wav"
+      },
+      {
+        "name": "HIGH HATS (18).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(18).wav"
+      },
+      {
+        "name": "HIGH HATS (19).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(19).wav"
+      },
+      {
+        "name": "HIGH HATS (20).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(20).wav"
+      },
+      {
+        "name": "HIGH HATS (21).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(21).wav"
+      },
+      {
+        "name": "HIGH HATS (22).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(22).wav"
+      },
+      {
+        "name": "HIGH HATS (23).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(23).wav"
+      },
+      {
+        "name": "HIGH HATS (24).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(24).wav"
+      },
+      {
+        "name": "HIGH HATS (25).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(25).wav"
+      },
+      {
+        "name": "HIGH HATS (26).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(26).wav"
+      },
+      {
+        "name": "HIGH HATS (27).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(27).wav"
+      },
+      {
+        "name": "HIGH HATS (28).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(28).wav"
+      },
+      {
+        "name": "HIGH HATS (29).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(29).wav"
+      },
+      {
+        "name": "HIGH HATS (30).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(30).wav"
+      },
+      {
+        "name": "HIGH HATS (31).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(31).wav"
+      },
+      {
+        "name": "HIGH HATS (32).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(32).wav"
+      },
+      {
+        "name": "HIGH HATS (33).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(33).wav"
+      },
+      {
+        "name": "HIGH HATS (34).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(34).wav"
+      },
+      {
+        "name": "HIGH HATS (35).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(35).wav"
+      },
+      {
+        "name": "HIGH HATS (36).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(36).wav"
+      },
+      {
+        "name": "HIGH HATS (37).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(37).wav"
+      },
+      {
+        "name": "HIGH HATS (38).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(38).wav"
+      },
+      {
+        "name": "HIGH HATS (39).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(39).wav"
+      },
+      {
+        "name": "HIGH HATS (40).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(40).wav"
+      },
+      {
+        "name": "HIGH HATS (41).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(41).wav"
+      },
+      {
+        "name": "HIGH HATS (42).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(42).wav"
+      },
+      {
+        "name": "HIGH HATS (43).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(43).wav"
+      },
+      {
+        "name": "HIGH HATS (44).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(44).wav"
+      },
+      {
+        "name": "HIGH HATS (45).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(45).wav"
+      },
+      {
+        "name": "HIGH HATS (46).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(46).wav"
+      },
+      {
+        "name": "HIGH HATS (47).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(47).wav"
+      },
+      {
+        "name": "HIGH HATS (48).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(48).wav"
+      },
+      {
+        "name": "HIGH HATS (49).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(49).wav"
+      },
+      {
+        "name": "HIGH HATS (50).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(50).wav"
+      },
+      {
+        "name": "HIGH HATS (51).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(51).wav"
+      },
+      {
+        "name": "HIGH HATS (52).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(52).wav"
+      },
+      {
+        "name": "HIGH HATS (53).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(53).wav"
+      },
+      {
+        "name": "HIGH HATS (54).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(54).wav"
+      },
+      {
+        "name": "HIGH HATS (55).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(55).wav"
+      },
+      {
+        "name": "HIGH HATS (56).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(56).wav"
+      },
+      {
+        "name": "HIGH HATS (57).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(57).wav"
+      },
+      {
+        "name": "HIGH HATS (58).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(58).wav"
+      },
+      {
+        "name": "HIGH HATS (59).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(59).wav"
+      },
+      {
+        "name": "HIGH HATS (60).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(60).wav"
+      },
+      {
+        "name": "HIGH HATS (61).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(61).wav"
+      },
+      {
+        "name": "HIGH HATS (62).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(62).wav"
+      },
+      {
+        "name": "HIGH HATS (63).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(63).wav"
+      },
+      {
+        "name": "HIGH HATS (64).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(64).wav"
+      },
+      {
+        "name": "HIGH HATS (65).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(65).wav"
+      },
+      {
+        "name": "HIGH HATS (66).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(66).wav"
+      },
+      {
+        "name": "HIGH HATS (67).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(67).wav"
+      },
+      {
+        "name": "HIGH HATS (68).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(68).wav"
+      },
+      {
+        "name": "HIGH HATS (69).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(69).wav"
+      },
+      {
+        "name": "HIGH HATS (70).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(70).wav"
+      },
+      {
+        "name": "HIGH HATS (71).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(71).wav"
+      },
+      {
+        "name": "HIGH HATS (72).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(72).wav"
+      },
+      {
+        "name": "HIGH HATS (73).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20HIGH%20HATS/HIGH%20HATS%20(73).wav"
+      }
+    ]
+  },
+  {
+    "folder": "DILLZEDD DRUM KIT - KICKS",
+    "files": [
+      {
+        "name": "KICK (1).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20KICKS/KICK%20(1).wav"
+      },
+      {
+        "name": "KICK (11).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20KICKS/KICK%20(11).wav"
+      },
+      {
+        "name": "KICK (12).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20KICKS/KICK%20(12).wav"
+      },
+      {
+        "name": "KICK (13).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20KICKS/KICK%20(13).wav"
+      },
+      {
+        "name": "KICK (14).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20KICKS/KICK%20(14).wav"
+      },
+      {
+        "name": "KICK (15).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20KICKS/KICK%20(15).wav"
+      },
+      {
+        "name": "KICK (16).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20KICKS/KICK%20(16).wav"
+      },
+      {
+        "name": "KICK (17).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20KICKS/KICK%20(17).wav"
+      },
+      {
+        "name": "KICK (18).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20KICKS/KICK%20(18).wav"
+      },
+      {
+        "name": "KICK (19).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20KICKS/KICK%20(19).wav"
+      }
+    ]
+  },
+  {
+    "folder": "DILLZEDD DRUM KIT - OPEN HATS",
+    "files": [
+      {
+        "name": "OPEN HAT (1).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20OPEN%20HATS/OPEN%20HAT%20(1).wav"
+      },
+      {
+        "name": "OPEN HAT (2).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20OPEN%20HATS/OPEN%20HAT%20(2).wav"
+      },
+      {
+        "name": "OPEN HAT (3).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20OPEN%20HATS/OPEN%20HAT%20(3).wav"
+      },
+      {
+        "name": "OPEN HAT (4).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20OPEN%20HATS/OPEN%20HAT%20(4).wav"
+      },
+      {
+        "name": "OPEN HAT (5).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20OPEN%20HATS/OPEN%20HAT%20(5).wav"
+      },
+      {
+        "name": "OPEN HAT (6).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20OPEN%20HATS/OPEN%20HAT%20(6).wav"
+      },
+      {
+        "name": "OPEN HAT (7).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20OPEN%20HATS/OPEN%20HAT%20(7).wav"
+      },
+      {
+        "name": "OPEN HAT (8).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20OPEN%20HATS/OPEN%20HAT%20(8).wav"
+      },
+      {
+        "name": "OPEN HAT (9).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20OPEN%20HATS/OPEN%20HAT%20(9).wav"
+      },
+      {
+        "name": "OPEN HAT (10).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20OPEN%20HATS/OPEN%20HAT%20(10).wav"
+      }
+    ]
+  },
+  {
+    "folder": "DILLZEDD DRUM KIT - PERCS",
+    "files": [
+      {
+        "name": "PERCS (8).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20PERCS/PERCS%20(8).wav"
+      },
+      {
+        "name": "PERCS (9).WAV",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20PERCS/PERCS%20(9).WAV"
+      },
+      {
+        "name": "PERCS (17).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20PERCS/PERCS%20(17).wav"
+      },
+      {
+        "name": "PERCS (18).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20PERCS/PERCS%20(18).wav"
+      },
+      {
+        "name": "PERCS (19).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20PERCS/PERCS%20(19).wav"
+      },
+      {
+        "name": "PERCS (20).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20PERCS/PERCS%20(20).wav"
+      },
+      {
+        "name": "PERCS (21).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20PERCS/PERCS%20(21).wav"
+      },
+      {
+        "name": "PERCS (22).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20PERCS/PERCS%20(22).wav"
+      },
+      {
+        "name": "PERCS (23).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20PERCS/PERCS%20(23).wav"
+      },
+      {
+        "name": "PERCS (24).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20PERCS/PERCS%20(24).wav"
+      },
+      {
+        "name": "PERCS (25).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20PERCS/PERCS%20(25).wav"
+      },
+      {
+        "name": "PERCS (26).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20PERCS/PERCS%20(26).wav"
+      }
+    ]
+  },
+  {
+    "folder": "DILLZEDD DRUM KIT - SNAPS",
+    "files": [
+      {
+        "name": "SNAP (1).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20SNAPS/SNAP%20(1).wav"
+      },
+      {
+        "name": "SNAP (2).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20SNAPS/SNAP%20(2).wav"
+      },
+      {
+        "name": "SNAP (3).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20SNAPS/SNAP%20(3).wav"
+      },
+      {
+        "name": "SNAP (4).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20SNAPS/SNAP%20(4).wav"
+      },
+      {
+        "name": "SNAP (5).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20SNAPS/SNAP%20(5).wav"
+      },
+      {
+        "name": "SNAP (6).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20SNAPS/SNAP%20(6).wav"
+      },
+      {
+        "name": "SNAP (7).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20SNAPS/SNAP%20(7).wav"
+      },
+      {
+        "name": "SNAP (8).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20SNAPS/SNAP%20(8).wav"
+      },
+      {
+        "name": "SNAP (9).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20SNAPS/SNAP%20(9).wav"
+      },
+      {
+        "name": "SNAP (10).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20SNAPS/SNAP%20(10).wav"
+      }
+    ]
+  },
+  {
+    "folder": "DILLZEDD DRUM KIT - SNARES",
+    "files": [
+      {
+        "name": "SNARE (1).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20SNARES/SNARE%20(1).wav"
+      },
+      {
+        "name": "SNARE (11).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20SNARES/SNARE%20(11).wav"
+      },
+      {
+        "name": "SNARE (12).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20SNARES/SNARE%20(12).wav"
+      },
+      {
+        "name": "SNARE (13).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20SNARES/SNARE%20(13).wav"
+      },
+      {
+        "name": "SNARE (14).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20SNARES/SNARE%20(14).wav"
+      },
+      {
+        "name": "SNARE (15).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20SNARES/SNARE%20(15).wav"
+      },
+      {
+        "name": "SNARE (16).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20SNARES/SNARE%20(16).wav"
+      },
+      {
+        "name": "SNARE (17).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20SNARES/SNARE%20(17).wav"
+      },
+      {
+        "name": "SNARE (18).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20SNARES/SNARE%20(18).wav"
+      },
+      {
+        "name": "SNARE (19).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20SNARES/SNARE%20(19).wav"
+      },
+      {
+        "name": "SNARE (20).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20SNARES/SNARE%20(20).wav"
+      }
+    ]
+  },
+  {
+    "folder": "DILLZEDD DRUM KIT - VOX & CHANTS",
+    "files": [
+      {
+        "name": "VOX OR CHANT (1).mp3",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20VOX%20%26%20CHANTS/VOX%20OR%20CHANT%20(1).mp3"
+      },
+      {
+        "name": "VOX OR CHANT (1).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20VOX%20%26%20CHANTS/VOX%20OR%20CHANT%20(1).wav"
+      },
+      {
+        "name": "VOX OR CHANT (2).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20VOX%20%26%20CHANTS/VOX%20OR%20CHANT%20(2).wav"
+      },
+      {
+        "name": "VOX OR CHANT (3).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20VOX%20%26%20CHANTS/VOX%20OR%20CHANT%20(3).wav"
+      },
+      {
+        "name": "VOX OR CHANT (4).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20VOX%20%26%20CHANTS/VOX%20OR%20CHANT%20(4).wav"
+      },
+      {
+        "name": "VOX OR CHANT (5).wav",
+        "url": "samples/DILLZEDD%20DRUM%20KIT%20-%20VOX%20%26%20CHANTS/VOX%20OR%20CHANT%20(5).wav"
+      }
+    ]
+  }
+]

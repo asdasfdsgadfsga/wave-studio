@@ -3020,8 +3020,38 @@ const sampleBufferCache = new Map();
 async function getSampleBuffer(url) {
   if (sampleBufferCache.has(url)) return sampleBufferCache.get(url);
   initAC();
-  const resp = await fetch(url);
-  if (!resp.ok) throw new Error('HTTP ' + resp.status);
+
+  let resp = null;
+  // 1. Попытка загрузить по прямому URL
+  try {
+    resp = await fetch(url);
+  } catch(e) {}
+
+  // 2. Если сервер не нашёл или выбросил ошибку — пробуем декодированный путь (на некоторых хостингах)
+  if (!resp || !resp.ok) {
+    try {
+      const decoded = decodeURI(url);
+      if (decoded !== url) {
+        const r2 = await fetch(decoded);
+        if (r2.ok) resp = r2;
+      }
+    } catch(e) {}
+  }
+
+  // 3. Если путь относительный без ./, пробуем с явным префиксом ./
+  if (!resp || !resp.ok) {
+    if (!url.startsWith('http') && !url.startsWith('/')) {
+      try {
+        const r3 = await fetch('./' + url);
+        if (r3.ok) resp = r3;
+      } catch(e) {}
+    }
+  }
+
+  if (!resp || !resp.ok) {
+    throw new Error('HTTP ' + (resp ? resp.status : 'NETWORK_ERR') + ' loading sample ' + url);
+  }
+
   const ab = await resp.arrayBuffer();
   const buf = normalizeBuffer(await AC.decodeAudioData(ab));
   sampleBufferCache.set(url, buf);
@@ -3069,9 +3099,40 @@ async function loadServerSamples() {
   if (!kitList) return;
 
   try {
-    const resp = await fetch('/api/samples?t=' + Date.now());
-    if (!resp.ok) throw new Error('HTTP ' + resp.status);
-    const folders = await resp.json();
+    let folders = null;
+
+    // Шаг 1: Пробуем динамический API локального сервера Node.js (/api/samples)
+    try {
+      const resp = await fetch('/api/samples?t=' + Date.now());
+      if (resp.ok) {
+        folders = await resp.json();
+      }
+    } catch(e) {
+      // Игнорируем ошибку сети для перехода к статическому манифесту
+    }
+
+    // Шаг 2: Если API недоступен (статический хостинг Cloudflare, GitHub Pages, Vercel и т.д.),
+    // загружаем статический манифест samples.json
+    if (!folders || !Array.isArray(folders) || folders.length === 0) {
+      const manifestCandidates = [
+        'samples.json',
+        './samples.json',
+        'samples/samples.json',
+        './samples/samples.json'
+      ];
+      for (const manifestPath of manifestCandidates) {
+        try {
+          const sResp = await fetch(manifestPath + '?t=' + Date.now());
+          if (sResp.ok) {
+            const data = await sResp.json();
+            if (Array.isArray(data) && data.length > 0) {
+              folders = data;
+              break;
+            }
+          }
+        } catch(err) {}
+      }
+    }
 
     kitList.innerHTML = '';
     if (!folders || folders.length === 0) {
@@ -3079,7 +3140,7 @@ async function loadServerSamples() {
         <div class="kit-empty-box">
           <div>Папки сэмплов не найдены.</div>
           <div style="font-size:0.62rem; color:var(--text-muted); margin-top:4px;">
-            Создайте папку <code>samples/</code> в корне проекта.
+            Создайте папку <code>samples/</code> в корне проекта или сгенерируйте <code>samples.json</code>.
           </div>
         </div>`;
       return;
@@ -3190,16 +3251,21 @@ async function loadServerSamples() {
 }
 
 async function uploadFilesToFolder(files, folder) {
+  let uploadedCount = 0;
   for (const file of files) {
     if (!file.name.match(/\.(wav|mp3|ogg|flac|m4a|aif|aiff)$/i)) continue;
     try {
-      await fetch(`/api/upload-sample?folder=${encodeURIComponent(folder)}&file=${encodeURIComponent(file.name)}`, {
+      const resp = await fetch(`/api/upload-sample?folder=${encodeURIComponent(folder)}&file=${encodeURIComponent(file.name)}`, {
         method: 'POST',
         body: file
       });
+      if (resp && resp.ok) uploadedCount++;
     } catch(err) {
       console.warn('Ошибка загрузки файла на сервер:', file.name, err);
     }
+  }
+  if (uploadedCount === 0 && files.length > 0) {
+    alert('На статическом хостинге прямая запись в папки сервера недоступна. Пожалуйста, перейдите на вкладку «Мои звуки» — туда можно перетащить любые свои сэмплы и сразу использовать их в треке!');
   }
 }
 
