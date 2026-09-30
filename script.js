@@ -358,11 +358,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const infoData = {
         socials: {
             title: 'Наши соцсети',
-            body: 'Подписывайтесь на нас, чтобы не пропустить обновления и новые плагины:<br><div class="social-links"><a href="#" target="_blank">ВКонтакте</a><a href="#" target="_blank">Telegram</a><a href="#" target="_blank">YouTube</a></div>'
+            body: 'Подписывайтесь на нас, чтобы не пропустить обновления и новые сэмплы:<br><div class="social-links"><a href="#" target="_blank">ВКонтакте</a><a href="https://t.me/wavemusic_support" target="_blank">Telegram</a><a href="#" target="_blank">YouTube</a></div>'
         },
         support: {
             title: 'Поддержка 24/7',
-            body: 'Если у вас возникли проблемы, наша команда всегда готова помочь.<br><br>Email: support@waveprodmusic.com<br>Telegram: @waveprod_support'
+            body: 'Если у вас возникли проблемы или вопросы по бронированию, мы всегда на связи.<br><br>Телефон: +7 (999) 228-52-67<br>Email: booking@waveprodmusic.com<br>Telegram: <a href="https://t.me/wavemusic_support" target="_blank" style="color:#c77dff; text-decoration:none; font-weight:600;">@wavemusic_support</a>'
         }
     };
 
