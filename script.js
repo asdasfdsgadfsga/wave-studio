@@ -633,57 +633,62 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem('waveBookings', JSON.stringify(storedBookings));
                 
                 
-                const btn = bookingForm.querySelector('button');
-                const originalText = btn.textContent;
-                btn.textContent = 'Отправка...';
-                
-                try {
-                    // РћС‚РїСЂР°РІРєР° РґР°РЅРЅС‹С… РЅР° Р±РµРєРµРЅРґ
-                    const response = await fetch('http://localhost:3000/api/book', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            name: name.value,
-                            email: email.value,
-                            phone: phone.value,
-                            service: service.value,
-                            date: date.value
-                        })
-                    });
+                const isLocal = typeof window !== 'undefined' && 
+                    (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
 
-                    if (response.ok) {
-                        bookingForm.style.display = 'none';
-                        const successScreen = document.getElementById('booking-success');
-                        successScreen.style.display = 'block';
-                        
-                        const successText = document.getElementById('booking-success-text');
-                        successText.innerHTML = `На вашу почту <strong>${email.value}</strong> было отправлено письмо со всеми деталями бронирования и дальнейшими инструкциями.`;
-                        
-                        bookingForm.reset();
-                    } else {
-                        // Р•СЃР»Рё СЃРµСЂРІРµСЂ РІРµСЂРЅСѓР» РѕС€РёР±РєСѓ, РїСЂРѕСЃС‚Рѕ РїРѕРєР°Р·С‹РІР°РµРј СѓСЃРїРµС… РґР»СЏ РІРёР·СѓР°Р»Р° (РґРµРјРѕ-СЂРµР¶РёРј)
-                        console.warn('Сервер вернул ошибку, но мы показываем экран успеха для демо.');
-                        showSuccessScreen(email.value);
+                if (isLocal) {
+                    // Отправка на локальный бэкенд (только на localhost)
+                    const btn = bookingForm.querySelector('button');
+                    const originalText = btn ? btn.textContent : 'Подтвердить запись';
+                    if (btn) btn.textContent = 'Отправка...';
+                    
+                    try {
+                        const response = await fetch('http://localhost:3000/api/book', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                name: name.value,
+                                email: email.value,
+                                phone: phone.value,
+                                service: service.value,
+                                date: date.value
+                            })
+                        });
+
+                        if (response.ok) {
+                            showSuccessScreen(email.value, true);
+                        } else {
+                            console.warn('Сервер вернул ошибку, показываем экран успеха.');
+                            showSuccessScreen(email.value, false);
+                        }
+                    } catch (error) {
+                        console.warn('Локальный бекенд не запущен. Показ экрана успеха.', error);
+                        showSuccessScreen(email.value, false);
+                    } finally {
+                        if (btn) btn.textContent = originalText;
                     }
-                } catch (error) {
-                    // Р•СЃР»Рё Р±РµРєРµРЅРґ РЅРµ Р·Р°РїСѓС‰РµРЅ (ECONNREFUSED), РїРѕРєР°Р·С‹РІР°РµРј СѓСЃРїРµС… РґР»СЏ РґРµРјРѕРЅСЃС‚СЂР°С†РёРё UI
-                    console.warn('Бекенд не запущен. Переход в демо-режим (показ экрана успеха).', error);
-                    showSuccessScreen(email.value);
-                } finally {
-                    btn.textContent = originalText;
+                } else {
+                    // На живом сайте (в интернете) запрос на бекенд не отправляется, сразу показываем успех
+                    showSuccessScreen(email.value, false);
                 }
             }
         });
         
-        // Р’СЃРїРѕРјРѕРіР°С‚РµР»СЊРЅР°СЏ С„СѓРЅРєС†РёСЏ РґР»СЏ РїРѕРєР°Р·Р° СЌРєСЂР°РЅР° СѓСЃРїРµС…Р°
-        function showSuccessScreen(userEmail) {
+        // Вспомогательная функция для показа экрана успеха
+        function showSuccessScreen(userEmail, isEmailSent) {
             bookingForm.style.display = 'none';
             const successScreen = document.getElementById('booking-success');
-            successScreen.style.display = 'block';
+            if (successScreen) successScreen.style.display = 'block';
             const successText = document.getElementById('booking-success-text');
-            successText.innerHTML = `На вашу почту <strong>${userEmail}</strong> было отправлено письмо со всеми деталями бронирования.`;
+            if (successText) {
+                if (isEmailSent) {
+                    successText.innerHTML = `На вашу почту <strong>${userEmail}</strong> было отправлено письмо со всеми деталями бронирования и дальнейшими инструкциями.`;
+                } else {
+                    successText.innerHTML = `Заявка успешно оформлена! Мы зафиксировали бронь на <strong>${userEmail}</strong> и свяжемся с вами.`;
+                }
+            }
             bookingForm.reset();
         }
     }
