@@ -18,16 +18,21 @@
     return scripts[scripts.length - 1];
   })();
 
-  let apiUrl = 'http://localhost:3005/api/chat';
-  if (currentScript) {
-    if (currentScript.dataset.api) {
+  const isLocalhost = typeof window !== 'undefined' && 
+    (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+
+  let apiUrl = isLocalhost ? 'http://localhost:3005/api/chat' : '/api/chat';
+  if (currentScript && currentScript.dataset.api) {
+    if (isLocalhost && currentScript.dataset.api === '/api/chat') {
+      apiUrl = 'http://localhost:3005/api/chat';
+    } else {
       apiUrl = currentScript.dataset.api;
-    } else if (currentScript.src && currentScript.src.startsWith('http')) {
-      try {
-        const u = new URL(currentScript.src);
-        apiUrl = u.origin + '/api/chat';
-      } catch (e) {}
     }
+  } else if (!isLocalhost && currentScript && currentScript.src && currentScript.src.startsWith('http')) {
+    try {
+      const u = new URL(currentScript.src);
+      apiUrl = u.origin + '/api/chat';
+    } catch (e) {}
   }
 
   // Векторные SVG-иконки для интерфейса (вместо системных эмодзи)
