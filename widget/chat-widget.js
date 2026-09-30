@@ -596,31 +596,40 @@
     /* Поле ввода сообщения */
     .chat-footer {
       padding: 12px 14px;
-      background: rgba(15, 8, 28, 0.95);
-      backdrop-filter: blur(16px);
-      border-top: 1px solid rgba(199, 125, 255, 0.12);
+      background: rgba(16, 7, 32, 0.98);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(199, 125, 255, 0.22);
+      box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.45);
       display: flex;
       align-items: flex-end;
-      gap: 8px;
+      gap: 10px;
       position: relative;
-      z-index: 2;
+      z-index: 10;
+      flex-shrink: 0;
     }
 
     .chat-input-box {
       flex: 1;
-      background: rgba(26, 16, 46, 0.7);
-      border: 1px solid rgba(199, 125, 255, 0.2);
-      border-radius: 16px;
-      padding: 9px 12px;
+      background: rgba(40, 20, 72, 0.85);
+      border: 1.5px solid rgba(199, 125, 255, 0.45);
+      border-radius: 20px;
+      padding: 10px 14px;
       display: flex;
       align-items: center;
       transition: all 0.22s ease;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    .chat-input-box:hover {
+      border-color: rgba(199, 125, 255, 0.7);
+      background: rgba(48, 24, 86, 0.92);
     }
 
     .chat-input-box:focus-within {
-      border-color: rgba(199, 125, 255, 0.5);
-      background: rgba(32, 20, 56, 0.85);
-      box-shadow: 0 0 16px rgba(157, 78, 221, 0.25);
+      border-color: #c77dff;
+      background: rgba(52, 26, 92, 0.98);
+      box-shadow: 0 0 18px rgba(199, 125, 255, 0.38), inset 0 1px 3px rgba(0, 0, 0, 0.3);
     }
 
     .chat-input {
@@ -629,24 +638,25 @@
       border: none;
       outline: none;
       color: #ffffff;
-      font-size: 13.5px;
+      font-size: 14.5px;
       line-height: 1.45;
       resize: none;
       max-height: 90px;
-      min-height: 20px;
+      min-height: 22px;
     }
 
     .chat-input::placeholder {
-      color: rgba(199, 125, 255, 0.45);
-      font-size: 13px;
+      color: rgba(235, 215, 255, 0.82);
+      font-size: 13.5px;
+      font-weight: 400;
     }
 
     .chat-send-btn {
-      width: 38px;
-      height: 38px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #7b2cbf 0%, #9d4edd 100%);
-      border: 1px solid rgba(199, 125, 255, 0.35);
+      background: linear-gradient(135deg, #8a2be2 0%, #a855f7 100%);
+      border: 1.5px solid rgba(220, 180, 255, 0.6);
       outline: none;
       cursor: pointer;
       display: flex;
@@ -654,24 +664,26 @@
       justify-content: center;
       color: #ffffff;
       flex-shrink: 0;
-      box-shadow: 0 0 16px rgba(157, 78, 221, 0.35);
+      box-shadow: 0 0 18px rgba(168, 85, 247, 0.5);
       transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
     }
 
     .chat-send-btn:hover:not(:disabled) {
       transform: scale(1.08);
-      box-shadow: 0 0 22px rgba(199, 125, 255, 0.6);
+      box-shadow: 0 0 24px rgba(199, 125, 255, 0.7);
     }
 
     .chat-send-btn:disabled {
-      opacity: 0.35;
+      opacity: 0.4;
       cursor: not-allowed;
       box-shadow: none;
+      border-color: rgba(199, 125, 255, 0.25);
+      background: rgba(90, 40, 140, 0.4);
     }
 
     .chat-send-btn svg {
-      width: 16px;
-      height: 16px;
+      width: 17px;
+      height: 17px;
       fill: #ffffff;
       transform: translateX(1px);
     }
@@ -685,22 +697,32 @@
         height: 52px;
       }
       .chat-window {
+        position: fixed;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
+        width: 100%;
         width: 100vw;
+        height: 100%;
         height: 100vh;
-        max-width: 100vw;
-        max-height: 100vh;
+        height: 100dvh;
+        max-width: 100%;
+        max-height: 100dvh;
         border-radius: 0;
         border: none;
       }
       .chat-header {
-        padding-top: max(16px, env(safe-area-inset-top));
+        padding-top: max(16px, env(safe-area-inset-top, 16px));
       }
       .chat-footer {
-        padding-bottom: max(12px, env(safe-area-inset-bottom));
+        padding-left: 12px;
+        padding-right: 12px;
+        padding-top: 10px;
+        padding-bottom: max(14px, calc(10px + env(safe-area-inset-bottom, 14px)));
+      }
+      .chat-input {
+        font-size: 16px; /* Предотвращает авто-зум на iOS Safari */
       }
     }
   `;
@@ -864,9 +886,43 @@
       chatWindow.classList.toggle('is-open', isOpen);
 
       if (isOpen) {
-        setTimeout(() => chatInput.focus(), 250);
+        if (window.innerWidth > 600) {
+          setTimeout(() => chatInput.focus(), 250);
+        }
+        if (window.visualViewport && window.innerWidth <= 600) {
+          chatWindow.style.height = `${window.visualViewport.height}px`;
+        }
+        scrollToBottom();
+      } else {
+        chatWindow.style.height = '';
       }
     }
+
+    // Поддержка виртуальной клавиатуры и динамического вьюпорта на смартфонах (iOS / Android)
+    if (window.visualViewport) {
+      const handleViewportChange = () => {
+        if (window.innerWidth <= 600 && isOpen) {
+          chatWindow.style.height = `${window.visualViewport.height}px`;
+          scrollToBottom();
+        } else if (!isOpen) {
+          chatWindow.style.height = '';
+        }
+      };
+
+      window.visualViewport.addEventListener('resize', handleViewportChange);
+      window.visualViewport.addEventListener('scroll', handleViewportChange);
+    }
+
+    chatInput.addEventListener('focus', () => {
+      if (window.innerWidth <= 600) {
+        setTimeout(() => {
+          if (window.visualViewport) {
+            chatWindow.style.height = `${window.visualViewport.height}px`;
+          }
+          scrollToBottom();
+        }, 280);
+      }
+    });
 
     launcherBtn.addEventListener('click', () => toggleChat());
     closeBtn.addEventListener('click', () => toggleChat(false));
@@ -1014,7 +1070,9 @@
       } finally {
         isWaitingResponse = false;
         sendBtn.disabled = !chatInput.value.trim();
-        setTimeout(() => chatInput.focus(), 50);
+        if (window.innerWidth > 600) {
+          setTimeout(() => chatInput.focus(), 50);
+        }
       }
     }
 
