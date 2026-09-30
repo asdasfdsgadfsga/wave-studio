@@ -148,7 +148,7 @@ export async function onRequestPost(context) {
     const baseUrl = env?.OPENAI_BASE_URL || 'https://api.groq.com/openai/v1';
     const model = env?.OPENAI_MODEL || 'qwen/qwen3.8-27b';
 
-    const groqResp = await fetch(`${baseUrl}/chat/completions`, {
+    let groqResp = await fetch(`${baseUrl}/chat/completions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -158,9 +158,26 @@ export async function onRequestPost(context) {
         model: model,
         messages: messages,
         temperature: 0.7,
-        max_tokens: 1200,
+        max_tokens: 380,
       }),
     });
+
+    // При лимите 429 автоматически переключаемся на резервную модель
+    if (groqResp.status === 429) {
+      groqResp = await fetch(`${baseUrl}/chat/completions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model: 'openai/gpt-oss-20b',
+          messages: messages,
+          temperature: 0.7,
+          max_tokens: 380,
+        }),
+      });
+    }
 
     if (!groqResp.ok) {
       const errText = await groqResp.text().catch(() => '');

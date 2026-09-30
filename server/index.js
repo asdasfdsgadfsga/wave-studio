@@ -75,7 +75,7 @@ const apiKey = process.env.OPENAI_API_KEY;
 const baseURL = process.env.OPENAI_BASE_URL || 'https://api.openai.com/v1';
 const modelName = process.env.OPENAI_MODEL || 'gpt-4o-mini';
 const temperature = parseFloat(process.env.TEMPERATURE) || 0.7;
-const maxTokens = parseInt(process.env.MAX_TOKENS, 10) || 1200;
+const maxTokens = parseInt(process.env.MAX_TOKENS, 10) || 380;
 
 let openai = null;
 if (apiKey && apiKey !== 'your_api_key_here') {
