@@ -96,6 +96,56 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// Вызов Google Gemini API
+async function callGemini(geminiKey, systemInstruction, history, userMessage) {
+  const geminiContents = [];
+  if (Array.isArray(history)) {
+    history.slice(-8).forEach(h => {
+      if (h && typeof h.content === 'string') {
+        geminiContents.push({
+          role: h.role === 'assistant' ? 'model' : 'user',
+          parts: [{ text: h.content.trim() }]
+        });
+      }
+    });
+  }
+  geminiContents.push({
+    role: 'user',
+    parts: [{ text: userMessage.trim() }]
+  });
+
+  const payload = {
+    system_instruction: { parts: [{ text: systemInstruction }] },
+    contents: geminiContents,
+    generationConfig: {
+      temperature: 0.75,
+      maxOutputTokens: 1800
+    }
+  };
+
+  const models = ['gemini-3.1-flash-lite', 'gemini-3.5-flash'];
+  for (const m of models) {
+    try {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${geminiKey}`;
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (res.ok) {
+        const data = await res.json();
+        const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (text && text.trim()) {
+          return { reply: text.trim(), model: m };
+        }
+      }
+    } catch (e) {
+      console.warn(`[Gemini local ${m} warn]:`, e.message);
+    }
+  }
+  return null;
+}
+
 // Функция очистки ответа от markdown-таблиц, звёздочек жирного шрифта и решёток
 function cleanPlainReply(rawText) {
   if (!rawText || typeof rawText !== 'string') return '';
@@ -185,6 +235,24 @@ app.post('/api/chat', async (req, res) => {
 
     // 4. Сборка контекста диалога
     const systemInstruction = getSystemPrompt(mode);
+
+    // 4.1 Проверяем наличие ключа Google Gemini (приоритетный движок)
+    const geminiKey = process.env.GEMINI_API_KEY;
+    if (geminiKey) {
+      try {
+        const geminiResult = await callGemini(geminiKey, systemInstruction, validHistory, message);
+        if (geminiResult && geminiResult.reply) {
+          return res.json({
+            reply: cleanPlainReply(geminiResult.reply),
+            model: geminiResult.model,
+            provider: 'gemini'
+          });
+        }
+      } catch (geminiErr) {
+        console.warn('[Gemini Error, falling back to OpenAI/Groq]:', geminiErr.message);
+      }
+    }
+
     const messages = [
       { role: 'system', content: systemInstruction },
       ...validHistory,

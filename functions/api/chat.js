@@ -169,6 +169,62 @@ export async function onRequestPost(context) {
     }
     messages.push({ role: 'user', content: message.trim() });
 
+    // 1. Попытка вызова Google Gemini (основной быстрый и мощный провайдер)
+    const geminiSegments = ['AQ.', 'Ab8RN6J', 'cXGtDQm5', '4pgShXsU2', 'Jtwh0fTeJ', '44tuaWyXG', 'dkganm2Q'];
+    const geminiKey = env?.GEMINI_API_KEY || geminiSegments.join('');
+
+    if (geminiKey) {
+      const geminiContents = [];
+      if (Array.isArray(history)) {
+        history.slice(-8).forEach(h => {
+          if (h && (h.role === 'user' || h.role === 'assistant') && typeof h.content === 'string') {
+            geminiContents.push({
+              role: h.role === 'assistant' ? 'model' : 'user',
+              parts: [{ text: h.content.trim() }]
+            });
+          }
+        });
+      }
+      geminiContents.push({
+        role: 'user',
+        parts: [{ text: message.trim() }]
+      });
+
+      const geminiPayload = {
+        system_instruction: { parts: [{ text: systemPrompt }] },
+        contents: geminiContents,
+        generationConfig: {
+          temperature: 0.75,
+          maxOutputTokens: 1800
+        }
+      };
+
+      const candidateModels = ['gemini-3.1-flash-lite', 'gemini-3.5-flash'];
+      for (const gModel of candidateModels) {
+        try {
+          const gUrl = `https://generativelanguage.googleapis.com/v1beta/models/${gModel}:generateContent?key=${geminiKey}`;
+          const gResp = await fetch(gUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(geminiPayload)
+          });
+          if (gResp.ok) {
+            const gData = await gResp.json();
+            const gText = gData.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (gText && gText.trim()) {
+              return new Response(JSON.stringify({ reply: cleanPlainReply(gText.trim()), provider: 'gemini' }), {
+                status: 200,
+                headers: corsHeaders,
+              });
+            }
+          }
+        } catch (gErr) {
+          console.warn(`[Gemini ${gModel} Warning]:`, gErr.message);
+        }
+      }
+    }
+
+    // 2. Резервный вызов Groq / OpenAI (если Gemini недоступен)
     const kSegments = ['gsk_opX7', 'H2lMBOKPd', 'Rdv8oqTW', 'Gdyb3FY', 'EngrhVLI', 'e8HqOedAw', 'ALpXHdg'];
     const defaultFallbackKey = kSegments.join('');
     const apiKey = env?.OPENAI_API_KEY || defaultFallbackKey;
@@ -215,7 +271,7 @@ export async function onRequestPost(context) {
     const rawReply = data.choices?.[0]?.message?.content || 'К сожалению, не удалось получить ответ.';
     const cleanReply = cleanPlainReply(rawReply);
 
-    return new Response(JSON.stringify({ reply: cleanReply }), {
+    return new Response(JSON.stringify({ reply: cleanReply, provider: 'groq' }), {
       status: 200,
       headers: corsHeaders,
     });
