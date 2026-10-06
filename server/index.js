@@ -119,7 +119,7 @@ async function callGemini(geminiKey, systemInstruction, history, userMessage) {
     contents: geminiContents,
     generationConfig: {
       temperature: 0.75,
-      maxOutputTokens: 1800
+      maxOutputTokens: 280
     }
   };
 
