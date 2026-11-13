@@ -85,6 +85,23 @@ test('widget detects navigation targets from tags and user prompts', () => {
   assert.equal(detect('привет', 'Обычный совет по эквализации вокала'), null);
 });
 
+test('DAW mode integrates into top transport bar and removes floating bottom button', () => {
+  const appSource = readFileSync(new URL('../app.html', import.meta.url), 'utf8');
+  const widgetSource = readFileSync(new URL('../widget/chat-widget.js', import.meta.url), 'utf8');
+
+  // Verify app.html contains header trigger and data-mode="daw"
+  assert.match(appSource, /id="btn-daw-ai"/);
+  assert.match(appSource, /data-wave-chat-toggle/);
+  assert.match(appSource, /data-mode="daw"/);
+  assert.match(appSource, /\.transport-ai-btn/);
+
+  // Verify chat-widget.js contains DAW mode styles hiding floating launcher
+  assert.match(widgetSource, /:host\(\[data-mode="daw"\]\)\s*\.chat-launcher-btn\s*\{\s*display:\s*none\s*!important;/);
+  assert.match(widgetSource, /:host\(\[data-mode="daw"\]\)\s*\.chat-window/);
+  assert.match(widgetSource, /isDawMode/);
+  assert.match(widgetSource, /syncExternalToggles/);
+});
+
 for (const [mode, prompt] of [['pro', PRO_PROMPT], ['street', STREET_PROMPT], ['poselok', STREET_PROMPT]]) {
   for (const provider of ['gemini', 'groq']) {
     test(`${mode}: trusted prompt stays separate from client instructions (${provider})`, async t => {

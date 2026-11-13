@@ -236,6 +236,43 @@ html, body {
 /* SAVE & EXIT BUTTONS */
 .transport-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
 
+.transport-ai-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  background: rgba(22, 10, 36, 0.85);
+  border: 1px solid rgba(199, 125, 255, 0.35);
+  border-radius: 20px;
+  color: #eee3ff;
+  font-family: var(--font-main);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  box-shadow: 0 0 10px rgba(157, 78, 221, 0.2);
+}
+.transport-ai-btn:hover {
+  background: rgba(38, 16, 62, 0.95);
+  border-color: var(--purple-light);
+  box-shadow: 0 0 14px var(--purple-glow);
+  transform: translateY(-1px);
+}
+.transport-ai-btn.active {
+  background: rgba(157, 78, 221, 0.35);
+  border-color: var(--purple-light);
+  box-shadow: 0 0 14px var(--purple-glow);
+}
+.transport-ai-wave {
+  width: 14px;
+  height: 14px;
+  color: var(--purple-light);
+  flex-shrink: 0;
+}
+
 .save-btn {
   background: var(--bg-card);
   border: 1px solid var(--purple-border);
@@ -1420,6 +1457,12 @@ html, body {
 
   <!-- Right side: Export, Save & Exit -->
   <div class="transport-right">
+    <button type="button" class="transport-ai-btn" id="btn-daw-ai" data-wave-chat-toggle title="AI-помощник по звуку Wave Studio">
+      <svg class="transport-ai-wave" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+        <path d="M3 10v4M7.5 6v12M12 3v18M16.5 7v10M21 10v4"/>
+      </svg>
+      <span>Спросить AI</span>
+    </button>
     <button class="export-btn" id="btn-export-mp3" title="Экспортировать и скачать трек в MP3">
       <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4">
         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -4622,8 +4665,8 @@ async function exportProjectToMP3() {
 
 document.getElementById('btn-export-mp3')?.addEventListener('click', exportProjectToMP3);
 </script>
-<!-- Встраиваемый AI Чат-бот поддержки (кнопка в левом нижнем углу) -->
-<script defer src="widget/chat-widget.js?v=2.6" data-api="/api/chat"></script>
+<!-- Встраиваемый AI Чат-бот поддержки (интегрирован в транспортную панель DAW) -->
+<script defer src="widget/chat-widget.js?v=2.7" data-api="/api/chat" data-mode="daw"></script>
 </body>
 </html>
 

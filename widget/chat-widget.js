@@ -167,6 +167,25 @@
       visibility:visible;
       transform:none
     }
+    :host([data-mode="daw"]) .chat-launcher-btn {
+      display: none !important;
+    }
+    :host([data-mode="daw"]) .chat-window {
+      top: 76px;
+      right: 18px;
+      bottom: auto;
+      left: auto;
+      height: min(720px, calc(100vh - 96px));
+      max-height: calc(100vh - 96px);
+      width: 420px;
+      max-width: calc(100vw - 36px);
+      transform-origin: top right;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, .75), 0 0 35px rgba(157, 78, 221, .25);
+    }
+    :host([data-mode="daw"]) .chat-header {
+      cursor: move;
+      user-select: none;
+    }
     .chat-header {
       padding:22px 22px 16px;
       background: rgba(18, 4, 36, .58);
@@ -607,7 +626,8 @@
       }
       .launcher-label, .launcher-wave { display: none; }
       .launcher-chat { display: block; }
-      .chat-window {
+      .chat-window,
+      :host([data-mode="daw"]) .chat-window {
         top:0;
         left:0;
         right:0;
@@ -748,9 +768,42 @@
 
   function mountWidget() {
     ensureGlobalNavStyles();
+    const isDawMode = Boolean(
+      (currentScript && (currentScript.dataset.mode === 'daw' || currentScript.dataset.position === 'header')) ||
+      document.getElementById('transport') ||
+      (typeof window !== 'undefined' && (window.location.pathname.endsWith('app.html') || window.location.pathname.endsWith('/app.html') || window.location.pathname.endsWith('/app')))
+    );
+
     const hostEl = document.createElement('div');
     hostEl.id = 'wave-ai-chat-root';
+    if (isDawMode) {
+      hostEl.setAttribute('data-mode', 'daw');
+    }
     document.body.appendChild(hostEl);
+
+    // В режиме DAW при отсутствии кнопки в разметке аккуратно встраиваем ее в транспортную панель
+    if (isDawMode && !document.getElementById('btn-daw-ai')) {
+      const container = document.querySelector('.transport-right') || document.getElementById('transport');
+      if (container) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.id = 'btn-daw-ai';
+        btn.className = 'transport-ai-btn';
+        btn.setAttribute('data-wave-chat-toggle', 'true');
+        btn.setAttribute('title', 'AI-помощник по звуку Wave Studio');
+        btn.innerHTML = `
+          <svg class="transport-ai-wave" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true" style="width:14px;height:14px;color:#c77dff;flex-shrink:0;">
+            <path d="M3 10v4M7.5 6v12M12 3v18M16.5 7v10M21 10v4"/>
+          </svg>
+          <span>Спросить AI</span>
+        `;
+        if (container.classList.contains('transport-right') && container.firstChild) {
+          container.insertBefore(btn, container.firstChild);
+        } else {
+          container.appendChild(btn);
+        }
+      }
+    }
 
     const shadowRoot = hostEl.attachShadow({ mode: 'open' });
 
@@ -836,6 +889,13 @@
       }
     }
 
+    function syncExternalToggles(openState) {
+      document.querySelectorAll('[data-wave-chat-toggle], #btn-daw-ai').forEach(btn => {
+        btn.classList.toggle('active', openState);
+        btn.setAttribute('aria-expanded', String(openState));
+      });
+    }
+
     function toggleChat(forceState) {
       isOpen = typeof forceState === 'boolean' ? forceState : !isOpen;
       launcherBtn.classList.toggle('is-open', isOpen);
@@ -844,6 +904,7 @@
       launcherBtn.setAttribute('aria-expanded', String(isOpen));
       launcherLabel.textContent = isOpen ? 'Свернуть чат' : 'Спросить AI';
       launcherBtn.setAttribute('aria-label', isOpen ? 'Свернуть чат Wave Studio' : 'Спросить AI — открыть чат Wave Studio');
+      syncExternalToggles(isOpen);
       updateLauncherPosition();
 
       if (isOpen) {
@@ -862,7 +923,12 @@
         }
       } else {
         chatWindow.style.height = '';
-        launcherBtn.focus();
+        if (!isDawMode) {
+          launcherBtn.focus();
+        } else {
+          const dawBtn = document.getElementById('btn-daw-ai');
+          if (dawBtn) dawBtn.focus();
+        }
       }
     }
 
@@ -900,6 +966,71 @@
     shadowRoot.addEventListener('keydown', event => {
       if (event.key === 'Escape' && isOpen) toggleChat(false);
     });
+
+    document.addEventListener('click', event => {
+      const toggle = event.target && event.target.closest && event.target.closest('[data-wave-chat-toggle], #btn-daw-ai');
+      if (toggle) {
+        event.preventDefault();
+        toggleChat();
+      }
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && isOpen) {
+        toggleChat(false);
+      }
+    });
+
+    // Возможность плавного перемещения окна чата за шапку в режиме DAW
+    let isDraggingWindow = false;
+    let dragStartX = 0, dragStartY = 0;
+    let initialLeft = 0, initialTop = 0;
+    const chatHeaderEl = shadowRoot.querySelector('.chat-header');
+
+    if (chatHeaderEl) {
+      chatHeaderEl.addEventListener('mousedown', (e) => {
+        if (!isDawMode) return;
+        if (e.target.closest('button, .chat-persona-switch, textarea, input, a')) return;
+        if (window.innerWidth <= 600) return;
+        isDraggingWindow = true;
+        const rect = chatWindow.getBoundingClientRect();
+        dragStartX = e.clientX;
+        dragStartY = e.clientY;
+        initialLeft = rect.left;
+        initialTop = rect.top;
+        chatWindow.style.left = `${initialLeft}px`;
+        chatWindow.style.top = `${initialTop}px`;
+        chatWindow.style.right = 'auto';
+        chatWindow.style.bottom = 'auto';
+        document.body.style.userSelect = 'none';
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!isDraggingWindow) return;
+        const dx = e.clientX - dragStartX;
+        const dy = e.clientY - dragStartY;
+        const maxLeft = Math.max(10, window.innerWidth - chatWindow.offsetWidth - 10);
+        const maxTop = Math.max(10, window.innerHeight - 80);
+        const newLeft = Math.min(Math.max(10, initialLeft + dx), maxLeft);
+        const newTop = Math.min(Math.max(10, initialTop + dy), maxTop);
+        chatWindow.style.left = `${newLeft}px`;
+        chatWindow.style.top = `${newTop}px`;
+      });
+
+      window.addEventListener('mouseup', () => {
+        if (isDraggingWindow) {
+          isDraggingWindow = false;
+          document.body.style.userSelect = '';
+        }
+      });
+    }
+
+    window.WaveChat = {
+      open: () => toggleChat(true),
+      close: () => toggleChat(false),
+      toggle: () => toggleChat(),
+      isOpen: () => isOpen
+    };
 
     const NAV_CONFIGS = {
       daw: {
