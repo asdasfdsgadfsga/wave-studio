@@ -220,10 +220,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const isSelected = nearest === i;
                 if (isSelected && !el.classList.contains('active')) {
                     el.classList.add('active');
-                    el.setAttribute('aria-selected', 'true');
+                    el.setAttribute('aria-current', 'location');
                 } else if (!isSelected && el.classList.contains('active')) {
                     el.classList.remove('active');
-                    el.setAttribute('aria-selected', 'false');
+                    el.removeAttribute('aria-current');
                 }
 
                 el.style.transform = `translate3d(${x.toFixed(2)}px, calc(${y.toFixed(2)}px - 50%), 0) rotate(${rot.toFixed(3)}deg)`;
@@ -940,6 +940,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     volumeSlider.addEventListener('input', (e) => {
         masterVolume = parseFloat(e.target.value);
+        volumeSlider.setAttribute('aria-valuetext', Math.round(masterVolume * 100) + '%');
         updateAudios();
     });
 
@@ -2604,6 +2605,7 @@ class InfiniteGridMenu {
 
 // Gallery Lightbox Controller
 let galleryLightboxIndex = 0;
+let galleryLightboxTrigger = null;
 function openGalleryLightbox(index) {
     const lb = document.getElementById('gallery-lightbox');
     const lbImg = document.getElementById('lightbox-img');
@@ -2611,18 +2613,27 @@ function openGalleryLightbox(index) {
     const lbTitle = document.getElementById('lightbox-title');
     if (!lb || !lbImg) return;
 
+    if (!lb.classList.contains('active')) galleryLightboxTrigger = document.activeElement;
     galleryLightboxIndex = (index + GALLERY_ITEMS.length) % GALLERY_ITEMS.length;
     const item = GALLERY_ITEMS[galleryLightboxIndex];
     lbImg.src = item.image;
+    lbImg.alt = item.title;
     if (lbTag) lbTag.textContent = item.badge;
     if (lbTitle) lbTitle.textContent = item.title;
     lb.classList.add('active');
+    lb.inert = false;
+    lb.removeAttribute('aria-hidden');
     document.body.style.overflow = 'hidden';
+    if (!lb.contains(document.activeElement)) document.getElementById('lightbox-close-btn')?.focus();
 }
 
 function closeGalleryLightbox() {
     const lb = document.getElementById('gallery-lightbox');
-    if (lb) lb.classList.remove('active');
+    if (!lb || !lb.classList.contains('active')) return;
+    lb.classList.remove('active');
+    if (lb.contains(document.activeElement)) galleryLightboxTrigger?.focus({ preventScroll: true });
+    lb.inert = true;
+    lb.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
 }
 
@@ -2635,8 +2646,14 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('keydown', e => {
         if (e.key === 'Escape') closeGalleryLightbox();
         if (document.getElementById('gallery-lightbox')?.classList.contains('active')) {
-            if (e.key === 'ArrowLeft') openGalleryLightbox(galleryLightboxIndex - 1);
-            if (e.key === 'ArrowRight') openGalleryLightbox(galleryLightboxIndex + 1);
+            if (e.key === 'ArrowLeft') { e.preventDefault(); openGalleryLightbox(galleryLightboxIndex - 1); }
+            if (e.key === 'ArrowRight') { e.preventDefault(); openGalleryLightbox(galleryLightboxIndex + 1); }
+            if (e.key === 'Tab') {
+                const first = document.getElementById('lightbox-close-btn');
+                const last = document.getElementById('lightbox-next-btn');
+                if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+                if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+            }
         }
     });
 

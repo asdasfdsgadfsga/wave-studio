@@ -2,6 +2,10 @@
 /images/gallery/previews/v1/*
   Cache-Control: public, max-age=31536000, immutable
 
+# Versioned site artwork retains the existing appearance at smaller file sizes.
+/images/site/v1/*
+  Cache-Control: public, max-age=31536000, immutable
+
 # Keep audio reusable without delaying updates indefinitely.
 /audio/*
   Cache-Control: public, max-age=86400

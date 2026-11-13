@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://wavemusic.pages.dev/sitemap.xml
