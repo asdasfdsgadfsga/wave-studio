@@ -1025,6 +1025,60 @@
             window.location.href = 'index.html#gallery';
           }
         }
+      },
+      showcase: {
+        id: 'showcase',
+        label: 'Слушать A/B сведение',
+        icon: ICONS.sliders,
+        extIcon: ICONS.arrowDown,
+        closeOnMobile: true,
+        perform: () => {
+          const target = document.getElementById('showcase');
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            target.classList.remove('chat-nav-highlight');
+            void target.offsetWidth;
+            target.classList.add('chat-nav-highlight');
+          } else {
+            window.location.href = 'index.html#showcase';
+          }
+        }
+      },
+      faq: {
+        id: 'faq',
+        label: 'Частые вопросы (FAQ)',
+        icon: ICONS.note,
+        extIcon: ICONS.arrowDown,
+        closeOnMobile: true,
+        perform: () => {
+          const target = document.getElementById('faq');
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            target.classList.remove('chat-nav-highlight');
+            void target.offsetWidth;
+            target.classList.add('chat-nav-highlight');
+          } else {
+            window.location.href = 'index.html#faq';
+          }
+        }
+      },
+      about: {
+        id: 'about',
+        label: 'О студии WaveMusic',
+        icon: ICONS.wave,
+        extIcon: ICONS.arrowDown,
+        closeOnMobile: true,
+        perform: () => {
+          const target = document.getElementById('about');
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            target.classList.remove('chat-nav-highlight');
+            void target.offsetWidth;
+            target.classList.add('chat-nav-highlight');
+          } else {
+            window.location.href = 'index.html#about';
+          }
+        }
       }
     };
 
@@ -1089,6 +1143,30 @@
         r.includes('#gallery')
       ) {
         return 'gallery';
+      }
+
+      // Showcase
+      if (
+        /(?:до\s*(?:и|\/|-)?\s*после|шоукейс|showcase|a[\s/-]?b)/i.test(u) ||
+        r.includes('#showcase')
+      ) {
+        return 'showcase';
+      }
+
+      // FAQ
+      if (
+        /(?:faq|частые\s+вопрос|вопрос[\s-]?ответ|регламент|как\s+скидывать|в\s+каком\s+формат|требован.*к\s+(?:мультитрек|дорожк|сведен)|стемы)/i.test(u) ||
+        r.includes('#faq')
+      ) {
+        return 'faq';
+      }
+
+      // About
+      if (
+        /(?:о\s+студии|о\s+нас|кто\s+вы|история\s+студии|расскажи\s+о\s+студии)/i.test(u) ||
+        r.includes('#about')
+      ) {
+        return 'about';
       }
 
       return null;

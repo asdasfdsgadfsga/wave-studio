@@ -13,12 +13,29 @@ test('Pages and local Express use identical prompt texts', () => {
   assert.equal(STREET_PROMPT, readFileSync(new URL('../server/street_prompt.txt', import.meta.url), 'utf8').replace(/\r\n/g, '\n').trim());
   assert.match(PRO_PROMPT, /\[\[NAV:daw\]\]/);
   assert.match(PRO_PROMPT, /\[\[NAV:booking\]\]/);
+  assert.match(PRO_PROMPT, /\[\[NAV:showcase\]\]/);
+  assert.match(PRO_PROMPT, /\[\[NAV:faq\]\]/);
+  assert.match(PRO_PROMPT, /\[\[NAV:about\]\]/);
   assert.match(PRO_PROMPT, /M1klussshevskiy/);
   assert.match(PRO_PROMPT, /Neumann U87/);
+  assert.match(PRO_PROMPT, /Tube-Tech CL 1B/);
+  assert.match(PRO_PROMPT, /Soft Clip/);
+  assert.match(PRO_PROMPT, /Halftime/);
+  assert.match(PRO_PROMPT, /IllBEINSIDE/);
+  assert.match(PRO_PROMPT, /Dry Hire/);
+  assert.match(PRO_PROMPT, /Ghost Production/);
+  assert.match(PRO_PROMPT, /24 bit/);
   assert.match(STREET_PROMPT, /\[\[NAV:daw\]\]/);
   assert.match(STREET_PROMPT, /\[\[NAV:booking\]\]/);
+  assert.match(STREET_PROMPT, /\[\[NAV:showcase\]\]/);
+  assert.match(STREET_PROMPT, /\[\[NAV:faq\]\]/);
+  assert.match(STREET_PROMPT, /\[\[NAV:about\]\]/);
   assert.match(STREET_PROMPT, /M1klussshevskiy/);
   assert.match(STREET_PROMPT, /Brawl Stars/);
+  assert.match(STREET_PROMPT, /Soft Clip/);
+  assert.match(STREET_PROMPT, /Halftime/);
+  assert.match(STREET_PROMPT, /IllBEINSIDE/);
+  assert.match(STREET_PROMPT, /Dry Hire/);
 });
 
 test('navigation tags are preserved in chat handler replies', async t => {
@@ -43,7 +60,7 @@ test('widget detects navigation targets from tags and user prompts', () => {
   const match = widgetSource.match(/function detectNavigationTarget\([\s\S]*?\n    \}/);
   assert.ok(match, 'detectNavigationTarget should exist');
   const fn = new Function('NAV_CONFIGS', 'return (' + match[0] + ')');
-  const NAV_CONFIGS = { daw: {}, booking: {}, services: {}, gear: {}, reviews: {}, gallery: {} };
+  const NAV_CONFIGS = { daw: {}, booking: {}, services: {}, gear: {}, reviews: {}, gallery: {}, showcase: {}, faq: {}, about: {} };
   const detect = fn(NAV_CONFIGS);
 
   assert.equal(detect('Открой дав', ''), 'daw');
@@ -55,8 +72,16 @@ test('widget detects navigation targets from tags and user prompts', () => {
   assert.equal(detect('Какое у вас оборудование?', ''), 'gear');
   assert.equal(detect('Покажи отзывы', ''), 'reviews');
   assert.equal(detect('Покажи фото студии', ''), 'gallery');
+  assert.equal(detect('Послушать примеры до и после', ''), 'showcase');
+  assert.equal(detect('Где ваш showcase стенд?', ''), 'showcase');
+  assert.equal(detect('В каком формате скидывать дорожки?', ''), 'faq');
+  assert.equal(detect('Где почитать частые вопросы?', ''), 'faq');
+  assert.equal(detect('Расскажи о студии', ''), 'about');
   assert.equal(detect('привет', 'Вот ссылка [[NAV:daw]]'), 'daw');
   assert.equal(detect('привет', 'Форма тут [[NAV:booking]]'), 'booking');
+  assert.equal(detect('привет', 'Стенд тут [[NAV:showcase]]'), 'showcase');
+  assert.equal(detect('привет', 'FAQ тут [[NAV:faq]]'), 'faq');
+  assert.equal(detect('привет', 'О студии [[NAV:about]]'), 'about');
   assert.equal(detect('привет', 'Обычный совет по эквализации вокала'), null);
 });
 
