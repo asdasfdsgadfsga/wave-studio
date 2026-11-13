@@ -19,6 +19,10 @@
 /samples/samples.json
   Cache-Control: no-cache
 
+# Ensure chat widget is always fresh and never cached stale in browsers
+/widget/*
+  Cache-Control: public, max-age=0, must-revalidate
+
 /admin.html
   Cache-Control: no-store
   X-Frame-Options: DENY

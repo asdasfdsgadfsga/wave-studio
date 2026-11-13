@@ -907,12 +907,28 @@
         label: 'Открыть онлайн DAW',
         icon: ICONS.piano,
         extIcon: ICONS.externalLink,
-        perform: () => {
+        perform: (isUserClick) => {
           if (window.location.pathname.endsWith('app.html')) return;
+          if (isUserClick) {
+            const win = window.open('app.html', '_blank');
+            if (!win) window.location.href = 'app.html';
+            return;
+          }
+          // Автоматический переход: пробуем открыть в новой вкладке
+          let opened = false;
           try {
-            window.open('app.html', '_blank');
-          } catch (e) {
-            window.location.href = 'app.html';
+            const win = window.open('app.html', '_blank');
+            if (win && !win.closed && typeof win.closed !== 'undefined') {
+              opened = true;
+            }
+          } catch (e) {}
+
+          // Если браузер заблокировал всплывающее окно (pop-up blocker при асинхронном ответе),
+          // переходим в текущей вкладке с небольшой паузой, чтобы пользователь успел прочитать сообщение бота
+          if (!opened) {
+            setTimeout(() => {
+              window.location.href = 'app.html';
+            }, 600);
           }
         }
       },
@@ -1115,7 +1131,7 @@
 
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
-        cfg.perform();
+        cfg.perform(true);
         if (cfg.closeOnMobile && window.innerWidth <= 600) {
           toggleChat(false);
         }
@@ -1127,11 +1143,11 @@
       // Auto trigger with slight delay for smooth visual feedback
       setTimeout(() => {
         try {
-          cfg.perform();
+          cfg.perform(false);
         } catch (e) {
           console.warn('[Navigation auto-trigger]:', e);
         }
-      }, 200);
+      }, 250);
     }
 
     function appendMessage(role, text, navTarget) {
