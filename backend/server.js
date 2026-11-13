@@ -1,119 +1,69 @@
-const express = require('express');
-const cors = require('cors');
-const nodemailer = require('nodemailer');
-const fs = require('fs');
-const path = require('path');
+// Node 24+; no dependencies required. Run: node backend/server.js
+const http = require('node:http');
+const fs = require('node:fs');
+const path = require('node:path');
+const { pathToFileURL } = require('node:url');
 
-const app = express();
-app.use(cors());
-app.use(express.json());
-
-const templatePath = path.join(__dirname, 'template.json');
-
-// Создаем дефолтный шаблон, если его нет
-if (!fs.existsSync(templatePath)) {
-    fs.writeFileSync(templatePath, JSON.stringify({
-        subject: "Запись на сессию - WaveProdMusic",
-        textBody: "Привет, {name}!\n\nВы успешно оставили заявку на сессию в WaveProdMusic.\n\nВаша заявка:\nУслуга: {service}\nЖелаемая дата: {date}\nУказанный телефон: {phone}\n\nНаш администратор свяжется с вами в ближайшее время для подтверждения деталей. Ждем вас на студии!"
-    }, null, 2));
-}
-
-// Root healthcheck
-app.get('/', (req, res) => {
-    res.send('Wave Backend API is running on port 3000');
-});
-
-// Получить текущий шаблон
-app.get('/api/template', (req, res) => {
+async function start() {
+  const root = path.resolve(__dirname, '..');
+  const vars = path.join(root, '.dev.vars');
+  if (fs.existsSync(vars)) process.loadEnvFile(vars);
+  if ((process.env.BOOKING_ADMIN_PASSWORD || '').length < 16) {
+    throw new Error('Set BOOKING_ADMIN_PASSWORD (16+ characters) in .dev.vars. See docs/booking-backend.md.');
+  }
+  const { handleBooking } = await import(pathToFileURL(path.join(root, 'lib/booking/api.mjs')));
+  const { openBookingDatabase } = await import(pathToFileURL(path.join(root, 'lib/booking/sqlite.mjs')));
+  const local = path.join(root, '.local');
+  fs.mkdirSync(local, { recursive: true });
+  const env = { ...process.env, BOOKING_DB: openBookingDatabase(path.join(local, 'booking.sqlite')) };
+  const mime = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8',
+    '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.webp': 'image/webp', '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg', '.wav': 'audio/wav', '.mp3': 'audio/mpeg', '.woff2': 'font/woff2', '.txt': 'text/plain', '.xml': 'application/xml' };
+  const server = http.createServer(async (req, res) => {
     try {
-        const template = JSON.parse(fs.readFileSync(templatePath, 'utf8'));
-        res.json(template);
-    } catch(e) {
-        res.status(500).json({ error: 'Failed to read template' });
-    }
-});
-
-// Сохранить новый шаблон
-app.post('/api/template', (req, res) => {
-    try {
-        fs.writeFileSync(templatePath, JSON.stringify(req.body, null, 2));
-        res.json({ success: true });
-    } catch(e) {
-        res.status(500).json({ success: false, error: 'Failed to save template' });
-    }
-});
-
-// Отправка email
-app.post('/api/book', async (req, res) => {
-    const { name, email, phone, service, date } = req.body;
-
-    try {
-        let transporter = nodemailer.createTransport({
-            host: "smtp.gmail.com",
-            port: 465,
-            secure: true,
-            auth: {
-                user: "nykhayp@gmail.com", 
-                pass: "ihrf hqps rgsc vjhs", 
-            },
-        });
-
-        // Загружаем шаблон
-        const template = JSON.parse(fs.readFileSync(templatePath, 'utf8'));
-        const formattedDate = new Date(date).toLocaleString('ru-RU');
-        
-        // Подставляем переменные
-        const subject = template.subject
-            .replace(/{name}/g, name)
-            .replace(/{service}/g, service);
-            
-        let processedText = template.textBody || '';
-        processedText = processedText
-            .replace(/{name}/g, name)
-            .replace(/{email}/g, email)
-            .replace(/{phone}/g, phone || 'Не указан')
-            .replace(/{service}/g, service)
-            .replace(/{date}/g, formattedDate);
-
-        // Превращаем переносы строк в <br>
-        const htmlContent = processedText.replace(/\n/g, '<br>');
-        
-        // Оборачиваем в стильный фирменный дизайн WaveMusic
-        const finalHtml = `
-        <div style="font-family: 'Segoe UI', Arial, sans-serif; padding: 40px 20px; background-color: #05010a; color: #fff;">
-            <div style="max-width: 600px; margin: 0 auto; background-color: #0a0216; border-radius: 12px; border: 1px solid #1c0638; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-                <div style="background: linear-gradient(90deg, #370e58 0%, #04000b 100%); padding: 25px; text-align: center; border-bottom: 2px solid #9d4edd;">
-                    <h1 style="color: #fff; letter-spacing: 3px; margin: 0; font-size: 24px; font-weight: 700;">WAVE<span style="color: #9d4edd;">MUSIC</span></h1>
-                </div>
-                
-                <div style="padding: 35px; font-size: 16px; line-height: 1.7; color: #e0e0e0;">
-                    ${htmlContent}
-                </div>
-                
-                <div style="background-color: #04000b; text-align: center; padding: 25px; border-top: 1px solid #1c0638;">
-                    <p style="color: #888; font-size: 13px; margin: 0;">С уважением, команда WaveProdMusic 🎧</p>
-                    <p style="color: #444; font-size: 11px; margin-top: 8px;">Это письмо сформировано автоматически. Пожалуйста, не отвечайте на него.</p>
-                </div>
-            </div>
-        </div>`;
-
-        let info = await transporter.sendMail({
-            from: '"WaveProdMusic 🎧" <nykhayp@gmail.com>',
-            to: email, 
-            subject: subject,
-            html: finalHtml
-        });
-
-        console.log("Сообщение успешно отправлено на реальную почту: %s", info.messageId);
-        res.status(200).json({ success: true });
+      const url = new URL(req.url, `http://${req.headers.host || 'localhost:3000'}`);
+      if (url.pathname.startsWith('/api/booking/')) {
+        const chunks = []; let size = 0;
+        for await (const chunk of req) {
+          size += chunk.length;
+          if (size > 8192) { res.writeHead(413); res.end('Request too large'); return; }
+          chunks.push(chunk);
+        }
+        const headers = new Headers(req.headers);
+        headers.set('CF-Connecting-IP', req.socket.remoteAddress || 'local');
+        const request = new Request(url, { method: req.method, headers,
+          ...(!['GET', 'HEAD'].includes(req.method) ? { body: Buffer.concat(chunks) } : {}) });
+        const response = await handleBooking(request, env);
+        res.writeHead(response.status, Object.fromEntries(response.headers));
+        res.end(Buffer.from(await response.arrayBuffer()));
+        return;
+      }
+      if (!['GET', 'HEAD'].includes(req.method)) { res.writeHead(405); res.end(); return; }
+      const parts = decodeURIComponent(url.pathname).split('/').filter(Boolean);
+      const privateRoots = ['backend', 'server', 'lib', 'migrations', 'tests', 'docs', 'tools', 'functions', 'node_modules', 'archive', '!ДОКИ'];
+      if (parts.some(p => p.startsWith('.') || p.includes('\\') || p.includes(':')) || privateRoots.includes(parts[0]?.toLowerCase()) || /\.env(?:\.|$)/i.test(parts.at(-1) || '')) {
+        res.writeHead(404); res.end(); return;
+      }
+      const file = path.resolve(root, ...parts, ...(url.pathname.endsWith('/') ? ['index.html'] : []));
+      if (!file.startsWith(root + path.sep)) { res.writeHead(404); res.end(); return; }
+      const stat = await fs.promises.stat(file);
+      if (!stat.isFile()) { res.writeHead(404); res.end(); return; }
+      let start = 0, end = stat.size - 1, status = 200;
+      const range = /^bytes=(\d+)-(\d*)$/.exec(req.headers.range || '');
+      if (range) {
+        start = Number(range[1]); end = range[2] ? Math.min(Number(range[2]), end) : end;
+        if (start > end || start >= stat.size) { res.writeHead(416, { 'Content-Range': `bytes */${stat.size}` }); res.end(); return; }
+        status = 206;
+      }
+      res.writeHead(status, { 'Content-Type': mime[path.extname(file).toLowerCase()] || 'application/octet-stream',
+        'Content-Length': end - start + 1, 'Accept-Ranges': 'bytes', 'Cache-Control': 'no-cache',
+        ...(status === 206 ? { 'Content-Range': `bytes ${start}-${end}/${stat.size}` } : {}) });
+      if (req.method === 'HEAD') res.end(); else fs.createReadStream(file, { start, end }).pipe(res);
     } catch (error) {
-        console.error("Ошибка при отправке письма: ", error);
-        res.status(500).json({ success: false, error: 'Internal Server Error' });
+      res.writeHead(error.code === 'ENOENT' ? 404 : 500); res.end('Unable to serve request');
     }
-});
-
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Backend server running on http://localhost:${PORT}`);
-    console.log(`Waiting for booking requests...`);
-});
+  });
+  server.on('error', error => { console.error('Local booking server:', error.code); process.exitCode = 1; });
+  server.listen(Number(process.env.BOOKING_PORT || 3000), '127.0.0.1', () => console.log('Wave booking: http://127.0.0.1:' + (process.env.BOOKING_PORT || 3000)));
+}
+start().catch(error => { console.error(error.message); process.exitCode = 1; });

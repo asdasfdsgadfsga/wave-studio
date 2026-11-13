@@ -1,31 +1,4 @@
 
-document.addEventListener('DOMContentLoaded', () => {
-    // ЗАГРУЗКА ЦЕН ИЗ НАСТРОЕК АДМИНКИ
-    try {
-        const settings = JSON.parse(localStorage.getItem('waveSettings'));
-        if (settings) {
-            if (settings.vocal) {
-                const pv = document.getElementById('price-vocal');
-                const ov = document.getElementById('opt-vocal');
-                if(pv) pv.textContent = 'Цена: ' + settings.vocal;
-                if(ov) ov.textContent = 'Запись вокала (' + settings.vocal + ')';
-            }
-            if (settings.mix) {
-                const pm = document.getElementById('price-mix');
-                const om = document.getElementById('opt-mix');
-                if(pm) pm.textContent = 'Цена: ' + settings.mix;
-                if(om) om.textContent = 'Сведение и мастеринг (' + settings.mix + ')';
-            }
-            if (settings.beat) {
-                const pb = document.getElementById('price-beat');
-                const ob = document.getElementById('opt-beat');
-                if(pb) pb.textContent = 'Цена: ' + settings.beat;
-                if(ob) ob.textContent = 'Написание бита (' + settings.beat + ')';
-            }
-        }
-    } catch(e) {}
-});
-
 // Пословное проявление текста со снятием размытия (Word-by-word Scroll Reveal)
 function initWordReveal() {
     const targetSelectors = [
@@ -338,17 +311,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 3. РћРіСЂР°РЅРёС‡РµРЅРёРµ РґР°С‚С‹ (РЅРµР»СЊР·СЏ РІС‹Р±СЂР°С‚СЊ СЃРµРіРѕРґРЅСЏ Рё СЂР°РЅСЊС€Рµ)
-    const dateInput = document.getElementById('book-date');
-    if (dateInput) {
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        tomorrow.setHours(0, 0, 0, 0);
-        
-        // Р¤РѕСЂРјР°С‚РёСЂСѓРµРј РґР»СЏ datetime-local (YYYY-MM-DDThh:mm)
-        const tzOffset = tomorrow.getTimezoneOffset() * 60000;
-        const localISOTime = (new Date(tomorrow - tzOffset)).toISOString().slice(0, 16);
-        dateInput.min = localISOTime;
-    }
 
     // 4. РњРѕРґР°Р»СЊРЅС‹Рµ РѕРєРЅР° (РРЅС„Рѕ)
     const authModal = document.getElementById('auth-modal');
@@ -584,114 +546,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Р’Р°Р»РёРґР°С†РёСЏ Р±СЂРѕРЅРёСЂРѕРІР°РЅРёСЏ Рё РѕС‚РїСЂР°РІРєР° РЅР° Р±РµРєРµРЅРґ
-    const bookingForm = document.getElementById('booking-form');
-    if (bookingForm) {
-        bookingForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            let isValid = true;
-            
-            const name = document.getElementById('book-name');
-            const email = document.getElementById('book-email');
-            const phone = document.getElementById('book-phone');
-            const service = document.getElementById('book-service');
-            const date = document.getElementById('book-date');
-            
-            if (name.value.trim().length < 2) {
-                showError(name, 'Введите корректное имя');
-                isValid = false;
-            } else clearError(name);
-            
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email.value.trim())) {
-                showError(email, 'Неверный формат email');
-                isValid = false;
-            } else clearError(email);
-
-            if (service.value === '') {
-                showError(service, 'Выберите услугу');
-                isValid = false;
-            } else clearError(service);
-
-            if (!date.value) {
-                showError(date, 'Выберите дату и время');
-                isValid = false;
-            } else clearError(date);
-            
-            
-            if (isValid) {
-                // РЎРћРҐР РђРќР•РќРР• Р”Р›РЇ РђР”РњРРќ РџРђРќР•Р›Р
-                const storedBookings = JSON.parse(localStorage.getItem('waveBookings') || '[]');
-                storedBookings.push({
-                    id: Date.now(),
-                    name: name.value,
-                    email: email.value,
-                    phone: phone.value,
-                    service: service.value,
-                    date: date.value,
-                    timestamp: new Date().toISOString()
-                });
-                localStorage.setItem('waveBookings', JSON.stringify(storedBookings));
-                
-                
-                const isLocal = typeof window !== 'undefined' && 
-                    (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
-
-                if (isLocal) {
-                    // Отправка на локальный бэкенд (только на localhost)
-                    const btn = bookingForm.querySelector('button');
-                    const originalText = btn ? btn.textContent : 'Подтвердить запись';
-                    if (btn) btn.textContent = 'Отправка...';
-                    
-                    try {
-                        const response = await fetch('http://localhost:3000/api/book', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                name: name.value,
-                                email: email.value,
-                                phone: phone.value,
-                                service: service.value,
-                                date: date.value
-                            })
-                        });
-
-                        if (response.ok) {
-                            showSuccessScreen(email.value, true);
-                        } else {
-                            console.warn('Сервер вернул ошибку, показываем экран успеха.');
-                            showSuccessScreen(email.value, false);
-                        }
-                    } catch (error) {
-                        console.warn('Локальный бекенд не запущен. Показ экрана успеха.', error);
-                        showSuccessScreen(email.value, false);
-                    } finally {
-                        if (btn) btn.textContent = originalText;
-                    }
-                } else {
-                    // На живом сайте (в интернете) запрос на бекенд не отправляется, сразу показываем успех
-                    showSuccessScreen(email.value, false);
-                }
-            }
-        });
-        
-        // Вспомогательная функция для показа экрана успеха
-        function showSuccessScreen(userEmail, isEmailSent) {
-            bookingForm.style.display = 'none';
-            const successScreen = document.getElementById('booking-success');
-            if (successScreen) successScreen.style.display = 'block';
-            const successText = document.getElementById('booking-success-text');
-            if (successText) {
-                if (isEmailSent) {
-                    successText.innerHTML = `На вашу почту <strong>${userEmail}</strong> было отправлено письмо со всеми деталями бронирования и дальнейшими инструкциями.`;
-                } else {
-                    successText.innerHTML = `Заявка успешно оформлена! Мы зафиксировали бронь на <strong>${userEmail}</strong> и свяжемся с вами.`;
-                }
-            }
-            bookingForm.reset();
-        }
-    }
+    // Online booking is handled by booking.js.
 
     document.querySelectorAll('.modal-close-btn').forEach(btn => {
         btn.addEventListener('click', closeModals);

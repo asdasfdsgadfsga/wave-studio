@@ -1,17 +1,15 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Local WaveMusic booking API and website preview",
+  "private": true,
+  "main": "server.js",
+  "engines": { "node": ">=24" },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "test": "node --test ../tests/booking.test.mjs"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "cors": "^2.8.6",
-    "express": "^5.2.1",
-    "nodemailer": "^10.0.10"
-  }
+  "license": "ISC"
 }

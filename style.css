@@ -848,6 +848,22 @@ body {
     color: #ffffff;
 }
 
+.scroll-section.booking-section { height: auto; min-height: 100vh; }
+.booking-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.booking-field-row .form-group { min-width: 0; }
+#booking-form { gap: 8px; }
+#booking-form .form-group { margin-bottom: 8px; }
+#booking-form .error-msg:empty { display: none; }
+.booking-consent { display: flex; gap: 10px; align-items: flex-start; font-size: 0.75rem; line-height: 1.6; color: #c5b9d1; text-align: left; }
+.booking-consent input { flex: 0 0 auto; margin-top: 5px; accent-color: #b883ec; width: 16px; height: 16px; }
+.booking-status { color: #bcb0c8; font-size: 0.78rem; line-height: 1.6; margin: 12px 0 0; text-align: left; }
+.booking-status.is-error { color: #ffb8c7; }
+.booking-honeypot { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+#booking-success-text { overflow-wrap: anywhere; }
+#booking-form button:disabled { opacity: 0.5; cursor: not-allowed; }
+#booking-form :focus-visible, #booking-again:focus-visible { outline: 2px solid #d5adff; outline-offset: 3px; }
+@media (max-width: 380px) { .booking-field-row { grid-template-columns: 1fr; gap: 0; } }
+
 .form-btn {
     width: 100%;
     margin-top: 10px;

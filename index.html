@@ -1552,46 +1552,65 @@
                     <div class="booking-form-container">
                         <div class="booking-form-header">
                             <h3 class="booking-form-title">Заполнить заявку</h3>
-                            <p class="booking-form-subtitle">Бронь фиксируется сразу после отправки</p>
+                            <p class="booking-form-subtitle">Выберите свободное время. Администратор подтвердит запись.</p>
                         </div>
                         <form id="booking-form" class="auth-form active" novalidate>
                             <div class="form-group">
                                 <label for="book-name">Ваше имя</label>
-                                <input type="text" id="book-name" required placeholder="Как к вам обращаться?">
+                                <input type="text" id="book-name" name="name" autocomplete="name" minlength="2" maxlength="100" required placeholder="Как к вам обращаться?">
                                 <span class="error-msg"></span>
                             </div>
                             <div class="form-group">
-                                <label for="book-email">Email (для подтверждения)</label>
-                                <input type="email" id="book-email" required placeholder="Ваш email">
+                                <label for="book-email">Email</label>
+                                <input type="email" id="book-email" name="email" autocomplete="email" maxlength="200" required placeholder="Ваш email">
                                 <span class="error-msg"></span>
                             </div>
                             <div class="form-group">
                                 <label for="book-phone">Номер телефона</label>
-                                <input type="tel" id="book-phone" required placeholder="+7 (999) 000-00-00">
+                                <input type="tel" id="book-phone" name="phone" autocomplete="tel" minlength="10" maxlength="30" required placeholder="+7 (999) 000-00-00">
                                 <span class="error-msg"></span>
                             </div>
                             <div class="form-group">
                                 <label for="book-service">Выберите услугу</label>
                                 <select id="book-service" required class="custom-select">
                                     <option value="">Не выбрано</option>
-                                    <option value="Запись вокала" id="opt-vocal">Запись вокала (1500 - 2500 ₽/ч)</option>
-                                    <option value="Сведение и мастеринг" id="opt-mix">Сведение и мастеринг (от 3000 ₽)</option>
-                                    <option value="Написание бита" id="opt-beat">Написание бита (от 5000 ₽)</option>
+                                    <option value="vocal" id="opt-vocal">Запись вокала (1500 - 2500 ₽/ч)</option>
+                                    <option value="mix" id="opt-mix">Сведение и мастеринг (от 3000 ₽)</option>
+                                    <option value="beat" id="opt-beat">Написание бита (от 5000 ₽)</option>
                                 </select>
                                 <span class="error-msg"></span>
                             </div>
-                            <div class="form-group">
-                                <label for="book-date">Желаемая дата и время</label>
-                                <input type="datetime-local" id="book-date" required>
-                                <span class="error-msg"></span>
+                            <div class="booking-field-row">
+                                <div class="form-group">
+                                    <label for="book-date">Дата в Хабаровске</label>
+                                    <input type="date" id="book-date" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="book-duration">Длительность сессии</label>
+                                    <select id="book-duration" required>
+                                        <option value="1">1 час</option><option value="2">2 часа</option>
+                                        <option value="3">3 часа</option><option value="4">4 часа</option>
+                                        <option value="5">5 часов</option><option value="6">6 часов</option>
+                                        <option value="7">7 часов</option><option value="8">8 часов</option>
+                                    </select>
+                                </div>
                             </div>
-                            <button type="submit" class="btn btn-primary form-btn">Подтвердить запись</button>
+                            <div class="form-group">
+                                <label for="book-time">Свободное время · UTC+10</label>
+                                <select id="book-time" required disabled><option value="">Выберите дату</option></select>
+                            </div>
+                            <label class="booking-consent"><input type="checkbox" id="book-consent" required> <span>Согласен на обработку имени, телефона и email для организации записи. Данные получит администратор студии.</span></label>
+                            <div class="booking-honeypot" aria-hidden="true"><label>Ваш сайт <input id="book-website" tabindex="-1" autocomplete="off"></label></div>
+                            <p id="booking-status" class="booking-status" role="status" aria-live="polite">Загружаем расписание…</p>
+                            <a id="booking-contact" class="booking-status" href="mailto:booking@waveprodmusic.com">Написать в студию</a>
+                            <button type="submit" class="btn btn-primary form-btn" disabled>Отправить заявку</button>
                         </form>
                         
                         <div id="booking-success" style="display:none; text-align:center;">
                             <div style="font-size: 3.5rem; color: #c77dff; margin-bottom: 10px;">✓</div>
                             <h3 style="color:#fff; margin-bottom:12px; font-weight: 400; letter-spacing: 2px;">ЗАЯВКА ПРИНЯТА</h3>
-                            <p class="modal-body" id="booking-success-text" style="color: #ccc; font-weight: 300; line-height: 1.6;">На вашу почту <strong>test@email.com</strong> было отправлено письмо со всеми деталями бронирования.</p>
+                            <p class="modal-body" id="booking-success-text" tabindex="-1" style="color: #ccc; font-weight: 300; line-height: 1.6; white-space:pre-line;"></p>
+                            <button type="button" id="booking-again" class="btn" style="margin-top:20px;">Новая заявка</button>
                         </div>
                     </div>
                 </div>
@@ -1675,6 +1694,7 @@
 
     <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="script.js" defer></script>
+    <script src="booking.js" defer></script>
 
     <!-- Встраиваемый AI Чат-бот поддержки (кнопка в левом нижнем углу) -->
     <script defer src="widget/chat-widget.js" data-api="/api/chat"></script>
