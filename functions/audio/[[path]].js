@@ -7,13 +7,20 @@ export async function onRequest({ request, env, next }) {
 
     url.search = '';
     // Fetch the complete representation without client Range/conditional headers.
-    const asset = await env.ASSETS.fetch(new Request(url, { method: request.method }));
+    const asset = await env.ASSETS.fetch(new Request(url));
     if (asset.status !== 200) return asset;
 
     const headers = new Headers(asset.headers);
     headers.set('Accept-Ranges', 'bytes');
     headers.set('Cache-Control', 'public, max-age=86400, no-transform');
-    const size = Number(headers.get('Content-Length'));
+    // The Pages ASSETS binding may omit Content-Length even for a WAV.
+    let size = Number(headers.get('Content-Length'));
+    let bytes;
+    if (!size) {
+        bytes = await asset.arrayBuffer();
+        size = bytes.byteLength;
+        headers.set('Content-Length', String(size));
+    }
     const range = request.headers.get('Range');
     const ifRange = request.headers.get('If-Range');
     const validatorMatches = !ifRange ||
@@ -22,20 +29,24 @@ export async function onRequest({ request, env, next }) {
     const match = range && /^bytes=(\d*)-(\d*)$/.exec(range.trim());
 
     // Unsupported/malformed ranges and changed validators receive the full file.
-    if (request.method === 'HEAD' || !size || !match || (!match[1] && !match[2]) || !validatorMatches) {
-        return new Response(asset.body, { status: 200, headers });
+    if (request.method === 'HEAD') {
+        if (!bytes) await asset.body.cancel();
+        return new Response(null, { status: 200, headers });
+    }
+    if (!size || !match || (!match[1] && !match[2]) || !validatorMatches) {
+        return new Response(bytes || asset.body, { status: 200, headers });
     }
 
     const start = match[1] ? Number(match[1]) : Math.max(0, size - Number(match[2]));
     const end = match[1] ? (match[2] ? Math.min(Number(match[2]), size - 1) : size - 1) : size - 1;
     if (!Number.isSafeInteger(start) || !Number.isSafeInteger(end) || start >= size || end < start) {
-        await asset.body.cancel();
+        if (!bytes) await asset.body.cancel();
         headers.set('Content-Range', `bytes */${size}`);
         headers.set('Content-Length', '0');
         return new Response(null, { status: 416, headers });
     }
 
-    const bytes = await asset.arrayBuffer();
+    bytes ||= await asset.arrayBuffer();
     headers.set('Content-Range', `bytes ${start}-${end}/${size}`);
     headers.set('Content-Length', String(end - start + 1));
     return new Response(new Uint8Array(bytes, start, end - start + 1), { status: 206, headers });

@@ -6,14 +6,14 @@ const source = await readFile(new URL('../functions/audio/[[path]].js', import.m
 const { onRequest } = await import('data:text/javascript;base64,' + Buffer.from(source).toString('base64'));
 const wav = Uint8Array.from({ length: 100 }, (_, i) => i);
 
-async function requestAudio(headers = {}, method = 'GET', path = '/audio/demo_raw.wav?v=seek-1') {
+async function requestAudio(headers = {}, method = 'GET', path = '/audio/demo_raw.wav?v=seek-1', omitLength = false) {
     return onRequest({
         request: new Request('https://wave.test' + path, { headers, method }),
         env: { ASSETS: { fetch: async request => {
             assert.equal(request.headers.get('Range'), null);
             assert.equal(new URL(request.url).search, '');
-            return new Response(method === 'HEAD' ? null : wav, { headers: {
-                'Content-Type': 'audio/wav', 'Content-Length': '100', ETag: '"wav-v1"'
+            return new Response(wav, { headers: {
+                'Content-Type': 'audio/wav', ...(omitLength ? {} : { 'Content-Length': '100' }), ETag: '"wav-v1"'
             } });
         } } },
         next: () => new Response('passthrough', { status: 202 })
@@ -61,4 +61,17 @@ test('HEAD advertises seeking and unrelated audio keeps its existing route', asy
     assert.equal((await response.arrayBuffer()).byteLength, 0);
     assert.equal((await requestAudio({}, 'GET', '/audio/m1klussshevskiy_ttg.mp3')).status, 202);
     assert.equal((await requestAudio({}, 'POST')).status, 202);
+});
+
+test('Pages assets without Content-Length still support seeking and HEAD', async () => {
+    for (const method of ['GET', 'HEAD']) {
+        const response = await requestAudio({ Range: 'bytes=20-39' }, method, undefined, true);
+        assert.equal(response.status, method === 'HEAD' ? 200 : 206);
+        assert.equal(response.headers.get('Content-Length'), method === 'HEAD' ? '100' : '20');
+        assert.equal((await response.arrayBuffer()).byteLength, method === 'HEAD' ? 0 : 20);
+    }
+    const full = await requestAudio({}, 'GET', undefined, true);
+    assert.equal(full.status, 200);
+    assert.equal(full.headers.get('Content-Length'), '100');
+    assert.deepEqual(new Uint8Array(await full.arrayBuffer()), wav);
 });
