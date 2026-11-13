@@ -72,6 +72,7 @@ if (fs.existsSync(widgetDir)) {
 
 // Инициализация клиента OpenAI / OpenRouter / DeepSeek
 const apiKey = process.env.OPENAI_API_KEY;
+const geminiKey = process.env.GEMINI_API_KEY;
 const baseURL = process.env.OPENAI_BASE_URL || 'https://api.openai.com/v1';
 const modelName = process.env.OPENAI_MODEL || 'gpt-4o-mini';
 const temperature = parseFloat(process.env.TEMPERATURE) || 0.7;
@@ -89,7 +90,7 @@ if (apiKey && apiKey !== 'your_api_key_here') {
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
-    llmConfigured: Boolean(openai),
+    llmConfigured: Boolean(openai || geminiKey),
     model: modelName,
     baseURL: baseURL,
     uptime: process.uptime()
@@ -126,10 +127,11 @@ async function callGemini(geminiKey, systemInstruction, history, userMessage) {
   const models = ['gemini-3.1-flash-lite', 'gemini-3.5-flash'];
   for (const m of models) {
     try {
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${geminiKey}`;
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent`;
       const res = await fetch(url, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'x-goog-api-key': geminiKey },
+        signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
         body: JSON.stringify(payload)
       });
       if (res.ok) {
@@ -140,7 +142,7 @@ async function callGemini(geminiKey, systemInstruction, history, userMessage) {
         }
       }
     } catch (e) {
-      console.warn(`[Gemini local ${m} warn]:`, e.message);
+      console.warn(`[Gemini local ${m} warn]:`, e.name);
     }
   }
   return null;
@@ -226,10 +228,10 @@ app.post('/api/chat', async (req, res) => {
     }
 
     // 3. Проверка настройки API-ключа
-    if (!openai) {
+    if (!openai && !geminiKey) {
       return res.status(503).json({
         error: 'Сервер чат-бота запущен, но API-ключ LLM не настроен в .env файле.',
-        hint: 'Укажите OPENAI_API_KEY в файле .env для включения генерации ответов.'
+        hint: 'Укажите GEMINI_API_KEY или OPENAI_API_KEY в файле .env для включения генерации ответов.'
       });
     }
 
@@ -237,7 +239,6 @@ app.post('/api/chat', async (req, res) => {
     const systemInstruction = getSystemPrompt(mode);
 
     // 4.1 Проверяем наличие ключа Google Gemini (приоритетный движок)
-    const geminiKey = process.env.GEMINI_API_KEY;
     if (geminiKey) {
       try {
         const geminiResult = await callGemini(geminiKey, systemInstruction, validHistory, message);
@@ -251,6 +252,10 @@ app.post('/api/chat', async (req, res) => {
       } catch (geminiErr) {
         console.warn('[Gemini Error, falling back to OpenAI/Groq]:', geminiErr.message);
       }
+    }
+
+    if (!openai) {
+      return res.status(502).json({ error: 'Не удалось получить ответ Gemini. Повторите запрос позже.' });
     }
 
     const messages = [

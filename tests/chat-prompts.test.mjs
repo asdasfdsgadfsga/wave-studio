@@ -11,6 +11,49 @@ const { onRequestPost } = await import('data:text/javascript;base64,' + Buffer.f
 test('Pages and local Express use identical prompt texts', () => {
   assert.equal(PRO_PROMPT, readFileSync(new URL('../server/system_prompt.txt', import.meta.url), 'utf8').replace(/\r\n/g, '\n').trim());
   assert.equal(STREET_PROMPT, readFileSync(new URL('../server/street_prompt.txt', import.meta.url), 'utf8').replace(/\r\n/g, '\n').trim());
+  assert.match(PRO_PROMPT, /\[\[NAV:daw\]\]/);
+  assert.match(PRO_PROMPT, /\[\[NAV:booking\]\]/);
+  assert.match(STREET_PROMPT, /\[\[NAV:daw\]\]/);
+  assert.match(STREET_PROMPT, /\[\[NAV:booking\]\]/);
+});
+
+test('navigation tags are preserved in chat handler replies', async t => {
+  t.mock.method(globalThis, 'fetch', async () => {
+    return Response.json({ candidates: [{ content: { parts: [{ text: 'Открываю онлайн DAW: [[NAV:daw]]' }] } }] });
+  });
+  const response = await onRequestPost({
+    env: { GEMINI_API_KEY: 'test-only' },
+    request: new Request('https://studio.example/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: 'Открой дав', mode: 'pro' })
+    })
+  });
+  assert.equal(response.status, 200);
+  const data = await response.json();
+  assert.match(data.reply, /\[\[NAV:daw\]\]/);
+});
+
+test('widget detects navigation targets from tags and user prompts', () => {
+  const widgetSource = readFileSync(new URL('../widget/chat-widget.js', import.meta.url), 'utf8');
+  const match = widgetSource.match(/function detectNavigationTarget\([\s\S]*?\n    \}/);
+  assert.ok(match, 'detectNavigationTarget should exist');
+  const fn = new Function('NAV_CONFIGS', 'return (' + match[0] + ')');
+  const NAV_CONFIGS = { daw: {}, booking: {}, services: {}, gear: {}, reviews: {}, gallery: {} };
+  const detect = fn(NAV_CONFIGS);
+
+  assert.equal(detect('Открой дав', ''), 'daw');
+  assert.equal(detect('перейди в daw', ''), 'daw');
+  assert.equal(detect('Где написать заявку', ''), 'booking');
+  assert.equal(detect('хочу записаться на студию', ''), 'booking');
+  assert.equal(detect('Покажи цены', ''), 'services');
+  assert.equal(detect('Сколько стоят услуги?', ''), 'services');
+  assert.equal(detect('Какое у вас оборудование?', ''), 'gear');
+  assert.equal(detect('Покажи отзывы', ''), 'reviews');
+  assert.equal(detect('Покажи фото студии', ''), 'gallery');
+  assert.equal(detect('привет', 'Вот ссылка [[NAV:daw]]'), 'daw');
+  assert.equal(detect('привет', 'Форма тут [[NAV:booking]]'), 'booking');
+  assert.equal(detect('привет', 'Обычный совет по эквализации вокала'), null);
 });
 
 for (const [mode, prompt] of [['pro', PRO_PROMPT], ['street', STREET_PROMPT], ['poselok', STREET_PROMPT]]) {

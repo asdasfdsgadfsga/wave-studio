@@ -4389,3 +4389,23 @@ body.page-hidden .scroll-section *::after {
         animation: none !important;
     }
 }
+
+/* Chat navigation smooth highlight */
+@keyframes chatNavPulse {
+    0% {
+        outline: 3px solid rgba(199, 125, 255, 0.95);
+        box-shadow: 0 0 35px rgba(199, 125, 255, 0.75);
+    }
+    50% {
+        outline: 2px solid rgba(199, 125, 255, 0.6);
+        box-shadow: 0 0 20px rgba(199, 125, 255, 0.45);
+    }
+    100% {
+        outline: 2px solid transparent;
+        box-shadow: none;
+    }
+}
+.chat-nav-highlight {
+    animation: chatNavPulse 2.4s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+    border-radius: 14px;
+}

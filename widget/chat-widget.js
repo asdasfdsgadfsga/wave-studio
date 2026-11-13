@@ -46,7 +46,12 @@
     piano: '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 16H6c-.55 0-1-.45-1-1V5h2v9h2V5h2v9h2V5h2v13c0 .55-.45 1-1 1z"/></svg>',
     mic: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>',
     tag: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>',
-    fire: '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 23c-4.97 0-9-3.8-9-8.5C3 8.35 9.17 2.22 9.53 2.02a1 1 0 0 1 1.05.12c.3.26.42.67.3 1.05-.53 1.63-.33 3.4.52 4.75.29.47.78.78 1.33.86.55.08 1.1-.08 1.5-.47 1.28-1.28 2.05-2.87 2.22-4.6a1 1 0 0 1 1.6-.68C19.78 6.45 21 10.42 21 14.5c0 4.7-4.03 8.5-9 8.5z"/></svg>'
+    fire: '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 23c-4.97 0-9-3.8-9-8.5C3 8.35 9.17 2.22 9.53 2.02a1 1 0 0 1 1.05.12c.3.26.42.67.3 1.05-.53 1.63-.33 3.4.52 4.75.29.47.78.78 1.33.86.55.08 1.1-.08 1.5-.47 1.28-1.28 2.05-2.87 2.22-4.6a1 1 0 0 1 1.6-.68C19.78 6.45 21 10.42 21 14.5c0 4.7-4.03 8.5-9 8.5z"/></svg>',
+    externalLink: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>',
+    arrowDown: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>',
+    calendar: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>',
+    camera: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>',
+    star: '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>'
   };
 
   const PRO_CHIPS = [
@@ -376,6 +381,62 @@
       color:#b9aaca;
       line-height:1
     }
+    .chat-link {
+      color: #d1a8ff;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      word-break: break-all;
+      transition: color .2s;
+    }
+    .chat-link:hover {
+      color: #ffffff;
+    }
+    .chat-action-container {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .chat-action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 15px;
+      border-radius: 12px;
+      border: 1px solid rgba(199, 125, 255, .38);
+      background: linear-gradient(135deg, rgba(88, 28, 135, .5), rgba(126, 34, 206, .3));
+      color: #f6eeff;
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: .3px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, .3);
+      transition: background .2s, border-color .2s, transform .2s, box-shadow .2s;
+      width: fit-content;
+      max-width: 100%;
+    }
+    .chat-action-btn:hover {
+      background: linear-gradient(135deg, rgba(126, 34, 206, .7), rgba(168, 85, 247, .45));
+      border-color: #c77dff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(168, 85, 247, .35);
+      color: #ffffff;
+    }
+    .chat-action-btn:active {
+      transform: translateY(0);
+    }
+    .chat-action-btn svg {
+      width: 13px;
+      height: 13px;
+      flex-shrink: 0;
+      color: #d8b4fe;
+    }
+    .chat-action-icon {
+      display: inline-flex;
+      align-items: center;
+      margin-left: 2px;
+      opacity: .85;
+    }
     .message-bubble.system-note {
       align-self:center;
       padding:4px 8px;
@@ -658,7 +719,35 @@
     </div>
   `;
 
+  function ensureGlobalNavStyles() {
+    if (typeof document === 'undefined' || document.getElementById('wave-chat-nav-styles')) return;
+    const styleEl = document.createElement('style');
+    styleEl.id = 'wave-chat-nav-styles';
+    styleEl.textContent = `
+      @keyframes chatNavPulse {
+        0% {
+          outline: 3px solid rgba(199, 125, 255, 0.95);
+          box-shadow: 0 0 35px rgba(199, 125, 255, 0.75);
+        }
+        50% {
+          outline: 2px solid rgba(199, 125, 255, 0.6);
+          box-shadow: 0 0 20px rgba(199, 125, 255, 0.45);
+        }
+        100% {
+          outline: 2px solid transparent;
+          box-shadow: none;
+        }
+      }
+      .chat-nav-highlight {
+        animation: chatNavPulse 2.4s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+        border-radius: 14px;
+      }
+    `;
+    document.head.appendChild(styleEl);
+  }
+
   function mountWidget() {
+    ensureGlobalNavStyles();
     const hostEl = document.createElement('div');
     hostEl.id = 'wave-ai-chat-root';
     document.body.appendChild(hostEl);
@@ -743,6 +832,7 @@
         launcherBtn.style.bottom = Math.max(18, window.innerHeight - viewportBottom + 18) + 'px';
       } else {
         launcherBtn.style.bottom = '';
+        if (window.innerWidth > 600) chatWindow.style.height = '';
       }
     }
 
@@ -765,7 +855,11 @@
         if (window.visualViewport && window.innerWidth <= 600) {
           chatWindow.style.height = `${window.visualViewport.height}px`;
         }
-        scrollToBottom();
+        if (messagesContainer.querySelector('.welcome')) {
+          messagesContainer.scrollTop = 0;
+        } else {
+          scrollToBottom();
+        }
       } else {
         chatWindow.style.height = '';
         launcherBtn.focus();
@@ -807,7 +901,240 @@
       if (event.key === 'Escape' && isOpen) toggleChat(false);
     });
 
-    function appendMessage(role, text) {
+    const NAV_CONFIGS = {
+      daw: {
+        id: 'daw',
+        label: 'Открыть онлайн DAW',
+        icon: ICONS.piano,
+        extIcon: ICONS.externalLink,
+        perform: () => {
+          if (window.location.pathname.endsWith('app.html')) return;
+          try {
+            window.open('app.html', '_blank');
+          } catch (e) {
+            window.location.href = 'app.html';
+          }
+        }
+      },
+      booking: {
+        id: 'booking',
+        label: 'Перейти к форме заявки',
+        icon: ICONS.calendar,
+        extIcon: ICONS.arrowDown,
+        closeOnMobile: true,
+        perform: () => {
+          const target = document.getElementById('booking');
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            target.classList.remove('chat-nav-highlight');
+            void target.offsetWidth;
+            target.classList.add('chat-nav-highlight');
+            setTimeout(() => {
+              const input = document.getElementById('book-name') || target.querySelector('input, select, textarea');
+              if (input) input.focus({ preventScroll: true });
+            }, 650);
+          } else {
+            window.location.href = 'index.html#booking';
+          }
+        }
+      },
+      services: {
+        id: 'services',
+        label: 'Посмотреть услуги и цены',
+        icon: ICONS.tag,
+        extIcon: ICONS.arrowDown,
+        closeOnMobile: true,
+        perform: () => {
+          const target = document.getElementById('services');
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            target.classList.remove('chat-nav-highlight');
+            void target.offsetWidth;
+            target.classList.add('chat-nav-highlight');
+          } else {
+            window.location.href = 'index.html#services';
+          }
+        }
+      },
+      gear: {
+        id: 'gear',
+        label: 'Оборудование студии',
+        icon: ICONS.mic,
+        extIcon: ICONS.arrowDown,
+        closeOnMobile: true,
+        perform: () => {
+          const target = document.getElementById('gear');
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            target.classList.remove('chat-nav-highlight');
+            void target.offsetWidth;
+            target.classList.add('chat-nav-highlight');
+          } else {
+            window.location.href = 'index.html#gear';
+          }
+        }
+      },
+      reviews: {
+        id: 'reviews',
+        label: 'Отзывы клиентов',
+        icon: ICONS.star,
+        extIcon: ICONS.arrowDown,
+        closeOnMobile: true,
+        perform: () => {
+          const target = document.getElementById('reviews');
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            target.classList.remove('chat-nav-highlight');
+            void target.offsetWidth;
+            target.classList.add('chat-nav-highlight');
+          } else {
+            window.location.href = 'index.html#reviews';
+          }
+        }
+      },
+      gallery: {
+        id: 'gallery',
+        label: 'Фотографии студии',
+        icon: ICONS.camera,
+        extIcon: ICONS.arrowDown,
+        closeOnMobile: true,
+        perform: () => {
+          const target = document.getElementById('gallery');
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            target.classList.remove('chat-nav-highlight');
+            void target.offsetWidth;
+            target.classList.add('chat-nav-highlight');
+          } else {
+            window.location.href = 'index.html#gallery';
+          }
+        }
+      }
+    };
+
+    function detectNavigationTarget(userMsg, aiReply) {
+      if (typeof aiReply === 'string') {
+        const match = aiReply.match(/\[\[NAV:([a-zA-Z0-9_-]+)\]\]/i);
+        if (match) {
+          const key = match[1].toLowerCase();
+          if (NAV_CONFIGS[key]) return key;
+        }
+      }
+
+      const u = (userMsg || '').toLowerCase();
+      const r = (aiReply || '').toLowerCase();
+
+      // DAW
+      if (
+        /(?:открой|запусти|перейди|зайти|вруби|включи|покажи|ссылк|где|хочу).*(?:дав|daw|веб[\s-]?студи|браузерн[\s-]?студи|секвенсор)/i.test(u) ||
+        /^(?:открой\s+)?(?:дав|daw)$/i.test(u.trim()) ||
+        (r.includes('/app.html') && /(?:дав|daw)/i.test(u))
+      ) {
+        return 'daw';
+      }
+
+      // Booking
+      if (
+        /(?:где|хочу|как|открой|перейди|подай|остав|заполн).*(?:заявк|запис|бронь|забронир|сесси)/i.test(u) ||
+        /^(?:заявка|запись|бронь|форма)$/i.test(u.trim()) ||
+        (r.includes('#booking') && /(?:заявк|запис|бронь)/i.test(u))
+      ) {
+        return 'booking';
+      }
+
+      // Services / Pricing
+      if (
+        /(?:покажи|где|какие|сколько).*(?:цен|прайс|услуг|стоим|тариф)/i.test(u) ||
+        /^(?:цены|прайс|услуги)$/i.test(u.trim()) ||
+        r.includes('#services')
+      ) {
+        return 'services';
+      }
+
+      // Gear
+      if (
+        /(?:покажи|где|какое|какой).*(?:микрофон|сетап|оборудован|желез|монитор|звуковух)/i.test(u) ||
+        r.includes('#gear')
+      ) {
+        return 'gear';
+      }
+
+      // Reviews
+      if (
+        /(?:покажи|где|какие).*(?:отзыв|клиент)/i.test(u) ||
+        r.includes('#reviews')
+      ) {
+        return 'reviews';
+      }
+
+      // Gallery
+      if (
+        /(?:покажи|где|какие).*(?:фото|галере|студи|интерьер|рум)/i.test(u) ||
+        r.includes('#gallery')
+      ) {
+        return 'gallery';
+      }
+
+      return null;
+    }
+
+    function renderFormattedMessage(container, text) {
+      if (!text) return;
+      const urlRegex = /(https?:\/\/[^\s]+)/g;
+      const parts = text.split(urlRegex);
+      parts.forEach(part => {
+        if (!part) return;
+        if (/^https?:\/\/[^\s]+$/.test(part)) {
+          const a = document.createElement('a');
+          a.className = 'chat-link';
+          a.href = part;
+          a.textContent = part;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          container.appendChild(a);
+        } else {
+          container.appendChild(document.createTextNode(part));
+        }
+      });
+    }
+
+    function attachNavigationAction(bubble, navTarget) {
+      const cfg = NAV_CONFIGS[navTarget];
+      if (!cfg) return;
+
+      const actionWrap = document.createElement('div');
+      actionWrap.className = 'chat-action-container';
+
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'chat-action-btn';
+      btn.setAttribute('aria-label', cfg.label);
+      btn.innerHTML = (cfg.icon || '') +
+        '<span class="chat-action-label">' + cfg.label + '</span>' +
+        (cfg.extIcon ? '<span class="chat-action-icon">' + cfg.extIcon + '</span>' : '');
+
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        cfg.perform();
+        if (cfg.closeOnMobile && window.innerWidth <= 600) {
+          toggleChat(false);
+        }
+      });
+
+      actionWrap.appendChild(btn);
+      bubble.appendChild(actionWrap);
+
+      // Auto trigger with slight delay for smooth visual feedback
+      setTimeout(() => {
+        try {
+          cfg.perform();
+        } catch (e) {
+          console.warn('[Navigation auto-trigger]:', e);
+        }
+      }, 200);
+    }
+
+    function appendMessage(role, text, navTarget) {
       const bubble = document.createElement('div');
       bubble.className = 'message-bubble ' + role;
 
@@ -815,7 +1142,12 @@
       if (cleanedText) {
         cleanedText = cleanedText.replaceAll('**', '');
       }
-      bubble.textContent = cleanedText;
+
+      renderFormattedMessage(bubble, cleanedText);
+
+      if (navTarget && role === 'assistant') {
+        attachNavigationAction(bubble, navTarget);
+      }
 
       if (role !== 'system-note') {
         const timeEl = document.createElement('div');
@@ -939,12 +1271,14 @@
         }
 
         const data = await resp.json();
-        const replyText = data.reply || 'К сожалению, не удалось получить ответ.';
+        const rawReply = data.reply || 'К сожалению, не удалось получить ответ.';
+        const navTarget = detectNavigationTarget(userText, rawReply);
+        const cleanReply = rawReply.replace(/\[\[NAV:[a-zA-Z0-9_-]+\]\]/gi, '').trim();
 
         history.push({ role: 'user', content: userText });
-        history.push({ role: 'assistant', content: replyText });
+        history.push({ role: 'assistant', content: cleanReply });
 
-        appendMessage('assistant', replyText);
+        appendMessage('assistant', cleanReply, navTarget);
 
       } catch (err) {
         hideTypingIndicator();
