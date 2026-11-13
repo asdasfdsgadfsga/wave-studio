@@ -27,11 +27,11 @@
 
 ## Включение в Cloudflare Pages
 
-Потребуется доступ к существующему проекту `wavemusic`. Платная подписка в коде не подключается. Не публиковать ключи ни целиком, ни разбитыми на строки.
+Потребуется доступ к существующему проекту `wavestudiopro` (домен `wavemusic.pages.dev`). Платная подписка в коде не подключается. Не публиковать ключи ни целиком, ни разбитыми на строки.
 
 1. Создать D1 базу `wave-bookings` в **Workers & Pages → D1**.
 2. Выполнить `migrations/0001_bookings.sql` в консоли этой базы. SQL идемпотентен: существующие таблицы/заявки не удаляет.
-3. В **Pages → wavemusic → Settings → Bindings** добавить D1 binding **`BOOKING_DB`**, выбрав эту базу. Настроить Production; для Preview использовать отдельную тестовую базу.
+3. В **Pages → wavestudiopro → Settings → Bindings** добавить D1 binding **`BOOKING_DB`**, выбрав эту базу. Настроить Production; для Preview использовать отдельную тестовую базу.
 4. В **Settings → Variables and Secrets** добавить **`BOOKING_ADMIN_PASSWORD`** как Secret (16+ случайных символов). В админке используется именно этот пароль. Не задавать его через публичные переменные сборки или JS.
 5. Передеплоить последний Production deployment. Изменения bindings/secrets применяются к новому деплою.
 6. Проверить `/api/booking/config`: `ready: true`. Затем `/admin.html`: без входа API журнала отвечает 401, после входа появляется журнал. Проверочную запись создавать с собственными тестовыми контактами; завершить проверку отменой через админку.
@@ -41,7 +41,7 @@
 ```powershell
 npx wrangler d1 create wave-bookings
 npx wrangler d1 execute wave-bookings --remote --file migrations/0001_bookings.sql
-npx wrangler pages secret put BOOKING_ADMIN_PASSWORD --project-name wavemusic
+npx wrangler pages secret put BOOKING_ADMIN_PASSWORD --project-name wavestudiopro
 ```
 
 Привязку `BOOKING_DB` к существующему Pages проекту всё равно нужно добавить. У проекта с автоматическим Git-деплоем настройки Pages сохраняют текущий способ публикации; фиктивный `database_id` в репозиторий не добавлен.
