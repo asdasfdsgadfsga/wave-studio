@@ -13,8 +13,12 @@ test('Pages and local Express use identical prompt texts', () => {
   assert.equal(STREET_PROMPT, readFileSync(new URL('../server/street_prompt.txt', import.meta.url), 'utf8').replace(/\r\n/g, '\n').trim());
   assert.match(PRO_PROMPT, /\[\[NAV:daw\]\]/);
   assert.match(PRO_PROMPT, /\[\[NAV:booking\]\]/);
+  assert.match(PRO_PROMPT, /M1klussshevskiy/);
+  assert.match(PRO_PROMPT, /Neumann U87/);
   assert.match(STREET_PROMPT, /\[\[NAV:daw\]\]/);
   assert.match(STREET_PROMPT, /\[\[NAV:booking\]\]/);
+  assert.match(STREET_PROMPT, /M1klussshevskiy/);
+  assert.match(STREET_PROMPT, /Brawl Stars/);
 });
 
 test('navigation tags are preserved in chat handler replies', async t => {
