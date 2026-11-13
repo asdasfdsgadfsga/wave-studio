@@ -960,11 +960,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const ctx = canvas.getContext('2d');
 
         function resizeCanvas() {
-            canvas.width = canvas.parentElement.clientWidth * (window.devicePixelRatio || 1);
-            canvas.height = canvas.parentElement.clientHeight * (window.devicePixelRatio || 1);
+            canvas.width = canvas.parentElement.clientWidth * Math.min(2, window.devicePixelRatio || 1);
+            canvas.height = canvas.parentElement.clientHeight * Math.min(2, window.devicePixelRatio || 1);
         }
         resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('resize', () => { resizeCanvas(); refreshWaveform(); });
 
         // Статический профиль формы волны трека
         const numBars = 64;
@@ -976,7 +976,15 @@ document.addEventListener('DOMContentLoaded', () => {
             barHeights.push(Math.max(0.14, Math.min(0.95, base + variation)));
         }
 
+        let waveformFrame = null;
+        let waveformVisible = false;
+        function refreshWaveform() {
+            if (waveformFrame !== null) cancelAnimationFrame(waveformFrame);
+            waveformFrame = null;
+            if (waveformVisible && !document.hidden) drawWaveform();
+        }
         function drawWaveform() {
+            waveformFrame = null;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             const w = canvas.width;
             const h = canvas.height;
@@ -1046,10 +1054,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.fill();
             }
 
-            requestAnimationFrame(drawWaveform);
+            if (isPlaying && waveformVisible && !document.hidden) {
+                waveformFrame = requestAnimationFrame(drawWaveform);
+            }
         }
 
-        drawWaveform();
+        const waveformSection = document.getElementById('showcase');
+        if ('IntersectionObserver' in window && waveformSection) {
+            new IntersectionObserver(entries => {
+                waveformVisible = entries[0].isIntersecting;
+                refreshWaveform();
+            }).observe(waveformSection);
+        } else {
+            waveformVisible = true;
+            refreshWaveform();
+        }
+        document.addEventListener('visibilitychange', refreshWaveform);
+        for (const audio of [audioRaw, audioMaster]) {
+            for (const event of ['play', 'pause', 'timeupdate', 'seeked']) {
+                audio.addEventListener(event, refreshWaveform);
+            }
+        }
+        btnRaw.addEventListener('click', refreshWaveform);
+        btnMaster.addEventListener('click', refreshWaveform);
+        playBtn.addEventListener('click', () => requestAnimationFrame(refreshWaveform));
     }
 });
 
@@ -2161,7 +2189,21 @@ class InfiniteGridMenu {
     }
   }
 
+  start() {
+    if (this.isRunning || !this.gl) return;
+    this.isRunning = true;
+    this.time = performance.now();
+    this.run(this.time);
+  }
+
+  stop() {
+    this.isRunning = false;
+    cancelAnimationFrame(this.animationFrame);
+    this.animationFrame = null;
+  }
+
   run(time = 0) {
+    if (!this.isRunning) return;
     this.deltaTime = Math.min(32, time - this.time);
     this.time = time;
     this.deltaFrames = this.deltaTime / this.TARGET_FRAME_DURATION;
@@ -2170,7 +2212,7 @@ class InfiniteGridMenu {
     this.animate(this.deltaTime);
     this.render();
 
-    requestAnimationFrame(t => this.run(t));
+    this.animationFrame = requestAnimationFrame(t => this.run(t));
   }
 
   init(onInit) {
@@ -2277,7 +2319,7 @@ class InfiniteGridMenu {
               errCtx.fillRect(0, 0, 512, 512);
               resolve(errCanvas);
             };
-            img.src = item.image;
+            img.src = item.image.replace('images/gallery/', 'images/gallery/previews/v1/').replace(/\.jpg$/, '.webp');
           })
       )
     ).then(images => {
@@ -2577,34 +2619,65 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const isMobile = window.innerWidth <= 768;
-    const sketch = new InfiniteGridMenu(
-        canvas,
-        GALLERY_ITEMS,
-        handleActiveItem,
-        handleMovementChange,
-        sk => sk.run(),
-        isMobile ? 1.25 : 1.0
-    );
+    let sketch = null;
+    let galleryVisible = false;
+    let initialization = null;
+    const gallerySec = document.getElementById('gallery');
 
-    const handleResize = () => {
-        if (sketch) sketch.resize();
+    const updateGallery = () => {
+        if (!sketch) return;
+        if (galleryVisible && !document.hidden) {
+            sketch.resize();
+            sketch.start();
+        } else {
+            sketch.stop();
+        }
     };
 
-    window.addEventListener('resize', handleResize);
-    setTimeout(handleResize, 100);
+    const initializeGallery = () => {
+        if (initialization) return initialization;
+        initialization = (async () => {
+            if (!window.glMatrix) {
+                await new Promise((resolve, reject) => {
+                    const dependency = document.createElement('script');
+                    dependency.src = 'gl-matrix-min.js';
+                    dependency.onload = resolve;
+                    dependency.onerror = () => {
+                        dependency.remove();
+                        reject(new Error('Gallery dependency could not be loaded'));
+                    };
+                    document.head.appendChild(dependency);
+                });
+            }
+            sketch = new InfiniteGridMenu(
+                canvas, GALLERY_ITEMS, handleActiveItem, handleMovementChange,
+                null, window.innerWidth <= 768 ? 1.25 : 1.0
+            );
+            updateGallery();
+        })().catch(error => {
+            initialization = null;
+            console.warn('Gallery initialization:', error.message);
+        });
+        return initialization;
+    };
 
-    // Also resize when gallery section enters viewport
-    const gallerySec = document.getElementById('gallery');
+    window.addEventListener('resize', updateGallery);
+    document.addEventListener('visibilitychange', updateGallery);
+
     if (gallerySec && 'IntersectionObserver' in window) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    handleResize();
-                }
-            });
-        }, { threshold: 0.1 });
-        observer.observe(gallerySec);
+        // Prepare textures shortly before the gallery enters the viewport.
+        const preloadObserver = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting) initializeGallery();
+        }, { rootMargin: '300px' });
+        preloadObserver.observe(gallerySec);
+        new IntersectionObserver(entries => {
+            galleryVisible = entries[0].isIntersecting;
+            if (galleryVisible) initializeGallery();
+            updateGallery();
+        }).observe(gallerySec);
+    } else {
+        galleryVisible = true;
+        initializeGallery();
     }
 });
 
@@ -2634,3 +2707,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+
+// Pause decorative CSS animations outside the visible section and in hidden tabs.
+document.addEventListener('DOMContentLoaded', () => {
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => entry.target.classList.toggle('is-offscreen', !entry.isIntersecting));
+        });
+        document.querySelectorAll('.scroll-section').forEach(section => observer.observe(section));
+    }
+    const updateVisibility = () => document.body.classList.toggle('page-hidden', document.hidden);
+    document.addEventListener('visibilitychange', updateVisibility);
+    updateVisibility();
+});

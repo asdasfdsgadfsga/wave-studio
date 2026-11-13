@@ -1709,7 +1709,6 @@ html, body {
   </div>
 </div>
 
-<script src="lame.min.js"></script>
 <script>
 'use strict';
 
@@ -3103,7 +3102,9 @@ async function loadServerSamples() {
 
     // Шаг 1: Пробуем динамический API локального сервера Node.js (/api/samples)
     try {
-      const resp = await fetch('/api/samples?t=' + Date.now());
+      const isLocal = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+      if (!isLocal) throw new Error('Use static sample manifest');
+      const resp = await fetch('/api/samples', { cache: 'no-store' });
       if (resp.ok) {
         folders = await resp.json();
       }
@@ -3122,7 +3123,7 @@ async function loadServerSamples() {
       ];
       for (const manifestPath of manifestCandidates) {
         try {
-          const sResp = await fetch(manifestPath + '?t=' + Date.now());
+          const sResp = await fetch(manifestPath, { cache: 'no-cache' });
           if (sResp.ok) {
             const data = await sResp.json();
             if (Array.isArray(data) && data.length > 0) {
@@ -4425,6 +4426,24 @@ function renderOfflinePianoNote(ctx, dest, fullNote, dur, t, sSec) {
   o.stop(t + noteDuration + 0.4);
 }
 
+let mp3EncoderPromise = null;
+function loadMP3Encoder() {
+  if (window.lamejs) return Promise.resolve();
+  if (!mp3EncoderPromise) {
+    mp3EncoderPromise = new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = 'lame.min.js';
+      script.onload = () => {
+        if (window.lamejs) resolve();
+        else { script.remove(); reject(new Error('Не удалось загрузить MP3-кодировщик')); }
+      };
+      script.onerror = () => { script.remove(); reject(new Error('Не удалось загрузить MP3-кодировщик')); };
+      document.head.appendChild(script);
+    }).catch(error => { mp3EncoderPromise = null; throw error; });
+  }
+  return mp3EncoderPromise;
+}
+
 async function exportProjectToMP3() {
   const exportBtn = document.getElementById('btn-export-mp3');
   if (!exportBtn) return;
@@ -4439,6 +4458,7 @@ async function exportProjectToMP3() {
   `;
 
   try {
+    await loadMP3Encoder();
     initAC();
     const sampleRate = 44100;
     const totalSteps = getStepsCount();
@@ -4603,7 +4623,7 @@ async function exportProjectToMP3() {
 document.getElementById('btn-export-mp3')?.addEventListener('click', exportProjectToMP3);
 </script>
 <!-- Встраиваемый AI Чат-бот поддержки (кнопка в левом нижнем углу) -->
-<script src="widget/chat-widget.js" data-api="http://localhost:3005/api/chat"></script>
+<script defer src="widget/chat-widget.js" data-api="/api/chat"></script>
 </body>
 </html>
 

@@ -275,8 +275,8 @@
                     </div>
 
                     <!-- Скрытые аудио-теги для точной синхронизации -->
-                    <audio id="ab-audio-raw" src="audio/demo_raw.wav" preload="auto"></audio>
-                    <audio id="ab-audio-mastered" src="audio/demo_mastered.wav" preload="auto"></audio>
+                    <audio id="ab-audio-raw" src="audio/demo_raw.wav" preload="none"></audio>
+                    <audio id="ab-audio-mastered" src="audio/demo_mastered.wav" preload="none"></audio>
                 </div>
 
                 <div class="showcase-cta">
@@ -1671,11 +1671,10 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="gl-matrix-min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="script.js" defer></script>
 
     <!-- Встраиваемый AI Чат-бот поддержки (кнопка в левом нижнем углу) -->
-    <script src="widget/chat-widget.js" data-api="/api/chat"></script>
+    <script defer src="widget/chat-widget.js" data-api="/api/chat"></script>
 </body>
 </html>

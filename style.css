@@ -4322,3 +4322,19 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
     .gallery-nav-prev { left: 4px; }
     .gallery-nav-next { right: 4px; }
 }
+
+/* Pause decorative motion when its section cannot be seen. */
+.scroll-section.is-offscreen *,
+.scroll-section.is-offscreen *::before,
+.scroll-section.is-offscreen *::after,
+body.page-hidden .scroll-section *,
+body.page-hidden .scroll-section *::before,
+body.page-hidden .scroll-section *::after {
+    animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .eq-bar, .ab-disc-icon, .ab-state-dot, .status-dot, .m1k-status-dot {
+        animation: none !important;
+    }
+}

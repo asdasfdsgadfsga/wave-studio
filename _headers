@@ -1,0 +1,13 @@
+# Versioned gallery previews can be cached across deployments.
+/images/gallery/previews/v1/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Keep audio reusable without delaying updates indefinitely.
+/audio/*
+  Cache-Control: public, max-age=86400
+
+# Revalidate manifests so newly uploaded samples appear immediately.
+/samples.json
+  Cache-Control: no-cache
+/samples/samples.json
+  Cache-Control: no-cache
