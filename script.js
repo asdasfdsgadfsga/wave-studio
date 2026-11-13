@@ -748,7 +748,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const discIcon = document.querySelector('.ab-disc-icon');
     const progressFill = document.getElementById('ab-progress-fill');
     const progressHandle = document.getElementById('ab-progress-handle');
-    const scrubBar = document.getElementById('ab-scrub-bar');
+    const scrubSurface = document.getElementById('ab-waveform-wrap');
     const currentTimeEl = document.getElementById('ab-current-time');
     const durationTimeEl = document.getElementById('ab-duration-time');
     const volumeSlider = document.getElementById('ab-volume-slider');
@@ -763,6 +763,53 @@ document.addEventListener('DOMContentLoaded', () => {
     let isPlaying = false;
     let currentMode = 'mastered'; // 'raw' или 'mastered'
     let masterVolume = 0.85;
+    let scrubbingPointer = null;
+    const pendingSeeks = new Map();
+    let refreshWaveform = () => {};
+
+    function trackDuration() {
+        const durations = [audioRaw.duration, audioMaster.duration].filter(d => Number.isFinite(d) && d > 0);
+        return durations.length ? Math.min(...durations) : TRACK_DURATION;
+    }
+
+    function renderPosition(time) {
+        const duration = trackDuration();
+        const progress = Math.min(100, Math.max(0, time / duration * 100));
+        progressFill.style.width = progress + '%';
+        progressHandle.style.left = progress + '%';
+        currentTimeEl.textContent = formatTime(time);
+        durationTimeEl.textContent = formatTime(duration);
+        scrubSurface.setAttribute('aria-valuemax', duration.toFixed(2));
+        scrubSurface.setAttribute('aria-valuenow', time.toFixed(2));
+        scrubSurface.setAttribute('aria-valuetext', formatTime(time) + ' из ' + formatTime(duration));
+    }
+
+    function seekTo(time) {
+        const target = Math.max(0, Math.min(trackDuration() - 0.05, time));
+        for (const audio of [audioMaster, audioRaw]) {
+            if (audio.readyState === 0) {
+                // Remember a seek made before the lazy-loaded WAV metadata arrives.
+                const loading = pendingSeeks.has(audio);
+                pendingSeeks.set(audio, target);
+                // play() already starts loading; load() here would abort it.
+                if (!loading && audio.paused) audio.load();
+            } else {
+                pendingSeeks.delete(audio);
+                audio.currentTime = target;
+            }
+        }
+        renderPosition(target);
+        refreshWaveform();
+    }
+
+    for (const audio of [audioMaster, audioRaw]) {
+        audio.addEventListener('loadedmetadata', () => {
+            if (pendingSeeks.has(audio)) {
+                audio.currentTime = Math.min(audio.duration - 0.05, pendingSeeks.get(audio));
+                pendingSeeks.delete(audio);
+            }
+        });
+    }
 
     // Web Audio API для живой синхронизации спектра с визуализатором волны
     let audioCtx = null;
@@ -821,11 +868,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!isPlaying) {
             try {
-                if (activeAudio.currentTime >= TRACK_DURATION - 0.5) {
-                    audioMaster.currentTime = 0;
-                    audioRaw.currentTime = 0;
+                if (activeAudio.ended) seekTo(0);
+                if (!pendingSeeks.size && !activeAudio.seeking && !inactiveAudio.seeking) {
+                    inactiveAudio.currentTime = activeAudio.currentTime;
                 }
-                inactiveAudio.currentTime = activeAudio.currentTime;
                 audioMaster.playbackRate = 1.0;
                 audioRaw.playbackRate = 1.0;
                 updateAudios();
@@ -857,7 +903,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const newActive = currentMode === 'mastered' ? audioMaster : audioRaw;
 
         // Синхронизируем позицию нового активного трека
-        newActive.currentTime = oldActive.currentTime;
+        if (!pendingSeeks.size && !oldActive.seeking && !newActive.seeking) {
+            newActive.currentTime = oldActive.currentTime;
+        }
         newActive.playbackRate = 1.0;
 
         if (mode === 'raw') {
@@ -899,21 +947,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function onAudioTick(sourceAudio) {
         const activeAudio = currentMode === 'mastered' ? audioMaster : audioRaw;
         const inactiveAudio = currentMode === 'mastered' ? audioRaw : audioMaster;
-        if (sourceAudio !== activeAudio) return;
+        if (sourceAudio !== activeAudio || scrubbingPointer !== null || pendingSeeks.size ||
+            activeAudio.seeking || inactiveAudio.seeking) return;
 
         const curTime = activeAudio.currentTime;
 
-        if (curTime >= TRACK_DURATION) {
-            audioMaster.currentTime = 0;
-            audioRaw.currentTime = 0;
-            return;
-        }
-
-        const progress = Math.min(100, (curTime / TRACK_DURATION) * 100);
-        progressFill.style.width = progress + '%';
-        progressHandle.style.left = progress + '%';
-        currentTimeEl.textContent = formatTime(curTime);
-        durationTimeEl.textContent = '0:38';
+        renderPosition(curTime);
 
         // Корректируем ТОЛЬКО неактивный трек, если он отстал, активный не трогаем!
         const drift = activeAudio.currentTime - inactiveAudio.currentTime;
@@ -925,33 +964,56 @@ document.addEventListener('DOMContentLoaded', () => {
     audioMaster.addEventListener('timeupdate', () => onAudioTick(audioMaster));
     audioRaw.addEventListener('timeupdate', () => onAudioTick(audioRaw));
 
-    function onEnded() {
-        audioMaster.currentTime = 0;
-        audioRaw.currentTime = 0;
+    function onEnded(sourceAudio) {
+        const activeAudio = currentMode === 'mastered' ? audioMaster : audioRaw;
+        if (sourceAudio !== activeAudio || scrubbingPointer !== null || activeAudio.seeking) return;
+        seekTo(0);
         if (isPlaying) {
             audioMaster.play();
             audioRaw.play();
         }
     }
-    audioMaster.addEventListener('ended', onEnded);
-    audioRaw.addEventListener('ended', onEnded);
+    audioMaster.addEventListener('ended', () => onEnded(audioMaster));
+    audioRaw.addEventListener('ended', () => onEnded(audioRaw));
 
     function scrub(e) {
-        const rect = scrubBar.getBoundingClientRect();
+        const rect = scrubSurface.getBoundingClientRect();
+        if (!rect.width) return;
         const clickX = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
         const pct = clickX / rect.width;
-        const targetTime = Math.min(TRACK_DURATION - 0.05, Math.max(0, pct * TRACK_DURATION));
-
-        audioMaster.currentTime = targetTime;
-        audioRaw.currentTime = targetTime;
-
-        currentTimeEl.textContent = formatTime(targetTime);
-        progressFill.style.width = (pct * 100) + '%';
-        progressHandle.style.left = (pct * 100) + '%';
+        seekTo(pct * trackDuration());
     }
 
-    scrubBar.addEventListener('click', scrub);
-    if (canvas && canvas.parentElement) canvas.parentElement.addEventListener('click', scrub);
+    scrubSurface.addEventListener('pointerdown', e => {
+        if (!e.isPrimary || e.button !== 0) return;
+        scrubbingPointer = e.pointerId;
+        scrubSurface.setPointerCapture(e.pointerId);
+        scrubSurface.focus({ preventScroll: true });
+        scrubSurface.classList.add('is-scrubbing');
+        scrub(e);
+    });
+    scrubSurface.addEventListener('pointermove', e => {
+        if (e.pointerId === scrubbingPointer) scrub(e);
+    });
+    function finishScrub(e) {
+        if (e.pointerId !== scrubbingPointer) return;
+        if (e.type === 'pointerup') scrub(e);
+        scrubbingPointer = null;
+        scrubSurface.classList.remove('is-scrubbing');
+        if (scrubSurface.hasPointerCapture(e.pointerId)) scrubSurface.releasePointerCapture(e.pointerId);
+    }
+    for (const event of ['pointerup', 'pointercancel', 'lostpointercapture']) {
+        scrubSurface.addEventListener(event, finishScrub);
+    }
+    scrubSurface.addEventListener('keydown', e => {
+        const activeAudio = currentMode === 'mastered' ? audioMaster : audioRaw;
+        const time = pendingSeeks.get(activeAudio) ?? activeAudio.currentTime;
+        const targets = { ArrowLeft: time - 2, ArrowDown: time - 2,
+            ArrowRight: time + 2, ArrowUp: time + 2, Home: 0, End: trackDuration() };
+        if (!(e.key in targets)) return;
+        e.preventDefault();
+        seekTo(targets[e.key]);
+    });
 
     // ==========================================
     // ЖИВОЙ НЕОНОВЫЙ ВИЗУАЛИЗАТОР СПЕКТРА
@@ -978,11 +1040,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let waveformFrame = null;
         let waveformVisible = false;
-        function refreshWaveform() {
+        refreshWaveform = function () {
             if (waveformFrame !== null) cancelAnimationFrame(waveformFrame);
             waveformFrame = null;
             if (waveformVisible && !document.hidden) drawWaveform();
-        }
+        };
         function drawWaveform() {
             waveformFrame = null;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -991,7 +1053,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const barWidth = (w / numBars) * 0.65;
             const gap = (w / numBars) * 0.35;
             const activeAudio = currentMode === 'mastered' ? audioMaster : audioRaw;
-            const progress = Math.min(1, activeAudio.currentTime / TRACK_DURATION);
+            const progress = Math.min(1, (pendingSeeks.get(activeAudio) ?? activeAudio.currentTime) / trackDuration());
 
             // Получаем спектр частот из Web Audio API
             let hasRealData = false;
@@ -1071,7 +1133,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         document.addEventListener('visibilitychange', refreshWaveform);
         for (const audio of [audioRaw, audioMaster]) {
-            for (const event of ['play', 'pause', 'timeupdate', 'seeked']) {
+            for (const event of ['play', 'pause', 'timeupdate', 'seeking', 'seeked']) {
                 audio.addEventListener(event, refreshWaveform);
             }
         }

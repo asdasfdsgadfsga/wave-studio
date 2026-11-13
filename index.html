@@ -222,7 +222,9 @@
                     </div>
 
                     <!-- Живой аудио-визуализатор волны -->
-                    <div class="ab-waveform-container" id="ab-waveform-wrap">
+                    <div class="ab-waveform-container" id="ab-waveform-wrap" role="slider" tabindex="0"
+                        aria-label="Позиция воспроизведения" aria-valuemin="0" aria-valuemax="38.6"
+                        aria-valuenow="0" aria-valuetext="0:00 из 0:38">
                         <canvas id="ab-wave-canvas"></canvas>
                         <div class="ab-progress-bar-wrap" id="ab-scrub-bar">
                             <div class="ab-progress-fill" id="ab-progress-fill"></div>
@@ -275,8 +277,8 @@
                     </div>
 
                     <!-- Скрытые аудио-теги для точной синхронизации -->
-                    <audio id="ab-audio-raw" src="audio/demo_raw.wav" preload="none"></audio>
-                    <audio id="ab-audio-mastered" src="audio/demo_mastered.wav" preload="none"></audio>
+                    <audio id="ab-audio-raw" src="audio/demo_raw.wav?v=seek-1" preload="none"></audio>
+                    <audio id="ab-audio-mastered" src="audio/demo_mastered.wav?v=seek-1" preload="none"></audio>
                 </div>
 
                 <div class="showcase-cta">
