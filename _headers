@@ -6,6 +6,9 @@
 /images/site/v1/*
   Cache-Control: public, max-age=31536000, immutable
 
+/fonts/montserrat/v31/*
+  Cache-Control: public, max-age=31536000, immutable
+
 # Keep audio reusable without delaying updates indefinitely.
 /audio/*
   Cache-Control: public, max-age=86400

@@ -8,7 +8,7 @@
   const localTime = n => new Date(n + 10 * 3600000).toISOString().slice(0, 16);
   let bookings = [], offset = 0, total = 0, loading, loggedIn = false;
   function message(value, error = false) { $('#message').textContent = value; $('#message').classList.toggle('error', error); }
-  function showLogin() { loggedIn = false; $('#login-panel').hidden = false; $('#workspace').hidden = true; $('#logout').hidden = true; $('#bookings').replaceChildren(); bookings = []; }
+  function showLogin() { loggedIn = false; document.body.classList.remove('is-authenticated'); $('#login-panel').hidden = false; $('#workspace').hidden = true; $('#logout').hidden = true; $('#bookings').replaceChildren(); bookings = []; }
   async function api(path, options = {}) {
     const response = await fetch('/api/booking/' + path, { credentials: 'same-origin', cache: 'no-store', ...options });
     let data;
@@ -23,6 +23,7 @@
   async function enter() {
     const session = await api('admin/session');
     loggedIn = true; $('#login-panel').hidden = true; $('#workspace').hidden = false; $('#logout').hidden = false;
+    document.body.classList.add('is-authenticated');
     try { $('#legacy-data').hidden = !localStorage.getItem('waveBookings'); } catch {}
     $('#notification-state').textContent = `Telegram: ${session.notifications.telegram ? 'настроен' : 'не подключён'} · Почта: ${session.notifications.email ? 'настроена' : 'не подключена'}`;
     const config = await api('admin/settings');
@@ -82,9 +83,16 @@
       list.append(card);
     }
   }
+  $('#password-toggle').addEventListener('click', () => {
+    const show = $('#password').type === 'password';
+    $('#password').type = show ? 'text' : 'password';
+    $('#password-toggle').setAttribute('aria-pressed', String(show));
+    $('#password-toggle').setAttribute('aria-label', show ? 'Скрыть пароль' : 'Показать пароль');
+  });
   $('#login-form').addEventListener('submit', async event => {
-    event.preventDefault(); const button = event.currentTarget.querySelector('button'); button.disabled = true;
-    const password = $('#password').value; $('#password').value = '';
+    event.preventDefault(); const button = event.currentTarget.querySelector('[type="submit"]'); button.disabled = true;
+    const password = $('#password').value; $('#password').value = ''; $('#password').type = 'password';
+    $('#password-toggle').setAttribute('aria-pressed', 'false'); $('#password-toggle').setAttribute('aria-label', 'Показать пароль');
     try { await api('admin/login', jsonOptions('POST', { password })); message(''); await enter(); }
     catch (error) { message(error.message, true); $('#password').focus(); }
     finally { button.disabled = false; }
