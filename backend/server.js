@@ -1,4 +1,4 @@
-// Node 24+; no dependencies required. Run: node backend/server.js
+// Node 24+; run npm ci at the repository root, then npm start.
 const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -6,12 +6,14 @@ const { pathToFileURL } = require('node:url');
 
 async function start() {
   const root = path.resolve(__dirname, '..');
-  const vars = path.join(root, '.dev.vars');
-  if (fs.existsSync(vars)) process.loadEnvFile(vars);
+  for (const relative of ['.dev.vars', 'server/.env']) {
+    const vars = path.join(root, relative);
+    if (fs.existsSync(vars)) process.loadEnvFile(vars);
+  }
   if ((process.env.BOOKING_ADMIN_PASSWORD || '').length < 16) {
     throw new Error('Set BOOKING_ADMIN_PASSWORD (16+ characters) in .dev.vars. See docs/booking-backend.md.');
   }
-  const { handleBooking } = await import(pathToFileURL(path.join(root, 'lib/booking/api.mjs')));
+  const { app } = await import(pathToFileURL(path.join(root, 'lib/api/app.mjs')));
   const { openBookingDatabase } = await import(pathToFileURL(path.join(root, 'lib/booking/sqlite.mjs')));
   const local = path.join(root, '.local');
   fs.mkdirSync(local, { recursive: true });
@@ -22,18 +24,19 @@ async function start() {
   const server = http.createServer(async (req, res) => {
     try {
       const url = new URL(req.url, `http://${req.headers.host || 'localhost:3000'}`);
-      if (url.pathname.startsWith('/api/booking/')) {
+      if (url.pathname.startsWith('/api/')) {
         const chunks = []; let size = 0;
         for await (const chunk of req) {
           size += chunk.length;
-          if (size > 8192) { res.writeHead(413); res.end('Request too large'); return; }
+          const limit = url.pathname === '/api/chat' ? 65536 : 8192;
+          if (size > limit) { res.writeHead(413, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }); res.end(JSON.stringify({ error: 'Слишком большой запрос.' })); return; }
           chunks.push(chunk);
         }
         const headers = new Headers(req.headers);
         headers.set('CF-Connecting-IP', req.socket.remoteAddress || 'local');
         const request = new Request(url, { method: req.method, headers,
           ...(!['GET', 'HEAD'].includes(req.method) ? { body: Buffer.concat(chunks) } : {}) });
-        const response = await handleBooking(request, env);
+        const response = await app.fetch(request, env);
         res.writeHead(response.status, Object.fromEntries(response.headers));
         res.end(Buffer.from(await response.arrayBuffer()));
         return;
@@ -64,6 +67,6 @@ async function start() {
     }
   });
   server.on('error', error => { console.error('Local booking server:', error.code); process.exitCode = 1; });
-  server.listen(Number(process.env.BOOKING_PORT || 3000), '127.0.0.1', () => console.log('Wave booking: http://127.0.0.1:' + (process.env.BOOKING_PORT || 3000)));
+  server.listen(Number(process.env.BOOKING_PORT || 3000), '127.0.0.1', () => console.log('WaveMusic · Hono: http://127.0.0.1:' + (process.env.BOOKING_PORT || 3000)));
 }
 start().catch(error => { console.error(error.message); process.exitCode = 1; });

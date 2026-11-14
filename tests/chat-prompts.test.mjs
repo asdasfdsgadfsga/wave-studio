@@ -3,10 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { PRO_PROMPT, STREET_PROMPT } from '../lib/chat/prompts.mjs';
 
-// Load the Pages ESM handler without changing the local Express package type.
-const source = readFileSync(new URL('../functions/api/chat.js', import.meta.url), 'utf8')
-  .replace('../../lib/chat/prompts.mjs', new URL('../lib/chat/prompts.mjs', import.meta.url).href);
-const { onRequestPost } = await import('data:text/javascript;base64,' + Buffer.from(source).toString('base64'));
+import { handleChat as onRequestPost } from '../lib/chat/api.mjs';
 
 test('Pages and local Express use identical prompt texts', () => {
   assert.equal(PRO_PROMPT, readFileSync(new URL('../server/system_prompt.txt', import.meta.url), 'utf8').replace(/\r\n/g, '\n').trim());

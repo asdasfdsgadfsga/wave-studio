@@ -1,0 +1,13 @@
+{
+  "name": "wavemusic",
+  "version": "1.0.0",
+  "private": true,
+  "description": "WaveMusic website and Hono API for Cloudflare Pages and local Node.js",
+  "engines": { "node": ">=24" },
+  "scripts": {
+    "start": "node backend/server.js",
+    "test": "node tools/sync-chat-prompts.cjs --check && node --test tests/*.test.mjs",
+    "prompts:sync": "node tools/sync-chat-prompts.cjs"
+  },
+  "dependencies": { "hono": "^4.0.0" }
+}

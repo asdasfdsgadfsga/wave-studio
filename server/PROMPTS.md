@@ -3,7 +3,7 @@
 `system_prompt.txt` задаёт режим Pro, `street_prompt.txt` — вымышленный образ Васи.
 Локальный Express читает их при запросе (Pro можно переопределить через
 `SYSTEM_PROMPT_PATH`). Cloudflare использует сгенерированный модуль
-`lib/chat/prompts.mjs`, импортируемый в `functions/api/chat.js`.
+`lib/chat/prompts.mjs`, импортируемый в `lib/chat/api.mjs` общего приложения Hono.
 
 После изменения текстов из корня проекта выполните:
 

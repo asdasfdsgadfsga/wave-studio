@@ -18,17 +18,10 @@
     return scripts[scripts.length - 1];
   })();
 
-  const isLocalhost = typeof window !== 'undefined' &&
-    (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
-
-  let apiUrl = isLocalhost ? 'http://localhost:3005/api/chat' : '/api/chat';
+  let apiUrl = '/api/chat';
   if (currentScript && currentScript.dataset.api) {
-    if (isLocalhost && currentScript.dataset.api === '/api/chat') {
-      apiUrl = 'http://localhost:3005/api/chat';
-    } else {
-      apiUrl = currentScript.dataset.api;
-    }
-  } else if (!isLocalhost && currentScript && currentScript.src && currentScript.src.startsWith('http')) {
+    apiUrl = currentScript.dataset.api;
+  } else if (currentScript && currentScript.src && currentScript.src.startsWith('http')) {
     try {
       const u = new URL(currentScript.src);
       apiUrl = u.origin + '/api/chat';

@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { handleBooking, studioDate } from '../lib/booking/api.mjs';
 import { openBookingDatabase } from '../lib/booking/sqlite.mjs';
+import { app } from '../lib/api/app.mjs';
 
 const HOUR = 3600000;
 function fixture(t) {
@@ -11,7 +12,7 @@ function fixture(t) {
   const input = (extra = {}) => ({ requestId: crypto.randomUUID(), name: 'Тестовый клиент', email: 'test@example.com', phone: '+7 999 123 45 67',
     service: 'vocal', startsAt, duration: 2, consent: true, ...extra });
   async function request(path, { method = 'GET', body, cookie, origin = 'https://studio.example', ip = '192.0.2.1' } = {}) {
-    const response = await handleBooking(new Request('https://studio.example/api/booking/' + path, { method,
+    const response = await app.fetch(new Request('https://studio.example/api/booking/' + path, { method,
       headers: { Origin: origin, 'CF-Connecting-IP': ip, ...(cookie ? { Cookie: cookie } : {}), ...(body !== undefined ? { 'Content-Type': 'application/json' } : {}) },
       ...(body !== undefined ? { body: JSON.stringify(body) } : {}) }), env);
     return { status: response.status, headers: response.headers, data: await response.json() };
